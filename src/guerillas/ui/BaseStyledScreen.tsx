@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
 export abstract class BaseStyledScreen<P= {}, S= {}> extends BaseScreen<P, S> {
   abstract renderStyledScreen(): ReactElement<any>;
   abstract primaryColor: string;
+  abstract primaryColorDark: string;
 
   render() {
     return (
@@ -28,14 +29,14 @@ export abstract class BaseStyledScreen<P= {}, S= {}> extends BaseScreen<P, S> {
       <View
         width={'100%'}
         height={20}
-        backgroundColor={this.primaryColor}
+        backgroundColor={this.primaryColorDark}
       />
     );
   }
 
   renderAndroidStatusBar(): any {
     return (
-      <StatusBar barStyle={'light-content'} backgroundColor={this.primaryColor} />
+      <StatusBar barStyle={'light-content'} backgroundColor={this.primaryColorDark} />
     );
   }
 }
