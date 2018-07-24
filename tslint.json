@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "tslint-config-airbnb",
+    "tslint-react"
+  ],
+  "rules": {
+    // override tslint-react rules here
+    // These are just dev-rules
+    "no-trailing-whitespace": false,
+    // Don't touch below rules
+    "jsx-wrap-multiline": false,
+    "variable-name": false,
+    // To enable return type : Next project - Insha-Allah
+    /*"typedef": [
+      true,
+      "call-signature",
+      "arrow-call-signature",
+      "parameter",
+      "arrow-parameter",
+      "property-declaration",
+      "variable-declaration",
+      "member-variable-declaration",
+      "object-destructuring",
+      "array-destructuring"
+    ],*/
+    "no-default-export": true,
+    "trailing-comma": false
+  }
+}
