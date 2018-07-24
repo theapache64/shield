@@ -7,23 +7,24 @@
  * 
  * @format
  */
-
-import { default as React, Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Component, default as React } from 'react';
 import { createStackNavigator } from 'react-navigation';
+
+import { LogInScreen } from './src/screens/login_screen/LogInScreen';
+import { MainScreen } from './src/screens/main_screen/MainScreen';
 import { SplashScreen } from './src/screens/splash_screen/SplashScreen';
 
 const RootStack = createStackNavigator(
   {
-    SplashScreen: {
-      screen: SplashScreen,
-      navigationOptions: {
-        header: null
-      }
-    }
+    SplashScreen,
+    MainScreen,
+    LogInScreen
   },
   {
-    initialRouteName: 'SplashScreen'
+    initialRouteName: 'SplashScreen',
+    navigationOptions: {
+      header: null
+    }
   }
 );
 

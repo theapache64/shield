@@ -1,5 +1,6 @@
 import { default as React, PureComponent, ReactElement } from 'react';
 import { View, Text, StyleSheet, Platform, StatusBar } from 'react-native';
+import { BaseScreen } from './BaseScreen';
 
 const styles = StyleSheet.create({
   vContainer: {
@@ -8,7 +9,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export abstract class BaseStyledScreen<P= {}, S= {}> extends PureComponent<P, S> {
+export abstract class BaseStyledScreen<P= {}, S= {}> extends BaseScreen<P, S> {
   abstract renderStyledScreen(): ReactElement<any>;
   abstract primaryColor: string;
 
@@ -16,8 +17,19 @@ export abstract class BaseStyledScreen<P= {}, S= {}> extends PureComponent<P, S>
     return (
       <View style={styles.vContainer}>
         {Platform.OS === 'android' && this.renderAndroidStatusBar()}
+        {Platform.OS === 'ios' && this.renderIOSStatusBar()}
         {this.renderStyledScreen()}
       </View>
+    );
+  }
+
+  renderIOSStatusBar(): any {
+    return (
+      <View
+        width={'100%'}
+        height={20}
+        backgroundColor={this.primaryColor}
+      />
     );
   }
 

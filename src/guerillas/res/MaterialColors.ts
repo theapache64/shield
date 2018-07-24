@@ -1,7 +1,9 @@
 export const materialColors = {
+  
   WHITE: '#ffffff',
   BLACK: '#000000',
   TRANSPARENT: 'transparent',
+
   DELTAGREY: {
     50: '#e4e4e4',
     100: '#bdbdbd',
@@ -18,6 +20,7 @@ export const materialColors = {
     A400: '#6e6e6e',
     A700: '#404040',
   },
+
   DELTABLUE: {
     50: '#e6f5ff',
     100: '#9ad8ff',
@@ -34,6 +37,7 @@ export const materialColors = {
     A400: '#009afb',
     A700: '#00619f',
   },
+
   DELTAORANGE: {
     50: '#FFFDFA',
     100: '#FFDAAE',
@@ -50,6 +54,7 @@ export const materialColors = {
     A400: '#FF9110',
     A700: '#B36100',
   },
+
   DELTAGREEN: {
     50: '#C5F8CD',
     100: '#81EF91',
@@ -66,6 +71,7 @@ export const materialColors = {
     A400: '#17BB2F',
     A700: '#0D6A1A',
   },
+
   RED: {
     50: '#ffebee',
     100: '#ffcdd2',
@@ -82,6 +88,7 @@ export const materialColors = {
     A400: '#ff1744',
     A700: '#d50000',
   },
+
   PINK: {
     50: '#fce4ec',
     100: '#f8bbd0',
@@ -98,6 +105,7 @@ export const materialColors = {
     A400: '#f50057',
     A700: '#c51162',
   },
+
   PURPLE: {
     50: '#f3e5f5',
     100: '#e1bee7',
@@ -114,6 +122,7 @@ export const materialColors = {
     A400: '#d500f9',
     A700: '#aa00ff',
   },
+
   DEEPPRUPLE: {
     50: '#ede7f6',
     100: '#d1c4e9',
@@ -130,6 +139,7 @@ export const materialColors = {
     A400: '#651fff',
     A700: '#6200ea',
   },
+
   INDIGO: {
     50: '#e8eaf6',
     100: '#c5cae9',
@@ -146,6 +156,7 @@ export const materialColors = {
     A400: '#3d5afe',
     A700: '#304ffe',
   },
+
   BLUE: {
     50: '#e3f2fd',
     100: '#bbdefb',
@@ -162,6 +173,7 @@ export const materialColors = {
     A400: '#2979ff',
     A700: '#2962ff',
   },
+
   LIGHTBLUE: {
     50: '#e1f5fe',
     100: '#b3e5fc',
@@ -178,6 +190,7 @@ export const materialColors = {
     A400: '#00b0ff',
     A700: '#0091ea',
   },
+
   CYAN: {
     50: '#e0f7fa',
     100: '#b2ebf2',
@@ -194,6 +207,7 @@ export const materialColors = {
     A400: '#00e5ff',
     A700: '#00b8d4',
   },
+
   TEAL: {
     50: '#e0f2f1',
     100: '#b2dfdb',
@@ -210,6 +224,7 @@ export const materialColors = {
     A400: '#1de9b6',
     A700: '#00bfa5',
   },
+
   GREEN: {
     50: '#e8f5e9',
     100: '#c8e6c9',
@@ -226,6 +241,7 @@ export const materialColors = {
     A400: '#00e676',
     A700: '#00c853',
   },
+
   LIGHTGREEN: {
     50: '#f1f8e9',
     100: '#dcedc8',
@@ -242,6 +258,7 @@ export const materialColors = {
     A400: '#76ff03',
     A700: '#64dd17',
   },
+
   LIME: {
     50: '#f9fbe7',
     100: '#f0f4c3',
@@ -258,6 +275,7 @@ export const materialColors = {
     A400: '#c6ff00',
     A700: '#aeea00',
   },
+
   YELLOW: {
     50: '#fffde7',
     100: '#fff9c4',
@@ -274,6 +292,7 @@ export const materialColors = {
     A400: '#ffea00',
     A700: '#ffd600',
   },
+
   AMBER: {
     50: '#fff8e1',
     100: '#ffecb3',
@@ -290,6 +309,7 @@ export const materialColors = {
     A400: '#ffc400',
     A700: '#ffab00',
   },
+
   ORANGE: {
     50: '#fff3e0',
     100: '#ffe0b2',
@@ -306,6 +326,7 @@ export const materialColors = {
     A400: '#ff9100',
     A700: '#ff6d00',
   },
+
   DEEPORANGE: {
     50: '#fbe9e7',
     100: '#ffccbc',
@@ -322,6 +343,7 @@ export const materialColors = {
     A400: '#ff3d00',
     A700: '#dd2c00',
   },
+
   BROWN: {
     50: '#efebe9',
     100: '#d7ccc8',
@@ -338,6 +360,7 @@ export const materialColors = {
     A400: '#8c6253',
     A700: '#533a31',
   },
+
   BLUEGREY: {
     50: '#eceff1',
     100: '#cfd8dc',
@@ -354,6 +377,7 @@ export const materialColors = {
     A400: '#6e8d9b',
     A700: '#475c67',
   },
+
   GREY: {
     50: '#fafafa',
     100: '#f5f5f5',

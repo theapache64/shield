@@ -12,7 +12,6 @@ interface States {
 
 export abstract class BaseShieldScreen<P= {}, S= {}> extends BaseStyledScreen<P, S> {
   primaryColor: string = materialColors.GREEN[500];
-
   abstract renderShieldScreen(): React.ReactElement<any>;
 
   renderStyledScreen(): React.ReactElement<any> {

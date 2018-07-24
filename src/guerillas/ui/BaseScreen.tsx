@@ -1,4 +1,5 @@
 import { BaseComponent } from './BaseComponent';
+import { NavigationScreenProp } from 'react-navigation';
 
 /**
  * Extends all screens, contains no UI related actions. Just util functions.
@@ -9,6 +10,9 @@ import { BaseComponent } from './BaseComponent';
  * @template P
  * @template S
  */
-export class BaseScreen<P= {}, S= {}> extends BaseComponent<P, S> {
+export interface BaseScreenProps {
+  navigation: NavigationScreenProp<any, any>;
+}
+export class BaseScreen<P= {}, S= {}> extends BaseComponent<P & BaseScreenProps, S> {
 
 }
