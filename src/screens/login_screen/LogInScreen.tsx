@@ -29,14 +29,12 @@ export class LogInScreen extends BaseShieldScreen<Props, States> {
         {/* Username */}
         <Input
           leftIcon={'user'}
-          containerStyle={styles.iInput}
           placeholder={'Username'}
         />
 
         {/* Password */}
         <Input
           leftIcon={'lock'}
-          containerStyle={styles.iInput}
           placeholder={'Password'}
         />
 
