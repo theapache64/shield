@@ -8,17 +8,17 @@
  * @format
  */
 
-import React, { Component } from 'react';
+import { default as React, Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { SplashScreen } from './src/screens/SplashScreen';
+import { SplashScreen } from './src/screens/splash_screen/SplashScreen';
 
 const RootStack = createStackNavigator(
   {
     SplashScreen: {
       screen: SplashScreen,
       navigationOptions: {
-        headerMode: 'none'
+        header: null
       }
     }
   },
