@@ -10,9 +10,9 @@
 import { Component, default as React } from 'react';
 import { createStackNavigator } from 'react-navigation';
 
-import { LogInScreen } from './src/screens/login_screen/LogInScreen';
-import { MainScreen } from './src/screens/main_screen/MainScreen';
-import { SplashScreen } from './src/screens/splash_screen/SplashScreen';
+import { LogInScreen } from './screens/login_screen/LogInScreen';
+import { MainScreen } from './screens/main_screen/MainScreen';
+import { SplashScreen } from './screens/splash_screen/SplashScreen';
 
 const RootStack = createStackNavigator(
   {

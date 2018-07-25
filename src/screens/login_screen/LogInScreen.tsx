@@ -30,6 +30,7 @@ export class LogInScreen extends BaseShieldScreen<Props, States> {
         <SimpleLineIcons
           name={'shield'}
           size={50}
+          color={this.primaryColorDark}
           style={styles.sliShield}
         />
 
@@ -68,10 +69,10 @@ export class LogInScreen extends BaseShieldScreen<Props, States> {
     }
 
     if (this.inputValidator.isAllValid(true)) {
-      
+
       const username = this.iUsername.current.getValue();
       const password = this.iPassword.current.getValue();
-      
+
     }
   }
 }
