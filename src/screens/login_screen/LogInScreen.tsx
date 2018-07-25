@@ -7,6 +7,8 @@ import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
 import { Button } from '../../guerillas/widgets/Button';
 import { InputValidator } from '../../guerillas/utils/InputValidator';
+import { connect } from 'react-redux';
+import { RootReducer } from '../../reducers/RootReducer';
 
 interface Props {
 
@@ -16,7 +18,7 @@ interface States {
 
 }
 
-export class LogInScreen extends BaseShieldScreen<Props, States> {
+class LogInScreen extends BaseShieldScreen<Props, States> {
 
   iUsername = React.createRef<Input>();
   iPassword = React.createRef<Input>();
@@ -76,3 +78,15 @@ export class LogInScreen extends BaseShieldScreen<Props, States> {
     }
   }
 }
+
+const mapStateToProps = (rootReducer: RootReducer) => ({
+  loginResponse: rootReducer.loginReducer
+});
+
+const mapDispatchToProps = {
+
+};
+
+export const logInScreen = connect(
+
+);

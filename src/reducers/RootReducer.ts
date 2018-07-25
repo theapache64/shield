@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { loginReducer } from '../api/routes/LogIn';
 
-interface RootReducer {
+export interface RootReducer {
   loginReducer: any;
 }
 
