@@ -11,9 +11,12 @@ import { connect } from 'react-redux';
 import { RootReducer } from '../../reducers/RootReducer';
 import { login, Params } from '../../api/routes/LogIn';
 import { AxiosRequest } from '../../guerillas/utils/api/AxiosRequest';
+import { NetworkResponse } from '../../guerillas/utils/api/NetworkResponse';
+import { LogInResponse } from '../../api/responses/LogInResponse';
 
 interface DispatchProps {
   login: (params: Params) => AxiosRequest;
+  loginResponse: NetworkResponse<LogInResponse>;
 }
 
 interface Props {

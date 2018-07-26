@@ -5,9 +5,9 @@ import { styles } from './Styles';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { materialColors } from '../../guerillas/res/MaterialColors';
 import { StackActionsUtils } from '../../guerillas/utils/StackActionsUtils';
-import { BaseScreenProps } from '../../guerillas/ui/BaseScreen';
+import { BaseScreenProps } from '../../guerillas/ui/screen/BaseScreen';
 
-interface Props extends BaseScreenProps {
+interface Props extends BaseScreenProps<any> {
 
 }
 

@@ -1,5 +1,6 @@
-import { default as React, PureComponent, ReactElement } from 'react';
-import { View, Text, StyleSheet, Platform, StatusBar } from 'react-native';
+import { default as React, ReactElement } from 'react';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+
 import { BaseScreen } from './BaseScreen';
 
 const styles = StyleSheet.create({
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export abstract class BaseStyledScreen<P= {}, S= {}> extends BaseScreen<P, S> {
+export abstract class BaseStyledScreen<P= {}, S= {}, NP= {}> extends BaseScreen<P, S, NP> {
   abstract renderStyledScreen(): ReactElement<any>;
   abstract primaryColor: string;
   abstract primaryColorDark: string;

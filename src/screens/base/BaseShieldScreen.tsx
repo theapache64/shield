@@ -1,14 +1,7 @@
 import { default as React } from 'react';
+
 import { materialColors } from '../../guerillas/res/MaterialColors';
-import { BaseStyledScreen } from '../../guerillas/ui/BaseStyledScreen';
-
-interface Props {
-
-}
-
-interface States {
-
-}
+import { BaseStyledScreen } from '../../guerillas/ui/screen/BaseStyledScreen';
 
 export abstract class BaseShieldScreen<P= {}, S= {}> extends BaseStyledScreen<P, S> {
   primaryColor: string = materialColors.GREEN[500];

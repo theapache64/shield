@@ -1,4 +1,4 @@
-import { BaseComponent } from './BaseComponent';
+import { BaseComponent } from '../BaseComponent';
 import { NavigationScreenProp } from 'react-navigation';
 
 /**
@@ -10,9 +10,10 @@ import { NavigationScreenProp } from 'react-navigation';
  * @template P
  * @template S
  */
-export interface BaseScreenProps {
-  navigation: NavigationScreenProp<any, any>;
+export interface BaseScreenProps<NP> {
+  navigation: NavigationScreenProp<any, NP>;
 }
-export class BaseScreen<P= {}, S= {}> extends BaseComponent<P & BaseScreenProps, S> {
+export class BaseScreen<P= {}, S= {}, NP= {}>
+  extends BaseComponent<P & BaseScreenProps<NP>, S> {
 
 }
