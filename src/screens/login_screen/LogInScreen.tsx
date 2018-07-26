@@ -9,6 +9,12 @@ import { Button } from '../../guerillas/widgets/Button';
 import { InputValidator } from '../../guerillas/utils/InputValidator';
 import { connect } from 'react-redux';
 import { RootReducer } from '../../reducers/RootReducer';
+import { login, Params } from '../../api/routes/LogIn';
+import { AxiosRequest } from '../../guerillas/utils/api/AxiosRequest';
+
+interface DispatchProps {
+  login: (params: Params) => AxiosRequest;
+}
 
 interface Props {
 
@@ -18,7 +24,7 @@ interface States {
 
 }
 
-class LogInScreen extends BaseShieldScreen<Props, States> {
+class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
   iUsername = React.createRef<Input>();
   iPassword = React.createRef<Input>();
@@ -75,6 +81,12 @@ class LogInScreen extends BaseShieldScreen<Props, States> {
       const username = this.iUsername.current.getValue();
       const password = this.iPassword.current.getValue();
 
+      this.props.login(
+        new Params(
+          username,
+          password
+        )
+      );
     }
   }
 }
@@ -84,9 +96,10 @@ const mapStateToProps = (rootReducer: RootReducer) => ({
 });
 
 const mapDispatchToProps = {
-
+  login
 };
 
 export const logInScreen = connect(
-
-);
+  mapStateToProps,
+  mapDispatchToProps
+)(LogInScreen);

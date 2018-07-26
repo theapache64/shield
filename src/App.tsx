@@ -13,7 +13,7 @@ import { Component, default as React } from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 
-import { LogInScreen } from './screens/login_screen/LogInScreen';
+import { logInScreen } from './screens/login_screen/LogInScreen';
 import { MainScreen } from './screens/main_screen/MainScreen';
 import { SplashScreen } from './screens/splash_screen/SplashScreen';
 import { store } from './Store';
@@ -22,7 +22,7 @@ const RootStack = createStackNavigator(
   {
     SplashScreen,
     MainScreen,
-    LogInScreen
+    logInScreen
   },
   {
     initialRouteName: 'SplashScreen',

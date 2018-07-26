@@ -42,7 +42,7 @@ export class SplashScreen extends BaseShieldScreen<Props, States> {
     // Setting splash timeout
     setTimeout(
       () => {
-        StackActionsUtils.resetTo('LogInScreen', this.props.navigation);
+        StackActionsUtils.resetTo('logInScreen', this.props.navigation);
       },
       SplashScreen.SPLASH_TIMEOUT
     );

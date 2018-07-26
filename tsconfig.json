@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "jsx": "react-native",
-    "lib": ["es6"],
+    "esModuleInterop": true,
+    "jsx": "react",
     "module": "es6",
+    "emitDecoratorMetadata": true,
     "moduleResolution": "node",
-    "noEmit": true,
+    "noEmit": false,
     "noImplicitAny": true,
     "target": "es6"
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
