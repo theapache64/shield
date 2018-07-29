@@ -1,23 +1,25 @@
 import { default as React } from 'react';
-import { View, Alert, Keyboard } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
-
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { Guard, LogInResponse } from '../../api/responses/LogInResponse';
+import { NetworkProgressOverlay } from '../../guerillas/ui/NetworkProgressOverlay';
+import { AxiosRequest, AxiosRequestType } from '../../guerillas/utils/api/AxiosRequest';
+import { NetworkResponse } from '../../guerillas/utils/api/NetworkResponse';
+import { InputValidator } from '../../guerillas/utils/InputValidator';
+import { Button } from '../../guerillas/widgets/Button';
 import { Input } from '../../guerillas/widgets/Input';
+import { SAVE_GUARD_REQUEST } from '../../reducers/GuardReducer';
+import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
-import { Button } from '../../guerillas/widgets/Button';
-import { InputValidator } from '../../guerillas/utils/InputValidator';
-import { connect } from 'react-redux';
-import { RootReducer } from '../../reducers/RootReducer';
-import { login, Params } from '../../api/routes/LogIn';
-import { AxiosRequest } from '../../guerillas/utils/api/AxiosRequest';
-import { NetworkResponse } from '../../guerillas/utils/api/NetworkResponse';
-import { LogInResponse } from '../../api/responses/LogInResponse';
-import { NetworkProgressOverlay } from '../../guerillas/ui/NetworkProgressOverlay';
+import { Params, login } from '../../api/routes/LogIn';
 
 interface DispatchProps {
-  login: (params: Params) => AxiosRequest;
+  login: (params: Params) => AxiosRequestType;
   loginResponse: NetworkResponse<LogInResponse>;
+  saveGuard: (guard: Guard) => void;
 }
 
 interface Props {
@@ -36,6 +38,18 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
   inputValidator: InputValidator;
 
   renderShieldScreen() {
+
+    const { loginResponse } = this.props;
+    console.warn(this.props.loginResponse);
+
+    const isLoggedIn = loginResponse.isSuccess && !loginResponse.response.error;
+    if (isLoggedIn) {
+      console.warn('Saving guard');
+
+      this.props.saveGuard(loginResponse.response.data.guard);
+      return;
+    }
+
     return (
       <View flex={1}>
         <View style={styles.vContainer}>
@@ -80,10 +94,6 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
     );
   }
 
-  onRetryPressed = () => {
-
-  }
-
   onLogInPressed = () => {
 
     if (this.inputValidator == null) {
@@ -101,6 +111,8 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
       const username = this.iUsername.current.getValue();
       const password = this.iPassword.current.getValue();
 
+      console.warn('Logging in');
+
       this.props.login(
         new Params(
           username,
@@ -115,8 +127,12 @@ const mapStateToProps = (rootReducer: RootReducer) => ({
   loginResponse: rootReducer.loginReducer
 });
 
-const mapDispatchToProps = {
-  login
+const mapDispatchToProps = (dispatch: Dispatch) => {
+
+  return {
+    login: (params: Params) => dispatch(login(params)),
+    saveGuard: (guard: Guard) => dispatch({ type: SAVE_GUARD_REQUEST, payload: { guard } })
+  };
 };
 
 export const logInScreen = connect(

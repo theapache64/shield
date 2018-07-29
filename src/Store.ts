@@ -1,8 +1,10 @@
-import { createStore, applyMiddleware } from 'redux';
 import { default as axios } from 'axios';
+import { applyMiddleware, createStore } from 'redux';
+import { default as logger } from 'redux-logger';
 import { rootReducer } from './reducers/RootReducer';
 const axiosMiddleware = require('redux-axios-middleware').default;
-import { default as logger } from 'redux-logger';
+import { default as createSagaMiddleware } from 'redux-saga';
+import { rootSaga } from './sagas/RootSaga';
 
 const initialState = {};
 
@@ -27,11 +29,16 @@ const client = axios.create({
   },
 });
 
+const sagaMiddleware = createSagaMiddleware();
+
 export const store = createStore(
   rootReducer,
   initialState,
   applyMiddleware(
+    logger,
+    sagaMiddleware,
     axiosMiddleware(client),
-    logger
   )
 );
+
+sagaMiddleware.run(rootSaga);

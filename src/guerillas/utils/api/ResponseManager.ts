@@ -67,6 +67,7 @@ export class ResponseManager {
           };
 
         case `${normalActionType}_SUCCESS`:
+
           return ResponseManager.getSuccessResponse<T>(state, action);
 
         case `${normalActionType}_FAIL`:

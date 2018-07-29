@@ -1,4 +1,4 @@
-interface AxiosRequestType {
+export interface AxiosRequestType {
   type: string;
   payload: {
     request: {
@@ -10,17 +10,8 @@ interface AxiosRequestType {
 }
 
 export class AxiosRequest {
-  
-  constructor(type: string, method: string, url: string, data?: {}) {
-    return AxiosRequest.build(
-      type,
-      method,
-      url,
-      data
-    );
-  }
-  
-  private static build =
+
+  public static build =
     (type: string, method: string, url: string, data?: {}): AxiosRequestType => {
       return {
         type,
