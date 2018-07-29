@@ -1,5 +1,5 @@
 import { default as React } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, Keyboard } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 
 import { Input } from '../../guerillas/widgets/Input';
@@ -13,6 +13,7 @@ import { login, Params } from '../../api/routes/LogIn';
 import { AxiosRequest } from '../../guerillas/utils/api/AxiosRequest';
 import { NetworkResponse } from '../../guerillas/utils/api/NetworkResponse';
 import { LogInResponse } from '../../api/responses/LogInResponse';
+import { NetworkProgressOverlay } from '../../guerillas/ui/NetworkProgressOverlay';
 
 interface DispatchProps {
   login: (params: Params) => AxiosRequest;
@@ -36,41 +37,54 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
   renderShieldScreen() {
     return (
-      <View style={styles.vContainer}>
+      <View flex={1}>
+        <View style={styles.vContainer}>
 
-        <SimpleLineIcons
-          name={'shield'}
-          size={50}
-          color={this.primaryColorDark}
-          style={styles.sliShield}
-        />
+          <SimpleLineIcons
+            name={'shield'}
+            size={50}
+            color={this.primaryColorDark}
+            style={styles.sliShield}
+          />
 
-        {/* Username */}
-        <Input
-          ref={this.iUsername}
-          leftIcon={'user'}
-          placeholder={'Username'}
-        />
+          {/* Username */}
+          <Input
+            ref={this.iUsername}
+            leftIcon={'user'}
+            placeholder={'Username'}
+          />
 
-        {/* Password */}
-        <Input
-          ref={this.iPassword}
-          leftIcon={'lock'}
-          secureTextEntry={true}
-          placeholder={'Password'}
-        />
+          {/* Password */}
+          <Input
+            ref={this.iPassword}
+            leftIcon={'lock'}
+            secureTextEntry={true}
+            placeholder={'Password'}
+          />
 
-        {/* SignUp */}
-        <Button
-          title={'LogIn'}
-          onPress={this.onSignUpPressed}
+          {/* SignUp */}
+          <Button
+            title={'LogIn'}
+            onPress={this.onLogInPressed}
+          />
+
+        </View>
+
+        <NetworkProgressOverlay
+          colorPrimary={this.primaryColor}
+          loadingMessage={'Authenticating...'}
+          response={this.props.loginResponse}
         />
 
       </View>
     );
   }
 
-  onSignUpPressed = () => {
+  onRetryPressed = () => {
+
+  }
+
+  onLogInPressed = () => {
 
     if (this.inputValidator == null) {
       this.inputValidator = new InputValidator([
@@ -80,6 +94,9 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
     }
 
     if (this.inputValidator.isAllValid(true)) {
+
+      // Dismissing keyboard
+      Keyboard.dismiss();
 
       const username = this.iUsername.current.getValue();
       const password = this.iPassword.current.getValue();

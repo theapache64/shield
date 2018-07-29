@@ -1,5 +1,5 @@
 import { Component, default as React } from 'react';
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 
 import { materialColors } from '../res/MaterialColors';
@@ -9,11 +9,8 @@ interface Props {
   response: NetworkResponse<any>;
   loadingMessage?: string;
   colorPrimary: string;
-  onRetryPressed: () => void;
-}
-
-interface States {
-
+  onRetryPressed?: () => void;
+  hasHeaderMargin?: boolean;
 }
 
 const styles = StyleSheet.create({
@@ -26,7 +23,6 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     backgroundColor: '#FFF',
-    marginTop: 56, // header height
     opacity: 0.8
   },
   loadingMessage: {
@@ -41,36 +37,49 @@ const styles = StyleSheet.create({
   },
   tError: {
     marginTop: 10,
-    color: materialColors.GREY[400]
+    color: materialColors.GREY[700]
   },
   bRetry: {
+    marginTop: 10,
     alignSelf: 'center'
   }
 });
 
-export class NetworkProgressOverlay extends Component<Props, States> {
+export class NetworkProgressOverlay extends Component<Props> {
 
   static defaultProps = {
     loadingMessage: 'Loading ...',
+    headerMargin: false,
+    colorPrimary: materialColors.GREY[600],
   };
 
   render() {
 
     console.log('NetworkProgressOverlay rendered');
 
-    // Destruc params
-    const { response, loadingMessage } = this.props;
+    // Destruct params
+    const { response, loadingMessage, hasHeaderMargin, onRetryPressed } = this.props;
+
+    if (response.errorMessage && !this.props.onRetryPressed) {
+      // No retry
+      Alert.alert('Error', response.errorMessage);
+      return null;
+    }
 
     // Either loading or error
-    const isVisible = response.isLoading || response.errorMessage;
+    const isVisible =
+      // Loading 
+      (response.isLoading) ||
+      // Error with retry button
+      (onRetryPressed && response.errorMessage);
 
     if (!isVisible) {
       // Render nothing
-      return <View />;
+      return null;
     }
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, hasHeaderMargin && { marginTop: 56 }]}>
         {/*Loading*/}
         {response.isLoading && this.renderLoading(loadingMessage)}
 
@@ -88,7 +97,7 @@ export class NetworkProgressOverlay extends Component<Props, States> {
           color={this.props.colorPrimary}
         />
         <Text style={styles.loadingMessage}>{message}</Text>
-      </View>
+      </View >
     );
   }
 
@@ -96,7 +105,11 @@ export class NetworkProgressOverlay extends Component<Props, States> {
 
     return (
       <View style={styles.vError}>
-        <SimpleLineIcons style={styles.iError} name={'ios-alert'} />
+        <SimpleLineIcons
+          size={25}
+          style={styles.iError}
+          name={'exclamation'}
+        />
         <Text style={styles.tError}>{message}</Text>
 
         {/*Retry button*/}
@@ -104,7 +117,7 @@ export class NetworkProgressOverlay extends Component<Props, States> {
           style={styles.bRetry}
           onPress={this.props.onRetryPressed}
         >
-          <Text>RETRY</Text>
+          <Text style={{ fontWeight: 'bold', color: this.props.colorPrimary }}>RETRY</Text>
         </TouchableOpacity>
       </View>
     );

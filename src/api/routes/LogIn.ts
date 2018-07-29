@@ -25,6 +25,6 @@ export const login = (
 ): AxiosRequest => new AxiosRequest(
 	LOGIN,
 	'POST',
-	'/login',
+	'/logingh',
 	params
 );
