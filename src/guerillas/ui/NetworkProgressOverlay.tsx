@@ -96,7 +96,9 @@ export class NetworkProgressOverlay extends Component<Props> {
           size={'large'}
           color={this.props.colorPrimary}
         />
-        <Text style={styles.loadingMessage}>{message}</Text>
+        <Text style={styles.loadingMessage}>
+          {message}
+        </Text>
       </View >
     );
   }

@@ -14,6 +14,8 @@ export class Data {
 
 export class Guard {
 
+  public static readonly KEY = 'guard';
+
   @Expose({ name: 'name' })
   readonly name: string;
 
