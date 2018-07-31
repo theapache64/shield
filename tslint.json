@@ -23,6 +23,11 @@
       "object-destructuring",
       "array-destructuring"
     ],*/
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration"
+    ],
     "no-default-export": true,
     "trailing-comma": false
   }

@@ -42,6 +42,10 @@ export class App extends Component<Props> {
   public static guard: Guard;
 
   componentWillMount() {
+    Guerilla.getInstance()
+      .setColorPrimary(materialColors.GREEN[500])
+      .setHeaderTheme('light')
+      .setColorPrimaryDark(materialColors.GREEN[700]);
   }
 
   render() {
