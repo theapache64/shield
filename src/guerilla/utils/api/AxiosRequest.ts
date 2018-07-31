@@ -5,6 +5,9 @@ export interface AxiosRequestType {
       method: string,
       url: string,
       data?: {}
+      headers?: {
+        Authorization?: string
+      }
     }
   };
 }
@@ -12,7 +15,8 @@ export interface AxiosRequestType {
 export class AxiosRequest {
 
   public static build =
-    (type: string, method: string, url: string, data?: {}): AxiosRequestType => {
+    (type: string, method: string, url: string, data?: {}, authorization?: string)
+      : AxiosRequestType => {
       return {
         type,
         payload: {
@@ -20,6 +24,9 @@ export class AxiosRequest {
             method,
             url,
             data,
+            headers: {
+              Authorization: authorization
+            }
           },
         },
       };

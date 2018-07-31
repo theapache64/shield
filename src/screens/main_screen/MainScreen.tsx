@@ -1,22 +1,60 @@
-import { default as React, PureComponent } from 'react';
-import { View, Text } from 'react-native';
-import { BaseShieldScreen } from '../base/BaseShieldScreen';
+import { default as React } from 'react';
+import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { LoadHomeResponse } from '../../api/responses/LoadHomeResponse';
+import { loadHome } from '../../api/routes/LodeHome';
+import { App } from '../../App';
+import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
+import { RootReducer } from '../../reducers/RootReducer';
+import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 
 interface Props {
+}
 
+interface DispatchProps {
+  loadHome: () => void;
+  loadHomeReducer: NetworkResponse<LoadHomeResponse>;
 }
 
 interface States {
 
 }
 
-export class MainScreen extends BaseShieldScreen<Props, States> {
-  renderShieldScreen(): React.ReactElement<any> {
+class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & DispatchProps, States> {
+
+  renderNetworkShieldScreen(response: LoadHomeResponse) {
     return (
       <View>
-        <Text>MainScreen</Text>
-      </View >
+        <Header
+          title={'Home'}
+        />
+      </View>
     );
   }
 
+  load(): void {
+    this.props.loadHome();
+  }
+  getResponseType() {
+    return LoadHomeResponse;
+  }
+
+  getResponse(): NetworkResponse<LoadHomeResponse> {
+    return this.props.loadHomeReducer;
+  }
+
+  componentDidMount() {
+    this.load();
+  }
 }
+
+const mapStateToProps = (rootReducer: RootReducer) => ({
+  loadHomeReducer: rootReducer.loadHomeReducer
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadHome: () => dispatch(loadHome(App.guard.apiKey))
+});
+
+export const mainScreen = connect(mapStateToProps, mapDispatchToProps)(MainScreen);

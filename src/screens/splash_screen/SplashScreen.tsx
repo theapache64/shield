@@ -3,9 +3,9 @@ import { Text, View, Animated } from 'react-native';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
-import { materialColors } from '../../guerillas/res/MaterialColors';
-import { StackActionsUtils } from '../../guerillas/utils/StackActionsUtils';
-import { BaseScreenProps } from '../../guerillas/ui/screen/BaseScreen';
+import { materialColors } from '../../guerilla/res/MaterialColors';
+import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
+import { BaseScreenProps } from '../../guerilla/ui/screen/BaseScreen';
 import { connect } from 'react-redux';
 import { RootReducer } from '../../reducers/RootReducer';
 import { Dispatch } from 'redux';
@@ -39,13 +39,11 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
   }
 
   componentDidMount() {
-    console.warn('Loading guard');
     this.props.loadGuard();
 
   }
 
   componentWillReceiveProps(nextProps: Props & DispatchProps) {
-    console.warn('Props are ', nextProps);
 
     if (nextProps.guardReducer.isLoaded) {
 
@@ -63,7 +61,7 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
       // Setting splash timeout
       setTimeout(
         () => {
-          const nextScreen = App.guard ? 'MainScreen' : 'logInScreen';
+          const nextScreen = App.guard ? 'mainScreen' : 'logInScreen';
           StackActionsUtils.resetTo(nextScreen, this.props.navigation);
         },
         SplashScreen.SPLASH_TIMEOUT

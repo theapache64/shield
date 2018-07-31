@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { materialColors } from '../../guerillas/res/MaterialColors';
+import { materialColors } from '../../guerilla/res/MaterialColors';
 
 export const styles = StyleSheet.create({
   vContainer: {

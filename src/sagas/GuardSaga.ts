@@ -2,7 +2,7 @@ import * as Keychain from 'react-native-keychain';
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { Guard } from '../api/responses/LogInResponse';
-import { BaseAction } from '../guerillas/models/BaseAction';
+import { BaseAction } from '../guerilla/models/BaseAction';
 import {
   GuardAction, LOAD_GUARD_FAILURE, LOAD_GUARD_REQUEST, SAVE_GUARD_FAILURE, SAVE_GUARD_REQUEST,
   SAVE_GUARD_SUCCESS,

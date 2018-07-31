@@ -9,7 +9,7 @@ import { BaseStyledScreen } from './BaseStyledScreen';
 
 export abstract class BaseNetworkScreen<NR extends BaseAPIResponse, P = {}, S= {}, NP= {}>
   extends BaseStyledScreen<P, S, NP> {
-  render() {
+  renderStyledScreen() {
 
     let response = null;
 

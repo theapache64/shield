@@ -4,12 +4,12 @@ import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLine
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Guard, LogInResponse } from '../../api/responses/LogInResponse';
-import { NetworkProgressOverlay } from '../../guerillas/ui/NetworkProgressOverlay';
-import { AxiosRequest, AxiosRequestType } from '../../guerillas/utils/api/AxiosRequest';
-import { NetworkResponse } from '../../guerillas/utils/api/NetworkResponse';
-import { InputValidator } from '../../guerillas/utils/InputValidator';
-import { Button } from '../../guerillas/widgets/Button';
-import { Input } from '../../guerillas/widgets/Input';
+import { NetworkProgressOverlay } from '../../guerilla/ui/NetworkProgressOverlay';
+import { AxiosRequest, AxiosRequestType } from '../../guerilla/utils/api/AxiosRequest';
+import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
+import { InputValidator } from '../../guerilla/utils/InputValidator';
+import { Button } from '../../guerilla/widgets/Button';
+import { Input } from '../../guerilla/widgets/Input';
 import { SAVE_GUARD_REQUEST, GuardReducer, LOAD_GUARD_REQUEST } from '../../reducers/GuardReducer';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
@@ -47,7 +47,6 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
     const { guard, error } = this.props.guardReducer;
 
     if (isLoggedIn && guard == null && error == null) {
-      console.warn('Saving guard ');
       this.props.saveGuard(loginResponse.response.data.guard);
       return;
     }

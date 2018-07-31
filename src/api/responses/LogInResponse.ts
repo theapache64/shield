@@ -1,5 +1,5 @@
 import { Type, Expose } from 'class-transformer';
-import { BaseAPIResponse } from '../../guerillas/utils/api/BaseAPIResponse';
+import { BaseAPIResponse } from '../../guerilla/utils/api/BaseAPIResponse';
 
 /**
 * Generated using MockAPI (https://github.com/theapache64/Mock-API) : Wed Jul 25 15:49:03 UTC 2018

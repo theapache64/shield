@@ -1,8 +1,8 @@
-import { NetworkResponse } from '../../guerillas/utils/api/NetworkResponse';
+import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { LogInResponse } from '../responses/LogInResponse';
-import { BaseAction } from '../../guerillas/utils/api/BaseAction';
-import { ResponseManager } from '../../guerillas/utils/api/ResponseManager';
-import { AxiosRequest, AxiosRequestType } from '../../guerillas/utils/api/AxiosRequest';
+import { BaseAction } from '../../guerilla/utils/api/BaseAction';
+import { ResponseManager } from '../../guerilla/utils/api/ResponseManager';
+import { AxiosRequest, AxiosRequestType } from '../../guerilla/utils/api/AxiosRequest';
 
 // Keyword
 const LOGIN = 'LOGIN';

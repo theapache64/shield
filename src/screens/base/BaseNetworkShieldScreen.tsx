@@ -1,32 +1,18 @@
-import { default as React, PureComponent } from 'react';
-import { View, Text } from 'react-native';
-import { BaseNetworkScreen } from '../../guerillas/ui/screen/BaseNetworkScreen';
-import { BaseAPIResponse } from '../../guerillas/utils/api/BaseAPIResponse';
-import { NetworkResponse } from '../../guerillas/utils/api/NetworkResponse';
+import { default as React } from 'react';
+import { BaseNetworkScreen } from '../../guerilla/ui/screen/BaseNetworkScreen';
+import { BaseAPIResponse } from '../../guerilla/utils/api/BaseAPIResponse';
+import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
+import { BaseShieldScreen } from './BaseShieldScreen';
+import { materialColors } from '../../guerilla/res/MaterialColors';
 
 export abstract class BaseNetworkShieldScreen<NR extends BaseAPIResponse, P = {}, S= {}, NP= {}>
   extends BaseNetworkScreen<NR, P, S, NP> {
-
-  load(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  getResponseType() {
-    throw new Error('Method not implemented.');
-  }
+  primaryColor: string = materialColors.GREEN[500];
+  primaryColorDark: string = materialColors.GREEN[700];
 
   renderNetworkScreen(response: NR) {
-    throw new Error('Method not implemented.');
+    return this.renderNetworkShieldScreen(response);
   }
 
-  getResponse(): NetworkResponse<NR> {
-    throw new Error('Method not implemented.');
-  }
-
-  renderStyledScreen(): React.ReactElement<any> {
-    throw new Error('Method not implemented.');
-  }
-
-  primaryColor: string;
-  primaryColorDark: string;
+  abstract renderNetworkShieldScreen(response: NR): any;
 }

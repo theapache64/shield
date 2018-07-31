@@ -1,4 +1,4 @@
-import { BaseAction } from '../guerillas/models/BaseAction';
+import { BaseAction } from '../guerilla/models/BaseAction';
 import { Guard } from '../api/responses/LogInResponse';
 
 const LOAD_GUARD = 'LOAD_GUARD';
@@ -31,7 +31,6 @@ export const guardReducer
     switch (action.type) {
 
       case LOAD_GUARD_SUCCESS:
-        console.warn('Guard loaded');
         return {
           ...state,
           error: null,
@@ -47,7 +46,6 @@ export const guardReducer
         };
 
       case SAVE_GUARD_SUCCESS:
-        console.warn('Guard saved');
         return {
           ...state,
           error: null,
