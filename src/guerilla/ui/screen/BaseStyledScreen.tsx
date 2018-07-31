@@ -2,6 +2,7 @@ import { default as React, ReactElement } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
 import { BaseScreen } from './BaseScreen';
+import { Guerilla } from '../../Guerilla';
 
 const styles = StyleSheet.create({
   vContainer: {
@@ -12,8 +13,9 @@ const styles = StyleSheet.create({
 
 export abstract class BaseStyledScreen<P= {}, S= {}, NP= {}> extends BaseScreen<P, S, NP> {
   abstract renderStyledScreen(): ReactElement<any>;
-  abstract primaryColor: string;
-  abstract primaryColorDark: string;
+  
+  primaryColor: string = Guerilla.getInstance().getColorPrimary();
+  primaryColorDark: string = Guerilla.getInstance().getColorPrimaryDark();
 
   render() {
     return (

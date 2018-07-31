@@ -8,6 +8,7 @@ import { App } from '../../App';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
+import { Header } from '../../guerilla/widgets/header/Header';
 
 interface Props {
 }

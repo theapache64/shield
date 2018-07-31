@@ -42,10 +42,6 @@ export class App extends Component<Props> {
   public static guard: Guard;
 
   componentWillMount() {
-    /* TODO: // Initializing guerilla
-     Guerilla.getInstance()
-       .setColorPrimary(materialColors.GREEN[500])
-       .setColorPrimaryDark(materialColors.GREEN[700]); */
   }
 
   render() {
