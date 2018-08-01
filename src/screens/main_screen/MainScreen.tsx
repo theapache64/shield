@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import { default as React, ReactElement } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -9,6 +9,7 @@ import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Header } from '../../guerilla/widgets/header/Header';
+import { Guerilla } from '../../guerilla/Guerilla';
 
 interface Props {
 }
@@ -24,11 +25,11 @@ interface States {
 
 class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & DispatchProps, States> {
 
-  renderNetworkShieldScreen(response: LoadHomeResponse) {
+  renderNetworkShieldScreen(response: LoadHomeResponse): ReactElement<any> {
     return (
       <View>
         <Header
-          title={'Home'}
+          title={'Home ' + Guerilla.getInstance().getColorPrimary('Home')}
         />
       </View>
     );
@@ -37,7 +38,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   load(): void {
     this.props.loadHome();
   }
-  getResponseType() {
+  getResponseType(): any {
     return LoadHomeResponse;
   }
 
@@ -45,7 +46,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
     return this.props.loadHomeReducer;
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.load();
   }
 }

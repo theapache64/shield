@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Guerilla } from '../../Guerilla';
 
-const guerilla = Guerilla.getInstance();
-
+const colorPrimary = Guerilla.getInstance().getColorPrimary('for style');
 export const styles = StyleSheet.create({
   vHeader: {
     flexDirection: 'row',
@@ -11,15 +10,15 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: 58,
     justifyContent: 'space-between',
-    backgroundColor: guerilla.getColorPrimary()
+    backgroundColor: colorPrimary
   },
   tTitle: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: guerilla.getHeaderTitleColor()
+    color: Guerilla.getInstance().getHeaderTitleColor()
   },
 
   sliRight: {
-    color: 
+
   }
 });

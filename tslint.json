@@ -29,6 +29,12 @@
       "property-declaration"
     ],
     "no-default-export": true,
-    "trailing-comma": false
+    "trailing-comma": false,
+    "member-ordering": [
+      true,
+      {
+        "order": "fields-first"
+      }
+    ]
   }
 }

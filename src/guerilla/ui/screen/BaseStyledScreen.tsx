@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
 });
 
 export abstract class BaseStyledScreen<P= {}, S= {}, NP= {}> extends BaseScreen<P, S, NP> {
-  abstract renderStyledScreen(): ReactElement<any>;
-  
+
   primaryColor: string = Guerilla.getInstance().getColorPrimary();
   primaryColorDark: string = Guerilla.getInstance().getColorPrimaryDark();
+  abstract renderStyledScreen(): ReactElement<any>;
 
-  render() {
+  render(): ReactElement<any> {
     return (
       <View style={styles.vContainer}>
         {Platform.OS === 'android' && this.renderAndroidStatusBar()}

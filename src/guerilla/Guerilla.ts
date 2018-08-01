@@ -3,13 +3,14 @@ import { materialColors } from './res/MaterialColors';
 type Theme = 'light' | 'dark';
 
 export class Guerilla {
-  
+
+  private static instance: Guerilla;
+
   // vars with default values
   private colorPrimary: string = materialColors.BLUE[500];
   private colorPrimaryDark: string = materialColors.BLUE[700];
   private headerTitleColor: string = materialColors.GREY[50];
-
-  private static instance: Guerilla;
+  private headerTheme: Theme = 'light';
 
   public static getInstance(): Guerilla {
     if (this.instance == null) {
@@ -45,6 +46,8 @@ export class Guerilla {
     return this.headerTitleColor;
   }
 
-
-
+  setHeaderTheme(theme: Theme): any {
+    this.headerTheme = theme;
+    return this;
+  }
 }

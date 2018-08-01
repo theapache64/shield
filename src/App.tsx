@@ -9,7 +9,7 @@ import 'reflect-metadata';
  * 
  * @format
  */
-import { Component, default as React } from 'react';
+import { Component, default as React, ReactElement } from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 
@@ -41,14 +41,15 @@ export class App extends Component<Props> {
 
   public static guard: Guard;
 
-  componentWillMount() {
+  componentWillMount(): any {
+
     Guerilla.getInstance()
       .setColorPrimary(materialColors.GREEN[500])
       .setHeaderTheme('light')
       .setColorPrimaryDark(materialColors.GREEN[700]);
   }
 
-  render() {
+  render(): ReactElement<any> {
     return (
       <Provider store={store}>
         <RootStack />
