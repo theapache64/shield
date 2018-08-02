@@ -1,5 +1,5 @@
 import { default as React, PureComponent, ReactElement } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { styles } from './Styles';
 import { Guerilla } from '../../Guerilla';
@@ -27,7 +27,7 @@ export class Header extends PureComponent<Props, States> {
 
     return (
       <View style={[styles.vHeader, this.themedStyle]}>
-      
+
         <Text style={styles.tTitle}>{this.props.title}</Text>
 
         <View style={styles.vIcons}>

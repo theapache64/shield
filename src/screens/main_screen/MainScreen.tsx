@@ -30,19 +30,8 @@ const MI_LOGOUT = 2;
 class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & DispatchProps, States> {
 
   private static readonly MENU_ICONS: MenuIcon[] = [
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_REFRESH, 'login'),
-    new MenuIcon(MI_LOGOUT, 'logout')
+    new MenuIcon(MI_REFRESH, 'refresh'),
+    new MenuIcon(MI_REFRESH, 'logout'),
   ];
 
   renderNetworkShieldScreen(response: LoadHomeResponse): ReactElement<any> {
