@@ -29,7 +29,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
     return (
       <View>
         <Header
-          title={'Home ' + Guerilla.getInstance().getColorPrimary('Home')}
+          title={'Home'}
         />
       </View>
     );

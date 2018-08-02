@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Guerilla } from '../../Guerilla';
 
-const colorPrimary = Guerilla.getInstance().getColorPrimary('for style');
+const colorPrimary = Guerilla.getInstance().getColorPrimary();
 export const styles = StyleSheet.create({
   vHeader: {
     flexDirection: 'row',
