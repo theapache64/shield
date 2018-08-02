@@ -1,4 +1,4 @@
-import { Component, default as React } from 'react';
+import { Component, default as React, ReactElement } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 
@@ -53,7 +53,7 @@ export class NetworkProgressOverlay extends Component<Props> {
     colorPrimary: materialColors.GREY[600],
   };
 
-  render() {
+  render() : ReactElement<any> {
 
     console.log('NetworkProgressOverlay rendered');
 

@@ -1,16 +1,17 @@
 import { default as React, ReactElement } from 'react';
-import { Text, View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { LoadHomeResponse } from '../../api/responses/LoadHomeResponse';
+
+import { Data, LoadHomeResponse } from '../../api/responses/LoadHomeResponse';
 import { loadHome } from '../../api/routes/LodeHome';
 import { App } from '../../App';
+import { MenuIcon } from '../../guerilla/models/MenuIcon';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
+import { Header } from '../../guerilla/widgets/header/Header';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
-import { Header } from '../../guerilla/widgets/header/Header';
-import { Guerilla } from '../../guerilla/Guerilla';
-import { MenuIcon } from '../../guerilla/models/MenuIcon';
+import { Counter } from './widgets/counter/Counter';
 
 interface Props {
 }
@@ -37,12 +38,28 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   renderNetworkShieldScreen(response: LoadHomeResponse): ReactElement<any> {
     return (
       <View>
+        {/* Header */}
         <Header
           title={'Home'}
           onMenuItemPressed={this.onMenuItemPressed}
           menuIcons={MainScreen.MENU_ICONS}
         />
+
+        {response && this.renderContent(response.data)}
+
       </View>
+    );
+  }
+  renderContent(data: Data): any {
+    return (
+      <ScrollView>
+        {/* Counter */}
+        <Counter
+          visitors={data.totalWorkersIn}
+          workers={30}
+        />
+      </ScrollView>
+
     );
   }
 
