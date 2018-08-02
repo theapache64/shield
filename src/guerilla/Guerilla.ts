@@ -7,16 +7,24 @@ export class Guerilla {
   private static instance: Guerilla;
 
   // vars with default values
-  private colorPrimary: string = materialColors.BLUE[500];
-  private colorPrimaryDark: string = materialColors.BLUE[700];
-  private headerTitleColor: string = materialColors.GREY[50];
-  private headerTheme: Theme = 'light';
+  private colorPrimary: string;
+  private colorPrimaryDark: string;
+  private headerTitleColor: string;
+  private headerIconColor: string;
+  private headerIconSize: number;
 
   public static getInstance(): Guerilla {
     if (this.instance == null) {
       this.instance = new Guerilla();
+      this.instance.setHeaderTheme('light');
+      this.instance.colorPrimary = materialColors.BLUE[500];
+      this.instance.colorPrimaryDark = materialColors.BLUE[700];
+      this.instance.headerIconSize = 20;
     }
     return this.instance;
+  }
+  getHeaderIconSize(): number {
+    return this.headerIconSize;
   }
 
   setColorPrimary(colorPrimary: string): Guerilla {
@@ -47,7 +55,13 @@ export class Guerilla {
   }
 
   setHeaderTheme(theme: Theme): any {
-    this.headerTheme = theme;
+    const color = theme === 'light' ? materialColors.GREY[50] : materialColors.GREY[900];
+    this.headerTitleColor = color;
+    this.headerIconColor = color;
     return this;
+  }
+
+  getHeaderIconColor(): string {
+    return this.headerIconColor;
   }
 }

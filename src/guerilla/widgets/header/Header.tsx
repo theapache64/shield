@@ -20,12 +20,16 @@ export class Header extends PureComponent<Props, States> {
 
   render(): ReactElement<any> {
 
+    const guerilla = Guerilla.getInstance();
+
     return (
       <View style={[styles.vHeader, this.themedStyle]}>
         <Text style={styles.tTitle}>{this.props.title}</Text>
 
         <SimpleLineIcons
           name={'logout'}
+          size={guerilla.getHeaderIconSize()}
+          color={Guerilla.getInstance().getHeaderIconColor()}
         />
       </View >
     );

@@ -36,6 +36,10 @@ const RootStack = createStackNavigator(
   }
 );
 
+class GuerillaConfig {
+
+}
+
 interface Props { }
 export class App extends Component<Props> {
 
@@ -44,8 +48,8 @@ export class App extends Component<Props> {
   componentWillMount(): any {
 
     Guerilla.getInstance()
-      .setColorPrimary(materialColors.GREEN[500])
       .setHeaderTheme('light')
+      .setColorPrimary(materialColors.GREEN[500])
       .setColorPrimaryDark(materialColors.GREEN[700]);
   }
 
