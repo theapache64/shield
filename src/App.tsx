@@ -36,24 +36,18 @@ const RootStack = createStackNavigator(
   }
 );
 
-class GuerillaConfig {
-
-}
-
 interface Props { }
 export class App extends Component<Props> {
 
   public static guard: Guard;
 
-  componentWillMount(): any {
+  render(): ReactElement<any> {
 
     Guerilla.getInstance()
       .setHeaderTheme('light')
       .setColorPrimary(materialColors.GREEN[500])
       .setColorPrimaryDark(materialColors.GREEN[700]);
-  }
 
-  render(): ReactElement<any> {
     return (
       <Provider store={store}>
         <RootStack />

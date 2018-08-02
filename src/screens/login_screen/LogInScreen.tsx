@@ -1,20 +1,21 @@
-import { default as React } from 'react';
-import { Keyboard, View, Alert } from 'react-native';
+import { default as React, ReactElement } from 'react';
+import { Alert, Keyboard, View } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
 import { Guard, LogInResponse } from '../../api/responses/LogInResponse';
+import { login, Params } from '../../api/routes/LogIn';
 import { NetworkProgressOverlay } from '../../guerilla/ui/NetworkProgressOverlay';
-import { AxiosRequest, AxiosRequestType } from '../../guerilla/utils/api/AxiosRequest';
+import { AxiosRequestType } from '../../guerilla/utils/api/AxiosRequest';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { InputValidator } from '../../guerilla/utils/InputValidator';
 import { Button } from '../../guerilla/widgets/Button';
 import { Input } from '../../guerilla/widgets/Input';
-import { SAVE_GUARD_REQUEST, GuardReducer, LOAD_GUARD_REQUEST } from '../../reducers/GuardReducer';
+import { GuardReducer, LOAD_GUARD_REQUEST, SAVE_GUARD_REQUEST } from '../../reducers/GuardReducer';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
-import { Params, login } from '../../api/routes/LogIn';
 
 interface DispatchProps {
   login: (params: Params) => AxiosRequestType;
@@ -39,7 +40,7 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
   inputValidator: InputValidator;
 
-  renderShieldScreen() {
+  renderShieldScreen(): ReactElement<any> {
 
     const { loginResponse } = this.props;
 
