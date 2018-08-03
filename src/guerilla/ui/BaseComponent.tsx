@@ -10,5 +10,7 @@ import { PureComponent } from 'react';
  * @template S
  */
 export class BaseComponent<P= {}, S= {}> extends PureComponent<P, S> {
-
+  getProp<K extends keyof P>(key: K): any {
+    return this.props[key];
+  }
 }

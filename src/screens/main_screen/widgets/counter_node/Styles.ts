@@ -5,7 +5,14 @@ export const styles = StyleSheet.create({
   vCounterNode: {
     flex: 1,
     padding: 10,
+    alignItems: 'center',
     margin: 5,
-    backgroundColor: materialColors.GREY[100]
+    backgroundColor: materialColors.GREY[100],
+    borderRadius: 10
+  },
+
+  tCount: {
+    fontWeight: 'bold',
+    fontSize: 35
   }
 });
