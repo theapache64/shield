@@ -1,17 +1,18 @@
 import { default as React, ReactElement } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { Data, LoadHomeResponse } from '../../api/responses/LoadHomeResponse';
 import { loadHome } from '../../api/routes/LodeHome';
 import { App } from '../../App';
-import { ToolbarMenuItem } from '../../guerilla/models/MenuIcon';
+import { ToolbarMenuItem } from '../../guerilla/models/ToolbarMenuItem';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { Header } from '../../guerilla/widgets/header/Header';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Counter } from './widgets/counter/Counter';
+import { GridMenuItemData } from '../../models/GridMenuItemData';
 
 interface Props {
 }
@@ -28,11 +29,19 @@ interface States {
 const MI_REFRESH = 1;
 const MI_LOGOUT = 2;
 
+const GI_ISSUE_NEW_PASS = 3;
+const GI_ISSUED_PASSES = 4;
+
 class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & DispatchProps, States> {
 
-  private static readonly MENU_ICONS: ToolbarMenuItem[] = [
+  private static readonly TOOLBAR_MENU_ITEMS: ToolbarMenuItem[] = [
     new ToolbarMenuItem(MI_REFRESH, 'refresh'),
     new ToolbarMenuItem(MI_LOGOUT, 'logout'),
+  ];
+
+  private static readonly GRID_MENU_ITEMS: GridMenuItemData[] = [
+    new GridMenuItemData(GI_ISSUE_NEW_PASS, 'ISSUE NEW PASS', 'plus'),
+    new GridMenuItemData(GI_ISSUED_PASSES, 'VIEW ISSUED PASSES', 'check'),
   ];
 
   renderNetworkShieldScreen(response: LoadHomeResponse): ReactElement<any> {
@@ -42,7 +51,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         <Header
           title={'Home'}
           onMenuItemPressed={this.onMenuItemPressed}
-          menuIcons={MainScreen.MENU_ICONS}
+          menuIcons={MainScreen.TOOLBAR_MENU_ITEMS}
         />
 
         {response && this.renderContent(response.data)}
@@ -52,7 +61,10 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   }
   renderContent(data: Data): any {
     return (
-      <ScrollView>
+      <View
+        padding={10}
+      >
+
         {/* Counter */}
         <Counter
           visitors={data.totalVisitorsIn}
@@ -60,12 +72,24 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         />
 
         {/* Menu Grid */}
-        
+        <FlatList<GridMenuItemData>
+          data={MainScreen.GRID_MENU_ITEMS}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderGridMenuItem}
+        />
 
-      </ScrollView>
+      </View>
 
     );
   }
+
+  keyExtractor(item: GridMenuItemData, index: number): string {
+    return index.toString();
+  }
+
+  renderGridMenuItem = () => (
+    <Text>OK</Text>
+  )
 
   onMenuItemPressed = (menuItem: ToolbarMenuItem) => {
     switch (menuItem.id) {

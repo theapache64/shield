@@ -19,7 +19,6 @@ export class Counter extends PureComponent<Props, States> {
 
     return (
       <View
-        flex={1}
         flexDirection={'row'}
       >
         {/* Visitors */}

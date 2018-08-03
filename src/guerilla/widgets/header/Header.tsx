@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { styles } from './Styles';
 import { Guerilla } from '../../Guerilla';
-import { ToolbarMenuItem } from '../../models/MenuIcon';
+import { ToolbarMenuItem } from '../../models/ToolbarMenuItem';
 
 interface Props {
   title?: string;
