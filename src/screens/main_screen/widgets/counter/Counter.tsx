@@ -1,7 +1,8 @@
 import { default as React, PureComponent, ReactElement } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { GrammarUtils } from '../../../../guerilla/utils/GrammarUtils';
 import { CounterNode } from '../counter_node/CounterNode';
+import { styles } from './Styles';
 
 interface Props {
   visitors: number;
@@ -18,24 +19,29 @@ export class Counter extends PureComponent<Props, States> {
     const { workers, visitors } = this.props;
 
     return (
-      <View
-        flexDirection={'row'}
-      >
-        {/* Visitors */}
-        <CounterNode
-          icon={'people'}
-          count={visitors}
-          title={`${GrammarUtils.getProper(visitors, 'visitor')} in`}
-        />
+      <View>
 
-        {/* Workers */}
-        <CounterNode
-          icon={'wrench'}
-          count={workers}
-          title={`${GrammarUtils.getProper(workers, 'worker')} in`}
-        />
+        <Text style={styles.tStatistics}>STATISTICS</Text>
 
-      </View >
+        <View
+          flexDirection={'row'}
+        >
+          {/* Visitors */}
+          <CounterNode
+            icon={'people'}
+            count={visitors}
+            title={`${GrammarUtils.getProper(visitors, 'visitor')} in`}
+          />
+
+          {/* Workers */}
+          <CounterNode
+            icon={'wrench'}
+            count={workers}
+            title={`${GrammarUtils.getProper(workers, 'worker')} in`}
+          />
+
+        </View >
+      </View>
     );
   }
 }

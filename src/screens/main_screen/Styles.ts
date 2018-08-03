@@ -11,6 +11,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: materialColors.GREY[50],
     elevation: 4,
-    borderRadius: 10
+    borderRadius: 5
   }
 });
