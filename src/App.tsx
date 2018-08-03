@@ -21,6 +21,7 @@ import { store } from './Store';
 import { Guard } from './api/responses/LogInResponse';
 import { Guerilla } from './guerilla/Guerilla';
 import { materialColors } from './guerilla/res/MaterialColors';
+import { Text } from 'react-native';
 
 const RootStack = createStackNavigator(
   {
@@ -40,6 +41,11 @@ interface Props { }
 export class App extends Component<Props> {
 
   public static guard: Guard;
+  constructor(props: Props) {
+    super(props);
+
+    Text.defaultProps.style = { color: 'red' };
+  }
 
   render(): ReactElement<any> {
 
