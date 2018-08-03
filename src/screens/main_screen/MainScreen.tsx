@@ -32,7 +32,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
 
   private static readonly MENU_ICONS: MenuIcon[] = [
     new MenuIcon(MI_REFRESH, 'refresh'),
-    new MenuIcon(MI_REFRESH, 'logout'),
+    new MenuIcon(MI_LOGOUT, 'logout'),
   ];
 
   renderNetworkShieldScreen(response: LoadHomeResponse): ReactElement<any> {
@@ -55,8 +55,8 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
       <ScrollView>
         {/* Counter */}
         <Counter
-          visitors={data.totalWorkersIn}
-          workers={30}
+          visitors={data.totalVisitorsIn}
+          workers={data.totalWorkersIn}
         />
       </ScrollView>
 
@@ -64,7 +64,13 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   }
 
   onMenuItemPressed = (menuItem: MenuIcon) => {
-    console.warn(menuItem.icon);
+    switch (menuItem.id) {
+      case MI_REFRESH:
+        this.load();
+        break;
+      case MI_LOGOUT:
+        break;
+    }
   }
 
   load(): void {

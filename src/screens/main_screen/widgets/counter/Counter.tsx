@@ -24,12 +24,14 @@ export class Counter extends PureComponent<Props, States> {
       >
         {/* Visitors */}
         <CounterNode
+          icon={'people'}
           count={visitors}
           title={`${GrammarUtils.getProper(visitors, 'visitor')} in`}
         />
 
         {/* Workers */}
         <CounterNode
+          icon={'wrench'}
           count={workers}
           title={`${GrammarUtils.getProper(workers, 'worker')} in`}
         />
