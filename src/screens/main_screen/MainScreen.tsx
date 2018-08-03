@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import { Data, LoadHomeResponse } from '../../api/responses/LoadHomeResponse';
 import { loadHome } from '../../api/routes/LodeHome';
 import { App } from '../../App';
-import { MenuIcon } from '../../guerilla/models/MenuIcon';
+import { ToolbarMenuItem } from '../../guerilla/models/MenuIcon';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { Header } from '../../guerilla/widgets/header/Header';
 import { RootReducer } from '../../reducers/RootReducer';
@@ -30,9 +30,9 @@ const MI_LOGOUT = 2;
 
 class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & DispatchProps, States> {
 
-  private static readonly MENU_ICONS: MenuIcon[] = [
-    new MenuIcon(MI_REFRESH, 'refresh'),
-    new MenuIcon(MI_LOGOUT, 'logout'),
+  private static readonly MENU_ICONS: ToolbarMenuItem[] = [
+    new ToolbarMenuItem(MI_REFRESH, 'refresh'),
+    new ToolbarMenuItem(MI_LOGOUT, 'logout'),
   ];
 
   renderNetworkShieldScreen(response: LoadHomeResponse): ReactElement<any> {
@@ -58,12 +58,16 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
           visitors={data.totalVisitorsIn}
           workers={data.totalWorkersIn}
         />
+
+        {/* Menu Grid */}
+        
+
       </ScrollView>
 
     );
   }
 
-  onMenuItemPressed = (menuItem: MenuIcon) => {
+  onMenuItemPressed = (menuItem: ToolbarMenuItem) => {
     switch (menuItem.id) {
       case MI_REFRESH:
         this.load();

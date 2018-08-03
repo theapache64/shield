@@ -3,12 +3,12 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { styles } from './Styles';
 import { Guerilla } from '../../Guerilla';
-import { MenuIcon } from '../../models/MenuIcon';
+import { ToolbarMenuItem } from '../../models/MenuIcon';
 
 interface Props {
   title?: string;
-  menuIcons?: MenuIcon[];
-  onMenuItemPressed?: (menuItem: MenuIcon) => void;
+  menuIcons?: ToolbarMenuItem[];
+  onMenuItemPressed?: (menuItem: ToolbarMenuItem) => void;
 }
 
 interface States {
@@ -37,10 +37,10 @@ export class Header extends PureComponent<Props, States> {
     );
   }
 
-  renderMenuIcons(menuIcons: MenuIcon[]): any {
+  renderMenuIcons(menuIcons: ToolbarMenuItem[]): any {
     const guerilla = Guerilla.getInstance();
     // Rendering menu icons
-    return menuIcons.map((item: MenuIcon, index: number) => (
+    return menuIcons.map((item: ToolbarMenuItem, index: number) => (
       <TouchableOpacity
         style={{ padding: 13, marginRight: 5 }}
         key={index}
