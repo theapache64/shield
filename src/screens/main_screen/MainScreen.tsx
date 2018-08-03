@@ -1,5 +1,5 @@
 import { default as React, ReactElement } from 'react';
-import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native';
+import { FlatList, ListRenderItemInfo, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -9,10 +9,12 @@ import { App } from '../../App';
 import { ToolbarMenuItem } from '../../guerilla/models/ToolbarMenuItem';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { Header } from '../../guerilla/widgets/header/Header';
+import { GridMenuItemData } from '../../models/GridMenuItemData';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Counter } from './widgets/counter/Counter';
-import { GridMenuItemData } from '../../models/GridMenuItemData';
+import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
+import { styles } from './Styles';
 
 interface Props {
 }
@@ -75,6 +77,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         <FlatList<GridMenuItemData>
           data={MainScreen.GRID_MENU_ITEMS}
           keyExtractor={this.keyExtractor}
+          numColumns={2}
           renderItem={this.renderGridMenuItem}
         />
 
@@ -87,8 +90,17 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
     return index.toString();
   }
 
-  renderGridMenuItem = () => (
-    <Text>OK</Text>
+  renderGridMenuItem = (item: ListRenderItemInfo<GridMenuItemData>) => (
+    <TouchableOpacity style={styles.toGridMenuItem}>
+      <View style={styles.vGridMenuItem}>
+        <SimpleLineIcons
+          name={item.item.icon}
+          size={35}
+          style={{ marginBottom: 10 }}
+        />
+        <Text>{item.item.title}</Text>
+      </View>
+    </TouchableOpacity>
   )
 
   onMenuItemPressed = (menuItem: ToolbarMenuItem) => {
