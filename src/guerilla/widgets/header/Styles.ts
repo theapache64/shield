@@ -13,7 +13,6 @@ export const styles = StyleSheet.create({
   },
   tTitle: {
     marginLeft: 10,
-    fontFamily: 'Roboto-Medium',
     fontSize: 16,
     color: Guerilla.getInstance().getHeaderTitleColor()
   },

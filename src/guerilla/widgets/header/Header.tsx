@@ -4,6 +4,7 @@ import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLine
 import { styles } from './Styles';
 import { Guerilla } from '../../Guerilla';
 import { ToolbarMenuItem } from '../../models/ToolbarMenuItem';
+import { GuerillaText } from '../guerialla_text/GuerillaText';
 
 interface Props {
   title?: string;
@@ -28,7 +29,7 @@ export class Header extends PureComponent<Props, States> {
     return (
       <View style={[styles.vHeader, this.themedStyle]}>
 
-        <Text style={styles.tTitle}>{this.props.title}</Text>
+        <GuerillaText style={styles.tTitle}>{this.props.title}</GuerillaText>
 
         <View style={styles.vIcons}>
           {menuIcons && this.renderMenuIcons(menuIcons)}

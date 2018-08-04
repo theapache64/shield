@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { GrammarUtils } from '../../../../guerilla/utils/GrammarUtils';
 import { CounterNode } from '../counter_node/CounterNode';
 import { styles } from './Styles';
+import { GuerillaText } from '../../../../guerilla/widgets/guerialla_text/GuerillaText';
 
 interface Props {
   visitors: number;
@@ -21,7 +22,12 @@ export class Counter extends PureComponent<Props, States> {
     return (
       <View>
 
-        <Text style={styles.tStatistics}>STATISTICS</Text>
+        <GuerillaText
+          style={styles.tStatistics}
+          fontFamily={'Roboto-Medium'}
+        >
+          STATISTICS
+        </GuerillaText>
 
         <View
           flexDirection={'row'}

@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
   },
 
   tCount: {
-    fontWeight: 'bold',
     fontSize: 35
   }
   

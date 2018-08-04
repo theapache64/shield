@@ -15,6 +15,9 @@ import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Counter } from './widgets/counter/Counter';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { styles } from './Styles';
+import { GuerillaText } from '../../guerilla/widgets/guerialla_text/GuerillaText';
+import { NumberUtils } from '../../guerilla/utils/NumberUtils';
+import { materialColors } from '../../guerilla/res/MaterialColors';
 
 interface Props {
 }
@@ -28,11 +31,15 @@ interface States {
 
 }
 
-const MI_REFRESH = 1;
-const MI_LOGOUT = 2;
+const MI_REFRESH = NumberUtils.getRandomId();
+const MI_LOGOUT = NumberUtils.getRandomId();
 
-const GI_ISSUE_NEW_PASS = 3;
-const GI_ISSUED_PASSES = 4;
+const GI_ISSUE_NEW_PASS = NumberUtils.getRandomId();
+const GI_ISSUED_PASSES = NumberUtils.getRandomId();
+const GI_MY_PROFILE = NumberUtils.getRandomId();
+const GI_GUARDS = NumberUtils.getRandomId();
+const GI_LOGOUT = NumberUtils.getRandomId();
+const GI_OTHER = NumberUtils.getRandomId();
 
 class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & DispatchProps, States> {
 
@@ -44,11 +51,15 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   private static readonly GRID_MENU_ITEMS: GridMenuItemData[] = [
     new GridMenuItemData(GI_ISSUE_NEW_PASS, 'ISSUE NEW PASS', 'plus'),
     new GridMenuItemData(GI_ISSUED_PASSES, 'VIEW ISSUED PASSES', 'check'),
+    new GridMenuItemData(GI_MY_PROFILE, 'MY PROFILE', 'user'),
+    new GridMenuItemData(GI_GUARDS, 'GUARDS', 'mustache'),
+    new GridMenuItemData(GI_OTHER, 'OTHER', 'tag'),
+    new GridMenuItemData(GI_LOGOUT, 'LOGOUT', 'logout'),
   ];
 
   renderNetworkShieldScreen(response: LoadHomeResponse): ReactElement<any> {
     return (
-      <View>
+      <View flex={1}>
         {/* Header */}
         <Header
           title={'Home'}
@@ -63,26 +74,21 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   }
   renderContent(data: Data): any {
     return (
-      <View
-        padding={10}
-      >
-
-        {/* Counter */}
-        <Counter
-          visitors={data.totalVisitorsIn}
-          workers={data.totalWorkersIn}
-        />
-
-        {/* Menu Grid */}
-        <FlatList<GridMenuItemData>
-          data={MainScreen.GRID_MENU_ITEMS}
-          keyExtractor={this.keyExtractor}
-          numColumns={2}
-          renderItem={this.renderGridMenuItem}
-        />
-
-      </View>
-
+      < FlatList<GridMenuItemData>
+        ListHeaderComponent={this.getHeader(data)}
+        data={MainScreen.GRID_MENU_ITEMS}
+        keyExtractor={this.keyExtractor}
+        numColumns={2}
+        renderItem={this.renderGridMenuItem}
+      />
+    );
+  }
+  getHeader(data: Data): any {
+    return (
+      <Counter
+        visitors={data.totalVisitorsIn}
+        workers={data.totalWorkersIn}
+      />
     );
   }
 
@@ -95,10 +101,11 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
       <View style={styles.vGridMenuItem}>
         <SimpleLineIcons
           name={item.item.icon}
-          size={35}
-          style={{ marginBottom: 10 }}
+          size={37}
+          color={materialColors.GREY[500]}
+          style={{ margin: 20 }}
         />
-        <Text>{item.item.title}</Text>
+        <GuerillaText>{item.item.title}</GuerillaText>
       </View>
     </TouchableOpacity>
   )

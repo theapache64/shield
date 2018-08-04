@@ -4,6 +4,7 @@ import { styles } from './Styles';
 import { BaseComponent } from '../../../../guerilla/ui/BaseComponent';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { materialColors } from '../../../../guerilla/res/MaterialColors';
+import { GuerillaText } from '../../../../guerilla/widgets/guerialla_text/GuerillaText';
 
 interface Props {
   count: number;
@@ -33,7 +34,12 @@ export class CounterNode extends BaseComponent<Props, States> {
           />
 
           {/* Count */}
-          <Text style={styles.tCount}>{this.getProp('count')}</Text>
+          <GuerillaText
+            fontFamily={'Roboto-Regular'}
+            style={styles.tCount}
+          >
+            {this.getProp('count')}
+          </GuerillaText>
         </View>
 
         {/* Title */}

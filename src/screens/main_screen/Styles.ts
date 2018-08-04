@@ -1,5 +1,5 @@
-import { StyleSheet } from '../../guerilla/utils/StyleSheet';
 import { materialColors } from '../../guerilla/res/MaterialColors';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   toGridMenuItem: {
