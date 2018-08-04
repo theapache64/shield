@@ -1,16 +1,15 @@
 import { default as React } from 'react';
-import { Text, View, Animated } from 'react-native';
+import { Animated } from 'react-native';
+import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { materialColors } from '../../guerilla/res/MaterialColors';
+import { BaseScreenProps } from '../../guerilla/ui/screen/BaseScreen';
+import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
+import { GuardReducer, LOAD_GUARD_REQUEST } from '../../reducers/GuardReducer';
+import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
-import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
-import { materialColors } from '../../guerilla/res/MaterialColors';
-import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
-import { BaseScreenProps } from '../../guerilla/ui/screen/BaseScreen';
-import { connect } from 'react-redux';
-import { RootReducer } from '../../reducers/RootReducer';
-import { Dispatch } from 'redux';
-import { GuardReducer, LOAD_GUARD_REQUEST, guardReducer } from '../../reducers/GuardReducer';
-import { App } from '../../App';
 
 interface DispatchProps {
   guardReducer: GuardReducer;
@@ -38,16 +37,14 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.props.loadGuard();
 
   }
 
-  componentWillReceiveProps(nextProps: Props & DispatchProps) {
+  componentWillReceiveProps(nextProps: Props & DispatchProps): void {
 
     if (nextProps.guardReducer.isLoaded) {
-
-      App.guard = nextProps.guardReducer.guard;
 
       // Starting animation
       Animated.timing(
@@ -61,7 +58,7 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
       // Setting splash timeout
       setTimeout(
         () => {
-          const nextScreen = App.guard ? 'mainScreen' : 'logInScreen';
+          const nextScreen = this.props.guardReducer.guard ? 'mainScreen' : 'logInScreen';
           StackActionsUtils.resetTo(nextScreen, this.props.navigation);
         },
         SplashScreen.SPLASH_TIMEOUT

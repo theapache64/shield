@@ -42,7 +42,6 @@ const RootStack = createStackNavigator(
 interface Props { }
 export class App extends Component<Props> {
 
-  public static guard: Guard;
   constructor(props: Props) {
     super(props);
 

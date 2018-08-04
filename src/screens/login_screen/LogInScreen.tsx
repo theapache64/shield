@@ -17,6 +17,7 @@ import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
 import { Guerilla } from '../../guerilla/Guerilla';
+import { App } from '../../App';
 
 interface DispatchProps {
   login: (params: Params) => AxiosRequestType;
@@ -42,25 +43,6 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
   inputValidator: InputValidator;
 
   renderShieldScreen(): ReactElement<any> {
-
-    const { loginResponse } = this.props;
-
-    const isLoggedIn = loginResponse.isSuccess && !loginResponse.response.error;
-    const { guard, error } = this.props.guardReducer;
-
-    if (isLoggedIn && guard == null && error == null) {
-      this.props.saveGuard(loginResponse.response.data.guard);
-      return;
-    }
-
-    if (guard && !error) {
-      Alert.alert('Session saved', guard.name);
-      return;
-    }
-
-    if (error) {
-      Alert.alert('Error while saving guard', error);
-    }
 
     return (
       <View flex={1} backgroundColor={Guerilla.getInstance().getColorPrimary()}>

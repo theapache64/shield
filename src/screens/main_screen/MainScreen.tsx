@@ -1,5 +1,5 @@
 import { default as React, ReactElement } from 'react';
-import { FlatList, ListRenderItemInfo, View } from 'react-native';
+import { FlatList, ListRenderItemInfo, View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -22,7 +22,7 @@ interface Props {
 }
 
 interface DispatchProps {
-  loadHome: () => void;
+  loadHome: (apiKey: string) => void;
   loadHomeReducer: NetworkResponse<LoadHomeResponse>;
   guardReducer: GuardReducer;
   clearGuard: () => void;
@@ -76,6 +76,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
 
   componentWillReceiveProps(nextProps: Props & DispatchProps): void {
     if (nextProps.guardReducer.guard === null) {
+      console.warn('Moving to login');
       StackActionsUtils.resetTo('logInScreen', this.props.navigation);
     }
   }
@@ -105,23 +106,41 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   }
 
   renderGridMenuItem = (item: ListRenderItemInfo<GridMenuItemData>) => (
-    <GridMenuItem data={item.item} />
+    <GridMenuItem
+      onMenuItemPressed={this.onGridMenuItemPressed}
+      data={item.item}
+    />
   )
+
+  onGridMenuItemPressed = (item: GridMenuItemData) => {
+    switch (item.id) {
+      case GI_LOGOUT:
+        this.props.clearGuard();
+        return;
+
+      default:
+        Alert.alert('Coming Soon!', 'This is a future feature');
+    }
+  }
 
   onMenuItemPressed = (menuItem: ToolbarMenuItem) => {
     switch (menuItem.id) {
+
       case MI_REFRESH:
         this.load();
         break;
+
       case MI_LOGOUT:
-        console.warn('Logging out');
         this.props.clearGuard();
         break;
+
     }
   }
 
   load(): void {
-    this.props.loadHome();
+    this.props.loadHome(
+      this.props.guardReducer.guard.apiKey
+    );
   }
   getResponseType(): any {
     return LoadHomeResponse;
@@ -142,7 +161,7 @@ const mapStateToProps = (rootReducer: RootReducer) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadHome: () => dispatch(loadHome(App.guard.apiKey)),
+  loadHome: (apiKey: string) => dispatch(loadHome(apiKey)),
   clearGuard: () => dispatch({ type: CLEAR_GUARD_REQUEST })
 });
 

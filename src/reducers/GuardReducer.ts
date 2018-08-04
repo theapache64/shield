@@ -20,6 +20,7 @@ export interface GuardReducer {
   isLoaded: boolean;
   guard: Guard;
   error: string;
+  isLoggedOut: boolean;
 }
 
 export interface GuardAction {
@@ -29,7 +30,8 @@ export interface GuardAction {
 const initialState: GuardReducer = {
   isLoaded: false,
   guard: null,
-  error: null
+  error: null,
+  isLoggedOut: false,
 };
 export const guardReducer
   = (state: GuardReducer = initialState, action: BaseAction<GuardAction>): GuardReducer => {
@@ -41,11 +43,13 @@ export const guardReducer
           ...state,
           error: null,
           isLoaded: true,
+          isLoggedOut: false,
           guard: action.payload.guard
         };
 
       case LOAD_GUARD_FAILURE:
         return {
+          ...state,
           error: null,
           isLoaded: true,
           guard: null
@@ -55,14 +59,18 @@ export const guardReducer
       case SAVE_GUARD_SUCCESS:
         return {
           ...state,
+          isLoaded: true,
           error: null,
+          isLoggedOut: false,
           guard: action.payload.guard
         };
 
       case SAVE_GUARD_FAILURE:
         return {
           ...state,
+          isLoaded: true,
           guard: null,
+          isLoggedOut: true,
           error: 'Failed to save guard'
         };
 
@@ -70,6 +78,7 @@ export const guardReducer
       case CLEAR_GUARD_SUCCESS:
         return {
           ...state,
+          isLoaded: true,
           error: null,
           guard: null
         };
@@ -77,6 +86,7 @@ export const guardReducer
       case CLEAR_GUARD_FAILURE:
         return {
           ...state,
+          isLoaded: true,
           guard: null,
           error: 'Failed to clear guard'
         };

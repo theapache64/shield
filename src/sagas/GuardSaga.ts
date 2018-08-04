@@ -87,7 +87,6 @@ function* clearGuard(): any {
   try {
     const result = yield Keychain.resetInternetCredentials(Guard.KEY);
     if (result) {
-      App.guard = null;
       yield put({ type: CLEAR_GUARD_SUCCESS });
     } else {
       yield put({ type: CLEAR_GUARD_FAILURE });

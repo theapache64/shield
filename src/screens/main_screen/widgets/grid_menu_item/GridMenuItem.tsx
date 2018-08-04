@@ -8,6 +8,7 @@ import { GuerillaText } from '../../../../guerilla/widgets/guerialla_text/Gueril
 
 interface Props {
   data: GridMenuItemData;
+  onMenuItemPressed: (item: GridMenuItemData) => void;
 }
 
 interface States {
@@ -18,7 +19,10 @@ export class GridMenuItem extends PureComponent<Props, States> {
   render(): ReactElement<any> {
     const { data } = this.props;
     return (
-      <TouchableOpacity style={styles.toGridMenuItem}>
+      <TouchableOpacity
+        onPress={this.props.onMenuItemPressed.bind(null, data)}
+        style={styles.toGridMenuItem}
+      >
         <View style={styles.vGridMenuItem}>
           <SimpleLineIcons
             name={data.icon}
