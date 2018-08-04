@@ -1,6 +1,7 @@
-import { Component, default as React } from 'react';
+import { Component, default as React, ReactElement } from 'react';
 import { Text, TextStyle, TouchableOpacity, TouchableOpacityProps, StyleSheet } from 'react-native';
 import { materialColors } from '../res/MaterialColors';
+import { GuerillaText } from './guerialla_text/GuerillaText';
 
 interface Props extends TouchableOpacityProps {
   title: string;
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
 });
 
 export class Button extends Component<Props, States> {
-  render() {
+  render(): ReactElement<Props> {
 
     const {
       style,
@@ -39,7 +40,7 @@ export class Button extends Component<Props, States> {
 
     return (
       <TouchableOpacity style={[styles.toContainer, style]} {...otherProps}>
-        <Text style={[styles.tTitle, this.props.textStyle]}>{title}</Text>
+        <GuerillaText style={[styles.tTitle, this.props.textStyle]}>{title}</GuerillaText>
       </TouchableOpacity >
     );
   }

@@ -16,6 +16,7 @@ import { GuardReducer, LOAD_GUARD_REQUEST, SAVE_GUARD_REQUEST } from '../../redu
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
+import { Guerilla } from '../../guerilla/Guerilla';
 
 interface DispatchProps {
   login: (params: Params) => AxiosRequestType;
@@ -62,7 +63,7 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
     }
 
     return (
-      <View flex={1}>
+      <View flex={1} backgroundColor={Guerilla.getInstance().getColorPrimary()}>
         <View style={styles.vContainer}>
 
           <SimpleLineIcons
@@ -96,7 +97,6 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
         </View>
 
         <NetworkProgressOverlay
-          colorPrimary={this.primaryColor}
           loadingMessage={'Authenticating...'}
           response={this.props.loginResponse}
         />

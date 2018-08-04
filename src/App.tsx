@@ -22,12 +22,14 @@ import { Guard } from './api/responses/LogInResponse';
 import { Guerilla } from './guerilla/Guerilla';
 import { materialColors } from './guerilla/res/MaterialColors';
 import { Text } from 'react-native';
+import { NewPassScreen } from './screens/new_pass_screen/NewPassScreen';
 
 const RootStack = createStackNavigator(
   {
     splashScreen,
     mainScreen,
-    logInScreen
+    logInScreen,
+    NewPassScreen
   },
   {
     initialRouteName: 'splashScreen',

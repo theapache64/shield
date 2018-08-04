@@ -1,23 +1,30 @@
 import * as Keychain from 'react-native-keychain';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, ForkEffect, CallEffect } from 'redux-saga/effects';
 
 import { Guard } from '../api/responses/LogInResponse';
 import { BaseAction } from '../guerilla/models/BaseAction';
 import {
   GuardAction, LOAD_GUARD_FAILURE, LOAD_GUARD_REQUEST, SAVE_GUARD_FAILURE, SAVE_GUARD_REQUEST,
   SAVE_GUARD_SUCCESS,
-  LOAD_GUARD_SUCCESS
+  LOAD_GUARD_SUCCESS,
+  CLEAR_GUARD_REQUEST,
+  CLEAR_GUARD_SUCCESS,
+  CLEAR_GUARD_FAILURE
 } from '../reducers/GuardReducer';
+import { App } from '../App';
 
-export function* saveGuardWatcherSaga() {
+// ################################
+// SAVE GUARD
+// ################################
+export function* saveGuardWatcherSaga(): any {
   yield takeLatest(SAVE_GUARD_REQUEST, saveGuardWorkerSaga);
 }
 
-function* saveGuardWorkerSaga(action?: BaseAction<GuardAction>) {
+function* saveGuardWorkerSaga(action?: BaseAction<GuardAction>): any {
   yield call(saveGuard, action.payload.guard);
 }
 
-function* saveGuard(guard: Guard) {
+function* saveGuard(guard: Guard): any {
 
   try {
 
@@ -34,19 +41,23 @@ function* saveGuard(guard: Guard) {
   }
 }
 
-export function* loadGuardWatcherSaga() {
+// ################################
+// LOAD GUARD
+// ################################
+
+export function* loadGuardWatcherSaga(): any {
   console.log('loadGuardWatcherSaga registered');
 
   yield takeLatest(LOAD_GUARD_REQUEST, loadGuardWorkerSaga);
 }
 
-export function* loadGuardWorkerSaga() {
+export function* loadGuardWorkerSaga(): any {
   console.log('loadGuardWorkerSaga registered');
 
   yield call(loadGuard);
 }
 
-function* loadGuard() {
+function* loadGuard(): any {
   try {
     const result = yield Keychain.getInternetCredentials(Guard.KEY);
     if (result) {
@@ -57,5 +68,32 @@ function* loadGuard() {
   } catch (error) {
     console.log('Error loading guard ', error);
     yield put({ type: LOAD_GUARD_FAILURE, });
+  }
+}
+
+// ################################
+// CLEAR GUARD
+// ################################
+
+export function* clearGuardWatcherSaga(): any {
+  yield takeLatest(CLEAR_GUARD_REQUEST, clearGuardWorkerSaga);
+}
+
+function* clearGuardWorkerSaga(): any {
+  yield call(clearGuard);
+}
+
+function* clearGuard(): any {
+  try {
+    const result = yield Keychain.resetInternetCredentials(Guard.KEY);
+    if (result) {
+      App.guard = null;
+      yield put({ type: CLEAR_GUARD_SUCCESS });
+    } else {
+      yield put({ type: CLEAR_GUARD_FAILURE });
+    }
+  } catch (error) {
+    console.warn('ERROR : ', error);
+    yield put({ type: CLEAR_GUARD_FAILURE });
   }
 }

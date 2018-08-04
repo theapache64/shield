@@ -4,11 +4,12 @@ import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLine
 
 import { materialColors } from '../res/MaterialColors';
 import { NetworkResponse } from '../utils/api/NetworkResponse';
+import { GuerillaText } from '../widgets/guerialla_text/GuerillaText';
+import { Guerilla } from '../Guerilla';
 
 interface Props {
   response: NetworkResponse<any>;
   loadingMessage?: string;
-  colorPrimary: string;
   onRetryPressed?: () => void;
   hasHeaderMargin?: boolean;
 }
@@ -50,10 +51,17 @@ export class NetworkProgressOverlay extends Component<Props> {
   static defaultProps = {
     loadingMessage: 'Loading ...',
     headerMargin: false,
-    colorPrimary: materialColors.GREY[600],
   };
 
-  render() : ReactElement<any> {
+  colorPrimary: string;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.colorPrimary = Guerilla.getInstance().getColorPrimary();
+  }
+
+  render(): ReactElement<any> {
 
     console.log('NetworkProgressOverlay rendered');
 
@@ -94,11 +102,11 @@ export class NetworkProgressOverlay extends Component<Props> {
       <View>
         <ActivityIndicator
           size={'large'}
-          color={this.props.colorPrimary}
+          color={this.colorPrimary}
         />
-        <Text style={styles.loadingMessage}>
+        <GuerillaText style={styles.loadingMessage}>
           {message}
-        </Text>
+        </GuerillaText>
       </View >
     );
   }
@@ -112,14 +120,16 @@ export class NetworkProgressOverlay extends Component<Props> {
           style={styles.iError}
           name={'exclamation'}
         />
-        <Text style={styles.tError}>{message}</Text>
+        <GuerillaText style={styles.tError}>{message}</GuerillaText>
 
         {/*Retry button*/}
         <TouchableOpacity
           style={styles.bRetry}
           onPress={this.props.onRetryPressed}
         >
-          <Text style={{ fontWeight: 'bold', color: this.props.colorPrimary }}>RETRY</Text>
+          <GuerillaText style={{ color: this.colorPrimary }}>
+            RETRY
+          </GuerillaText>
         </TouchableOpacity>
       </View>
     );

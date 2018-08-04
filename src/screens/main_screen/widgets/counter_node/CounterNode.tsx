@@ -43,7 +43,9 @@ export class CounterNode extends BaseComponent<Props, States> {
         </View>
 
         {/* Title */}
-        <Text>{this.getProp('title')}</Text>
+        <GuerillaText>
+          {this.getProp('title')}
+        </GuerillaText>
       </View >
     );
   }

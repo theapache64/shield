@@ -1,9 +1,10 @@
 import { all } from 'redux-saga/effects';
-import { saveGuardWatcherSaga, loadGuardWatcherSaga } from './GuardSaga';
+import { saveGuardWatcherSaga, loadGuardWatcherSaga, clearGuardWatcherSaga } from './GuardSaga';
 
-export function* rootSaga() {
+export function* rootSaga(): any {
   yield all([
     saveGuardWatcherSaga(),
-    loadGuardWatcherSaga()
+    loadGuardWatcherSaga(),
+    clearGuardWatcherSaga()
   ]);
 }

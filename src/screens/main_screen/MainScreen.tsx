@@ -15,6 +15,8 @@ import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Counter } from './widgets/counter/Counter';
 import { GridMenuItem } from './widgets/grid_menu_item/GridMenuItem';
+import { CLEAR_GUARD_REQUEST, GuardReducer } from '../../reducers/GuardReducer';
+import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
 
 interface Props {
 }
@@ -22,6 +24,8 @@ interface Props {
 interface DispatchProps {
   loadHome: () => void;
   loadHomeReducer: NetworkResponse<LoadHomeResponse>;
+  guardReducer: GuardReducer;
+  clearGuard: () => void;
 }
 
 interface States {
@@ -69,9 +73,16 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
       </View>
     );
   }
+
+  componentWillReceiveProps(nextProps: Props & DispatchProps): void {
+    if (nextProps.guardReducer.guard === null) {
+      StackActionsUtils.resetTo('logInScreen', this.props.navigation);
+    }
+  }
+
   renderContent(data: Data): any {
     return (
-      < FlatList<GridMenuItemData>
+      <FlatList<GridMenuItemData>
         ListHeaderComponent={this.getHeader(data)}
         data={MainScreen.GRID_MENU_ITEMS}
         keyExtractor={this.keyExtractor}
@@ -103,6 +114,8 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         this.load();
         break;
       case MI_LOGOUT:
+        console.warn('Logging out');
+        this.props.clearGuard();
         break;
     }
   }
@@ -124,11 +137,13 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
 }
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
-  loadHomeReducer: rootReducer.loadHomeReducer
+  loadHomeReducer: rootReducer.loadHomeReducer,
+  guardReducer: rootReducer.guardReducer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadHome: () => dispatch(loadHome(App.guard.apiKey))
+  loadHome: () => dispatch(loadHome(App.guard.apiKey)),
+  clearGuard: () => dispatch({ type: CLEAR_GUARD_REQUEST })
 });
 
 export const mainScreen = connect(mapStateToProps, mapDispatchToProps)(MainScreen);
