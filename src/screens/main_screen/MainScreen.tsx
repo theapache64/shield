@@ -1,5 +1,5 @@
 import { default as React, ReactElement } from 'react';
-import { FlatList, ListRenderItemInfo, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ListRenderItemInfo, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -8,15 +8,12 @@ import { loadHome } from '../../api/routes/LodeHome';
 import { App } from '../../App';
 import { ToolbarMenuItem } from '../../guerilla/models/ToolbarMenuItem';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
+import { NumberUtils } from '../../guerilla/utils/NumberUtils';
 import { Header } from '../../guerilla/widgets/header/Header';
 import { GridMenuItemData } from '../../models/GridMenuItemData';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Counter } from './widgets/counter/Counter';
-import { styles } from './Styles';
-import { GuerillaText } from '../../guerilla/widgets/guerialla_text/GuerillaText';
-import { NumberUtils } from '../../guerilla/utils/NumberUtils';
-import { materialColors } from '../../guerilla/res/MaterialColors';
 import { GridMenuItem } from './widgets/grid_menu_item/GridMenuItem';
 
 interface Props {
