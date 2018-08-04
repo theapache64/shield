@@ -44,7 +44,6 @@ export class App extends Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    Text.defaultProps.style = { color: 'red' };
   }
 
   render(): ReactElement<any> {
