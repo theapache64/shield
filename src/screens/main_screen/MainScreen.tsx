@@ -13,11 +13,11 @@ import { GridMenuItemData } from '../../models/GridMenuItemData';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Counter } from './widgets/counter/Counter';
-import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { styles } from './Styles';
 import { GuerillaText } from '../../guerilla/widgets/guerialla_text/GuerillaText';
 import { NumberUtils } from '../../guerilla/utils/NumberUtils';
 import { materialColors } from '../../guerilla/res/MaterialColors';
+import { GridMenuItem } from './widgets/grid_menu_item/GridMenuItem';
 
 interface Props {
 }
@@ -50,7 +50,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
 
   private static readonly GRID_MENU_ITEMS: GridMenuItemData[] = [
     new GridMenuItemData(GI_ISSUE_NEW_PASS, 'ISSUE NEW PASS', 'plus'),
-    new GridMenuItemData(GI_ISSUED_PASSES, 'VIEW ISSUED PASSES', 'check'),
+    new GridMenuItemData(GI_ISSUED_PASSES, 'VIEW ISSUED PASSES', 'eye'),
     new GridMenuItemData(GI_MY_PROFILE, 'MY PROFILE', 'user'),
     new GridMenuItemData(GI_GUARDS, 'GUARDS', 'mustache'),
     new GridMenuItemData(GI_OTHER, 'OTHER', 'tag'),
@@ -97,17 +97,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   }
 
   renderGridMenuItem = (item: ListRenderItemInfo<GridMenuItemData>) => (
-    <TouchableOpacity style={styles.toGridMenuItem}>
-      <View style={styles.vGridMenuItem}>
-        <SimpleLineIcons
-          name={item.item.icon}
-          size={37}
-          color={materialColors.GREY[500]}
-          style={{ margin: 20 }}
-        />
-        <GuerillaText>{item.item.title}</GuerillaText>
-      </View>
-    </TouchableOpacity>
+    <GridMenuItem data={item.item} />
   )
 
   onMenuItemPressed = (menuItem: ToolbarMenuItem) => {

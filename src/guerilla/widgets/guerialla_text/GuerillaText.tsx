@@ -5,6 +5,7 @@ type fonts = 'Roboto-Light' | 'Roboto-Regular' | 'Roboto-Medium';
 
 interface Props extends TextProps {
   fontFamily?: fonts;
+  color?: string;
 }
 
 interface States {
@@ -18,11 +19,11 @@ export class GuerillaText extends PureComponent<Props, States> {
   };
 
   render(): ReactElement<any> {
-    const { style, fontFamily, ...otherProps } = this.props;
+    const { style, fontFamily, color, ...otherProps } = this.props;
     return (
       <Text
         {...otherProps}
-        style={[{ fontFamily }, style]}
+        style={[{ fontFamily, color }, style]}
       >
         {this.props.children}
       </Text>
