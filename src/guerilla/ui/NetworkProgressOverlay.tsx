@@ -7,6 +7,7 @@ import { NetworkResponse } from '../utils/api/NetworkResponse';
 import { GuerillaText } from '../widgets/guerialla_text/GuerillaText';
 import { Guerilla } from '../Guerilla';
 import { Input } from '../widgets/Input';
+import { BaseComponent } from './BaseComponent';
 
 interface Props {
   response: NetworkResponse<any>;
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class NetworkProgressOverlay extends Component<Props> {
+export class NetworkProgressOverlay extends BaseComponent<Props> {
 
   static defaultProps = {
     loadingMessage: 'Loading ...',
@@ -72,7 +73,7 @@ export class NetworkProgressOverlay extends Component<Props> {
 
     if (response.errorMessage && !this.props.onRetryPressed) {
       // No retry
-      Alert.alert('Error', response.errorMessage);
+      this.showError(response.errorMessage);
       return null;
     }
 

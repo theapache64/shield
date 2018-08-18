@@ -1,5 +1,5 @@
 import { default as React } from 'react';
-import { Animated } from 'react-native';
+import { Animated, Alert } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -9,6 +9,8 @@ import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
+import * as Keychain from 'react-native-keychain';
+import { Guard } from '../../api/responses/LogInResponse';
 
 interface DispatchProps {
   loadGuard: () => void;
@@ -37,24 +39,29 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
   componentDidMount(): void {
 
-    // Starting animation
-    Animated.timing(
-      this.state.fadeAnim,
-      {
-        toValue: 1,
-        duration: 1000
-      }
-    ).start();
+    Keychain
+      .getInternetCredentials(Guard.KEY)
+      .then((value: Keychain.UserCredentials) => {
+        // Starting animation
+        Animated.timing(
+          this.state.fadeAnim,
+          {
+            toValue: 1,
+            duration: 1000
+          }
+        ).start();
 
-    // Setting splash timeout
-    setTimeout(
-      () => {
-        const nextScreen = 'logInScreen';
-        StackActionsUtils.resetTo(nextScreen, this.props.navigation);
-      },
-      SplashScreen.SPLASH_TIMEOUT
-    );
-
+        // Setting splash timeout
+        setTimeout(
+          () => {
+            const nextScreen = value.password ? 'mainScreen' : 'logInScreen';
+            StackActionsUtils.resetTo(nextScreen, this.props.navigation);
+          },
+          SplashScreen.SPLASH_TIMEOUT
+        );
+      }).catch((reason) => {
+        this.showError(reason);
+      });
   }
 
   renderShieldScreen(): React.ReactElement<any> {

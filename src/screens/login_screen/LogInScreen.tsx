@@ -1,13 +1,14 @@
 import { default as React, ReactElement } from 'react';
-import { Alert, Keyboard, View } from 'react-native';
+import { Keyboard, View, Alert } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { Guard, LogInResponse } from '../../api/responses/LogInResponse';
+import { LogInResponse, Guard } from '../../api/responses/LogInResponse';
 import { login, Params } from '../../api/routes/LogIn';
+import { Guerilla } from '../../guerilla/Guerilla';
 import { NetworkProgressOverlay } from '../../guerilla/ui/NetworkProgressOverlay';
-import { AxiosRequestType, AxiosRequest } from '../../guerilla/utils/api/AxiosRequest';
+import { AxiosRequestType } from '../../guerilla/utils/api/AxiosRequest';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { InputValidator } from '../../guerilla/utils/InputValidator';
 import { Button } from '../../guerilla/widgets/Button';
@@ -15,8 +16,8 @@ import { Input } from '../../guerilla/widgets/Input';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
-import { Guerilla } from '../../guerilla/Guerilla';
-import { App } from '../../App';
+import * as Keychain from 'react-native-keychain';
+import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
 
 interface DispatchProps {
   login: (params: Params) => AxiosRequestType;
@@ -81,6 +82,21 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
       </View>
     );
+  }
+
+  componentWillReceiveProps(newProps: Props & DispatchProps): void {
+    if (newProps.loginResponse.isSuccess) {
+      // Save guard
+      Keychain.setInternetCredentials(
+        Guard.KEY,
+        Guard.KEY,
+        JSON.stringify(newProps.loginResponse.response.data.guard)
+      ).then(() => {
+        StackActionsUtils.resetTo('mainScreen', this.props.navigation);
+      }).catch((reason) => {
+        this.showError('Failed to save guard');
+      });
+    }
   }
 
   onLogInPressed = () => {

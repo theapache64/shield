@@ -16,6 +16,8 @@ import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Counter } from './widgets/counter/Counter';
 import { GridMenuItem } from './widgets/grid_menu_item/GridMenuItem';
 import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
+import * as Keychain from 'react-native-keychain';
+import { Guard } from '../../api/responses/LogInResponse';
 
 interface Props {
 }
@@ -23,7 +25,6 @@ interface Props {
 interface DispatchProps {
   loadHome: (apiKey: string) => void;
   loadHomeReducer: NetworkResponse<LoadHomeResponse>;
-  clearGuard: () => void;
 }
 
 interface States {
@@ -106,7 +107,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   onGridMenuItemPressed = (item: GridMenuItemData) => {
     switch (item.id) {
       case GI_LOGOUT:
-        this.props.clearGuard();
+        this.clearGuard();
         return;
 
       default:
@@ -122,10 +123,21 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         break;
 
       case MI_LOGOUT:
-        this.props.clearGuard();
+        this.clearGuard();
         break;
 
     }
+  }
+
+  clearGuard(): void {
+    Keychain
+      .resetInternetCredentials(Guard.KEY)
+      .then(() => {
+        // Cleared
+        StackActionsUtils.resetTo('logInScreen', this.props.navigation);
+      }).catch((reason) => {
+        this.showError(reason);
+      });
   }
 
   load(): void {

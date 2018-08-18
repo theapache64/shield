@@ -1,5 +1,6 @@
 import { BaseComponent } from '../BaseComponent';
 import { NavigationScreenProp } from 'react-navigation';
+import { Alert } from 'react-native';
 
 /**
  * Extends all screens, contains no UI related actions. Just util functions.
