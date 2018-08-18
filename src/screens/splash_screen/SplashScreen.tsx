@@ -6,13 +6,11 @@ import { Dispatch } from 'redux';
 import { materialColors } from '../../guerilla/res/MaterialColors';
 import { BaseScreenProps } from '../../guerilla/ui/screen/BaseScreen';
 import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
-import { GuardReducer, LOAD_GUARD_REQUEST } from '../../reducers/GuardReducer';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
 
 interface DispatchProps {
-  guardReducer: GuardReducer;
   loadGuard: () => void;
 }
 
@@ -38,33 +36,25 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
   }
 
   componentDidMount(): void {
-    this.props.loadGuard();
 
-  }
+    // Starting animation
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: 1000
+      }
+    ).start();
 
-  componentWillReceiveProps(nextProps: Props & DispatchProps): void {
+    // Setting splash timeout
+    setTimeout(
+      () => {
+        const nextScreen = 'logInScreen';
+        StackActionsUtils.resetTo(nextScreen, this.props.navigation);
+      },
+      SplashScreen.SPLASH_TIMEOUT
+    );
 
-    if (nextProps.guardReducer.isLoaded) {
-
-      // Starting animation
-      Animated.timing(
-        this.state.fadeAnim,
-        {
-          toValue: 1,
-          duration: 1000
-        }
-      ).start();
-
-      // Setting splash timeout
-      setTimeout(
-        () => {
-          const nextScreen = this.props.guardReducer.guard ? 'mainScreen' : 'logInScreen';
-          StackActionsUtils.resetTo(nextScreen, this.props.navigation);
-        },
-        SplashScreen.SPLASH_TIMEOUT
-      );
-
-    }
   }
 
   renderShieldScreen(): React.ReactElement<any> {
@@ -88,11 +78,9 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 }
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
-  guardReducer: rootReducer.guardReducer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadGuard: () => dispatch({ type: LOAD_GUARD_REQUEST })
 });
 
 export const splashScreen = connect(

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { Data, LoadHomeResponse } from '../../api/responses/LoadHomeResponse';
-import { loadHome } from '../../api/routes/LodeHome';
+import { loadHome } from '../../api/routes/LoadHome';
 import { App } from '../../App';
 import { ToolbarMenuItem } from '../../guerilla/models/ToolbarMenuItem';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
@@ -15,7 +15,6 @@ import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { Counter } from './widgets/counter/Counter';
 import { GridMenuItem } from './widgets/grid_menu_item/GridMenuItem';
-import { CLEAR_GUARD_REQUEST, GuardReducer } from '../../reducers/GuardReducer';
 import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
 
 interface Props {
@@ -24,7 +23,6 @@ interface Props {
 interface DispatchProps {
   loadHome: (apiKey: string) => void;
   loadHomeReducer: NetworkResponse<LoadHomeResponse>;
-  guardReducer: GuardReducer;
   clearGuard: () => void;
 }
 
@@ -72,13 +70,6 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
 
       </View>
     );
-  }
-
-  componentWillReceiveProps(nextProps: Props & DispatchProps): void {
-    if (nextProps.guardReducer.guard === null) {
-      console.warn('Moving to login');
-      StackActionsUtils.resetTo('logInScreen', this.props.navigation);
-    }
   }
 
   renderContent(data: Data): any {
@@ -139,7 +130,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
 
   load(): void {
     this.props.loadHome(
-      this.props.guardReducer.guard.apiKey
+      'TODO: This should be replaced with real api_key'
     );
   }
   getResponseType(): any {
@@ -157,12 +148,10 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
   loadHomeReducer: rootReducer.loadHomeReducer,
-  guardReducer: rootReducer.guardReducer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadHome: (apiKey: string) => dispatch(loadHome(apiKey)),
-  clearGuard: () => dispatch({ type: CLEAR_GUARD_REQUEST })
+  loadHome: (apiKey: string) => dispatch(loadHome(apiKey))
 });
 
 export const mainScreen = connect(mapStateToProps, mapDispatchToProps)(MainScreen);

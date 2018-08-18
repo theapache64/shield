@@ -12,7 +12,6 @@ import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { InputValidator } from '../../guerilla/utils/InputValidator';
 import { Button } from '../../guerilla/widgets/Button';
 import { Input } from '../../guerilla/widgets/Input';
-import { GuardReducer, LOAD_GUARD_REQUEST, SAVE_GUARD_REQUEST } from '../../reducers/GuardReducer';
 import { RootReducer } from '../../reducers/RootReducer';
 import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
@@ -20,11 +19,6 @@ import { Guerilla } from '../../guerilla/Guerilla';
 import { App } from '../../App';
 
 interface DispatchProps {
-  login: (params: Params) => AxiosRequestType;
-  loginResponse: NetworkResponse<LogInResponse>;
-  saveGuard: (guard: Guard) => void;
-  loadGuard: () => void;
-  guardReducer: GuardReducer;
 }
 
 interface Props {
@@ -78,11 +72,6 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
         </View>
 
-        <NetworkProgressOverlay
-          loadingMessage={'Authenticating...'}
-          response={this.props.loginResponse}
-        />
-
       </View>
     );
   }
@@ -104,31 +93,11 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
       const username = this.iUsername.current.getValue();
       const password = this.iPassword.current.getValue();
 
-      this.props.login(
-        new Params(
-          username,
-          password
-        )
-      );
+      
+
     }
   }
 }
 
-const mapStateToProps = (rootReducer: RootReducer) => ({
-  loginResponse: rootReducer.loginReducer,
-  guardReducer: rootReducer.guardReducer
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-
-  return {
-    login: (params: Params) => dispatch(login(params)),
-    loadGuard: () => dispatch({ type: LOAD_GUARD_REQUEST }),
-    saveGuard: (guard: Guard) => dispatch({ type: SAVE_GUARD_REQUEST, payload: { guard } })
-  };
-};
-
 export const logInScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
 )(LogInScreen);

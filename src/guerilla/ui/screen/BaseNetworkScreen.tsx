@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer';
-import { default as React } from 'react';
+import { default as React, ReactElement } from 'react';
 import { View } from 'react-native';
 
 import { BaseAPIResponse } from '../../utils/api/BaseAPIResponse';
@@ -9,7 +9,7 @@ import { BaseStyledScreen } from './BaseStyledScreen';
 
 export abstract class BaseNetworkScreen<NR extends BaseAPIResponse, P = {}, S= {}, NP= {}>
   extends BaseStyledScreen<P, S, NP> {
-  renderStyledScreen() {
+  renderStyledScreen(): ReactElement<any> {
 
     let response = null;
 
@@ -24,7 +24,6 @@ export abstract class BaseNetworkScreen<NR extends BaseAPIResponse, P = {}, S= {
       >
         {this.renderNetworkScreen(response)}
         <NetworkProgressOverlay
-          colorPrimary={this.primaryColor}
           response={this.getResponse()}
           onRetryPressed={this.onRetry}
         />
