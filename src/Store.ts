@@ -35,9 +35,9 @@ export const store = createStore(
   rootReducer,
   initialState,
   applyMiddleware(
-    logger,
     sagaMiddleware,
     axiosMiddleware(client),
+    logger,
   )
 );
 

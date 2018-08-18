@@ -7,7 +7,7 @@ import { Dispatch } from 'redux';
 import { Guard, LogInResponse } from '../../api/responses/LogInResponse';
 import { login, Params } from '../../api/routes/LogIn';
 import { NetworkProgressOverlay } from '../../guerilla/ui/NetworkProgressOverlay';
-import { AxiosRequestType } from '../../guerilla/utils/api/AxiosRequest';
+import { AxiosRequestType, AxiosRequest } from '../../guerilla/utils/api/AxiosRequest';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { InputValidator } from '../../guerilla/utils/InputValidator';
 import { Button } from '../../guerilla/widgets/Button';
@@ -19,6 +19,8 @@ import { Guerilla } from '../../guerilla/Guerilla';
 import { App } from '../../App';
 
 interface DispatchProps {
+  login: (params: Params) => AxiosRequestType;
+  loginResponse: NetworkResponse<LogInResponse>;
 }
 
 interface Props {
@@ -40,6 +42,11 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
     return (
       <View flex={1} backgroundColor={Guerilla.getInstance().getColorPrimary()}>
+        <NetworkProgressOverlay
+          loadingMessage={'Authenticating...'}
+          response={this.props.loginResponse}
+        />
+
         <View style={styles.vContainer}>
 
           <SimpleLineIcons
@@ -93,11 +100,24 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
       const username = this.iUsername.current.getValue();
       const password = this.iPassword.current.getValue();
 
-      
+      this.props.login(new Params(
+        username,
+        password
+      ));
 
     }
   }
 }
 
+const mapStateToProps = (rootReducer: RootReducer) => ({
+  loginResponse: rootReducer.loginReducer,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  login: (params: Params) => dispatch(login(params))
+});
+
 export const logInScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(LogInScreen);

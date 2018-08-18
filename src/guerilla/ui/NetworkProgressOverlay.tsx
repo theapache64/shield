@@ -6,6 +6,7 @@ import { materialColors } from '../res/MaterialColors';
 import { NetworkResponse } from '../utils/api/NetworkResponse';
 import { GuerillaText } from '../widgets/guerialla_text/GuerillaText';
 import { Guerilla } from '../Guerilla';
+import { Input } from '../widgets/Input';
 
 interface Props {
   response: NetworkResponse<any>;
@@ -24,7 +25,8 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     backgroundColor: '#FFF',
-    opacity: 0.8
+    opacity: 0.8,
+    elevation: Input.ELEVATION + 1,
   },
   loadingMessage: {
     marginTop: 10,

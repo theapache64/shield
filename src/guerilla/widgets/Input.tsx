@@ -1,9 +1,11 @@
-import { default as React, PureComponent } from 'react';
-import { Alert, TextInput, TextInputProps, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { default as React, PureComponent, ReactElement } from 'react';
+import {
+  Alert, StyleSheet, TextInput, TextInputProps, TouchableOpacity, View, ViewStyle
+} from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
-import { Validateable } from '../utils/InputValidator';
-import { StyleSheet } from '../utils/StyleSheet';
+
 import { materialColors } from '../res/MaterialColors';
+import { Validateable } from '../utils/InputValidator';
 
 interface Props extends TextInputProps {
   leftIcon: string;
@@ -16,6 +18,8 @@ interface States {
   errorMessage: string;
 }
 
+const InputElevation = 4;
+
 const styles = StyleSheet.create({
   vContainer: {
     alignItems: 'center',
@@ -26,17 +30,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     // Android shadow
-    elevation: 5,
-
-    shadowColor: materialColors.GREY[800],
-    shadowOffset: { width: 3, height: 6 },
-    shadowRadius: 5,
-    shadowOpacity: 0.5
+    elevation: InputElevation,
   },
 
   tiMain: {
     flex: 1,
-    padding:10
+    padding: 10
   },
 
   sliUser: {
@@ -53,25 +52,23 @@ const styles = StyleSheet.create({
 
 export class Input extends PureComponent<Props, States> implements Validateable {
 
+  static defaultProps = {
+    regEx: '.+',
+  };
+  static ELEVATION: number = InputElevation;
+
   state = {
     value: '',
     errorMessage: ''
   };
 
-  static defaultProps = {
-    regEx: '.+',
-  };
-
-  render() {
+  render(): ReactElement<any> {
 
     // Props
     const {
       leftIcon,
       ...otherProps
     } = this.props;
-
-    // State
-    const { errorMessage } = this.state;
 
     return (
       <View style={[styles.vContainer, this.props.containerStyle]}>
@@ -112,9 +109,9 @@ export class Input extends PureComponent<Props, States> implements Validateable 
   validate(): boolean {
 
     const { value } = this.state;
-    const { regEx } = this.props;
+    const { regEx, placeholder } = this.props;
 
-    const regExp = new RegExp(this.props.regEx);
+    const regExp = new RegExp(regEx);
     const isValid = regExp.test(value);
 
     if (isValid) {
@@ -125,7 +122,7 @@ export class Input extends PureComponent<Props, States> implements Validateable 
       return true;
     }
 
-    this.setState({ errorMessage: 'Invalid ' + (this.props.placeholder).toLowerCase() });
+    this.setState({ errorMessage: 'Invalid ' + (placeholder).toLowerCase() });
     return false;
   }
 
