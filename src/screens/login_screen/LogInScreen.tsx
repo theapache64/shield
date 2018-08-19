@@ -18,10 +18,15 @@ import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
 import * as Keychain from 'react-native-keychain';
 import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
+import { put } from 'redux-saga/effects';
+import { LOAD_GUARD_REQUEST } from '../../sagas/GuardSaga';
+import { GuardReducer } from '../../reducers/GuardReducer';
 
 interface DispatchProps {
   login: (params: Params) => AxiosRequestType;
   loginResponse: NetworkResponse<LogInResponse>;
+  loadGuard: () => any;
+  guardReducer: GuardReducer;
 }
 
 interface Props {
@@ -85,6 +90,12 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
   }
 
   componentWillReceiveProps(newProps: Props & DispatchProps): void {
+
+    if (newProps.guardReducer.guard) {
+      StackActionsUtils.resetTo('mainScreen', this.props.navigation);
+      return;
+    }
+
     if (newProps.loginResponse.isSuccess) {
       // Save guard
       Keychain.setInternetCredentials(
@@ -92,11 +103,12 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
         Guard.KEY,
         JSON.stringify(newProps.loginResponse.response.data.guard)
       ).then(() => {
-        StackActionsUtils.resetTo('mainScreen', this.props.navigation);
+        this.props.loadGuard();
       }).catch((reason) => {
         this.showError('Failed to save guard');
       });
     }
+
   }
 
   onLogInPressed = () => {
@@ -127,10 +139,12 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
   loginResponse: rootReducer.loginReducer,
+  guardReducer: rootReducer.guardReducer,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  login: (params: Params) => dispatch(login(params))
+  login: (params: Params) => dispatch(login(params)),
+  loadGuard: () => dispatch({ type: LOAD_GUARD_REQUEST })
 });
 
 export const logInScreen = connect(

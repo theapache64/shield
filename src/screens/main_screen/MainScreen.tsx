@@ -143,7 +143,6 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   }
 
   load(): void {
-    console.warn(this.props.guardReducer.guard.name);
 
     this.props.loadHome(
       this.props.guardReducer.guard.apiKey
