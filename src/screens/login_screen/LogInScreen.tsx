@@ -19,13 +19,15 @@ import { styles } from './Styles';
 import * as Keychain from 'react-native-keychain';
 import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
 import { put } from 'redux-saga/effects';
-import { LOAD_GUARD_REQUEST } from '../../sagas/GuardSaga';
+import { LOAD_GUARD_REQUEST } from '../../sagas/guard/LoadGuardSaga.ts';
 import { GuardReducer } from '../../reducers/GuardReducer';
+import { SAVE_GUARD_REQUEST } from '../../sagas/guard/SaveGuardSaga';
 
 interface DispatchProps {
   login: (params: Params) => AxiosRequestType;
   loginResponse: NetworkResponse<LogInResponse>;
   loadGuard: () => any;
+  saveGuard: (guard: Guard) => any;
   guardReducer: GuardReducer;
 }
 
@@ -98,15 +100,7 @@ class LogInScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 
     if (newProps.loginResponse.isSuccess) {
       // Save guard
-      Keychain.setInternetCredentials(
-        Guard.KEY,
-        Guard.KEY,
-        JSON.stringify(newProps.loginResponse.response.data.guard)
-      ).then(() => {
-        this.props.loadGuard();
-      }).catch((reason) => {
-        this.showError('Failed to save guard');
-      });
+      this.props.saveGuard(newProps.loginResponse.response.data.guard);
     }
 
   }
@@ -144,6 +138,7 @@ const mapStateToProps = (rootReducer: RootReducer) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   login: (params: Params) => dispatch(login(params)),
+  saveGuard: (guard: Guard) => dispatch({ type: SAVE_GUARD_REQUEST, payload: { guard } }),
   loadGuard: () => dispatch({ type: LOAD_GUARD_REQUEST })
 });
 

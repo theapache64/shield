@@ -1,10 +1,17 @@
-import { BaseAction } from '../guerilla/utils/api/BaseAction';
-import { LOAD_GUARD_SUCCESS, LOAD_GUARD_FAILURE } from '../sagas/GuardSaga';
+
+import { LOAD_GUARD_SUCCESS, LOAD_GUARD_FAILURE } from '../sagas/guard/LoadGuardSaga.ts';
 import { Guard } from '../api/responses/LogInResponse';
+import { CLEAR_GUARD_SUCCESS } from '../sagas/guard/ClearGuardSaga';
+import { BaseAction } from '../guerilla/models/BaseAction';
+import { SAVE_GUARD_SUCCESS, SAVE_GUARD_FAILURE } from '../sagas/guard/SaveGuardSaga';
 
 export interface GuardReducer {
   guard: Guard;
   error: string;
+}
+
+export interface GuardAction {
+  guard: Guard;
 }
 
 const iState: GuardReducer = {
@@ -12,9 +19,11 @@ const iState: GuardReducer = {
   error: null
 };
 
-export const guardReducer = (state: GuardReducer = iState, action: BaseAction): GuardReducer => {
+export const guardReducer = (state: GuardReducer = iState, action: BaseAction<GuardAction>)
+  : GuardReducer => {
   switch (action.type) {
 
+    case SAVE_GUARD_SUCCESS:
     case LOAD_GUARD_SUCCESS:
       return {
         ...state,
@@ -22,12 +31,21 @@ export const guardReducer = (state: GuardReducer = iState, action: BaseAction): 
         error: null
       };
 
+    case SAVE_GUARD_FAILURE:
     case LOAD_GUARD_FAILURE:
       return {
         ...state,
         guard: null,
-        error: action.payload.error
+        error: action.error
       };
+
+    case CLEAR_GUARD_SUCCESS:
+      return {
+        ...state,
+        guard: null,
+        error: null
+      };
+
     default:
       return state;
   }

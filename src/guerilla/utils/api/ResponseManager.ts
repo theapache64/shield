@@ -26,28 +26,41 @@ export class ResponseManager {
   static getSuccessResponse
     = <T>(state: NetworkResponse<T>, action: BaseAction): NetworkResponse<T> => {
 
-      if (!action.payload.data.error) {
+      if (action.payload) {
 
-        // Success
+        if (!action.payload.data.error) {
+
+          // Success
+          return {
+            ...state,
+
+            isLoading: false,
+            errorMessage: null,
+            response: action.payload.data,
+            successMessage: action.payload.data.message,
+            isSuccess: true,
+          };
+        }
+
+        // Server error
         return {
           ...state,
-
           isLoading: false,
-          errorMessage: null,
-          response: action.payload.data,
-          successMessage: action.payload.data.message,
-          isSuccess: true,
+          isSuccess: false,
+          successMessage: '',
+          response: null,
+          errorMessage: action.payload.data.message,
         };
+
       }
 
-      // Server error
       return {
         ...state,
         isLoading: false,
         isSuccess: false,
         successMessage: '',
         response: null,
-        errorMessage: action.payload.data.message,
+        errorMessage: 'Something went terribly wrong! :/',
       };
     }
 

@@ -19,6 +19,7 @@ import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
 import * as Keychain from 'react-native-keychain';
 import { Guard } from '../../api/responses/LogInResponse';
 import { GuardReducer } from '../../reducers/GuardReducer';
+import { CLEAR_GUARD_REQUEST } from '../../sagas/guard/ClearGuardSaga';
 
 interface Props {
 }
@@ -27,6 +28,7 @@ interface DispatchProps {
   loadHome: (apiKey: string) => void;
   loadHomeReducer: NetworkResponse<LoadHomeResponse>;
   guardReducer: GuardReducer;
+  clearGuard: () => void;
 }
 
 interface States {
@@ -136,14 +138,18 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
       .resetInternetCredentials(Guard.KEY)
       .then(() => {
         // Cleared
+
+        // Clearing from state
+        this.props.clearGuard();
+
         StackActionsUtils.resetTo('logInScreen', this.props.navigation);
+        
       }).catch((reason) => {
         this.showError(reason);
       });
   }
 
   load(): void {
-
     this.props.loadHome(
       this.props.guardReducer.guard.apiKey
     );
@@ -167,7 +173,8 @@ const mapStateToProps = (rootReducer: RootReducer) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadHome: (apiKey: string) => dispatch(loadHome(apiKey))
+  loadHome: (apiKey: string) => dispatch(loadHome(apiKey)),
+  clearGuard: () => dispatch({ type: CLEAR_GUARD_REQUEST })
 });
 
 export const mainScreen = connect(mapStateToProps, mapDispatchToProps)(MainScreen);

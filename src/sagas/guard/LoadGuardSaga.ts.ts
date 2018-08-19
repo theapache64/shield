@@ -1,6 +1,6 @@
 import { call, takeLatest, put } from 'redux-saga/effects';
 import * as Keychain from 'react-native-keychain';
-import { Guard } from '../api/responses/LogInResponse';
+import { Guard } from '../../api/responses/LogInResponse';
 
 const LOAD_GUARD = 'LOAD_GUARD';
 export const LOAD_GUARD_REQUEST = `${LOAD_GUARD}_REQUEST`;
@@ -23,6 +23,7 @@ function* loadGuard(): any {
     if (result) {
       yield put({
         type: LOAD_GUARD_SUCCESS,
+        error: null,
         payload: {
           guard: JSON.parse(result.password)
         }
@@ -30,17 +31,13 @@ function* loadGuard(): any {
     } else {
       yield put({
         type: LOAD_GUARD_FAILURE,
-        payload: {
-          error: 'No guard logged in'
-        }
+        error: 'No guard logged in'
       });
     }
   } catch (error) {
     yield put({
+      error,
       type: LOAD_GUARD_FAILURE,
-      payload: {
-        error
-      }
     });
   }
 }

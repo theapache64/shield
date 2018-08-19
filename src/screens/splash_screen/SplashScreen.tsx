@@ -11,7 +11,7 @@ import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
 import * as Keychain from 'react-native-keychain';
 import { Guard } from '../../api/responses/LogInResponse';
-import { LOAD_GUARD_REQUEST } from '../../sagas/GuardSaga';
+import { LOAD_GUARD_REQUEST } from '../../sagas/guard/LoadGuardSaga.ts';
 import { GuardReducer } from '../../reducers/GuardReducer';
 
 interface DispatchProps {
