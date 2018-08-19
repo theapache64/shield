@@ -17,16 +17,16 @@ import { Guerilla } from './guerilla/Guerilla';
 import { materialColors } from './guerilla/res/MaterialColors';
 import { logInScreen } from './screens/login_screen/LogInScreen';
 import { mainScreen } from './screens/main_screen/MainScreen';
-import { NewPassScreen } from './screens/new_pass_screen/NewPassScreen';
 import { splashScreen } from './screens/splash_screen/SplashScreen';
 import { store } from './Store';
+import { newPassScreen } from './screens/new_pass_screen/NewPassScreen';
 
 const RootStack = createStackNavigator(
   {
     splashScreen,
     mainScreen,
     logInScreen,
-    NewPassScreen
+    newPassScreen
   },
   {
     initialRouteName: 'splashScreen',

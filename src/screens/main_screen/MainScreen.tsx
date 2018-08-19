@@ -114,6 +114,10 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         this.clearGuard();
         return;
 
+      case GI_ISSUE_NEW_PASS:
+        this.props.navigation.navigate('')
+        return;
+
       default:
         Alert.alert('Coming Soon!', 'This is a future feature');
     }
@@ -143,7 +147,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         this.props.clearGuard();
 
         StackActionsUtils.resetTo('logInScreen', this.props.navigation);
-        
+
       }).catch((reason) => {
         this.showError(reason);
       });

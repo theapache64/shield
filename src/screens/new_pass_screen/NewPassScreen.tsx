@@ -1,6 +1,7 @@
 import { default as React, PureComponent, ReactElement } from 'react';
 import { View } from 'react-native';
 import { GuerillaText } from '../../guerilla/widgets/guerialla_text/GuerillaText';
+import { connect } from 'react-redux';
 
 interface Props {
   title: string;
@@ -10,7 +11,7 @@ interface States {
 
 }
 
-export class NewPassScreen extends PureComponent<Props, States> {
+class NewPassScreen extends PureComponent<Props, States> {
   render(): ReactElement<Props> {
     return (
       <View>
@@ -19,3 +20,7 @@ export class NewPassScreen extends PureComponent<Props, States> {
     );
   }
 }
+
+export const newPassScreen = connect(
+  mapStateToProps,
+)(NewPassScreen);
