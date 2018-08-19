@@ -11,9 +11,12 @@ import { BaseShieldScreen } from '../base/BaseShieldScreen';
 import { styles } from './Styles';
 import * as Keychain from 'react-native-keychain';
 import { Guard } from '../../api/responses/LogInResponse';
+import { LOAD_GUARD_REQUEST } from '../../sagas/GuardSaga';
+import { GuardReducer } from '../../reducers/GuardReducer';
 
 interface DispatchProps {
   loadGuard: () => void;
+  guardReducer: GuardReducer;
 }
 
 interface Props extends BaseScreenProps<any> {
@@ -37,31 +40,30 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
     };
   }
 
+  componentWillReceiveProps(nextProps: Props & DispatchProps): any {
+
+    // Loaded guard will be available here
+    // Starting animation
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: 1000
+      }
+    ).start();
+
+    // Setting splash timeout
+    setTimeout(
+      () => {
+        const nextScreen = nextProps.guardReducer.guard ? 'mainScreen' : 'logInScreen';
+        StackActionsUtils.resetTo(nextScreen, this.props.navigation);
+      },
+      SplashScreen.SPLASH_TIMEOUT
+    );
+  }
   componentDidMount(): void {
-
-    Keychain
-      .getInternetCredentials(Guard.KEY)
-      .then((value: Keychain.UserCredentials) => {
-        // Starting animation
-        Animated.timing(
-          this.state.fadeAnim,
-          {
-            toValue: 1,
-            duration: 1000
-          }
-        ).start();
-
-        // Setting splash timeout
-        setTimeout(
-          () => {
-            const nextScreen = value.password ? 'mainScreen' : 'logInScreen';
-            StackActionsUtils.resetTo(nextScreen, this.props.navigation);
-          },
-          SplashScreen.SPLASH_TIMEOUT
-        );
-      }).catch((reason) => {
-        this.showError(reason);
-      });
+    // Loading guard
+    this.props.loadGuard();
   }
 
   renderShieldScreen(): React.ReactElement<any> {
@@ -85,9 +87,11 @@ class SplashScreen extends BaseShieldScreen<Props & DispatchProps, States> {
 }
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
+  guardReducer: rootReducer.guardReducer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadGuard: () => dispatch({ type: LOAD_GUARD_REQUEST })
 });
 
 export const splashScreen = connect(

@@ -18,6 +18,7 @@ import { GridMenuItem } from './widgets/grid_menu_item/GridMenuItem';
 import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
 import * as Keychain from 'react-native-keychain';
 import { Guard } from '../../api/responses/LogInResponse';
+import { GuardReducer } from '../../reducers/GuardReducer';
 
 interface Props {
 }
@@ -25,6 +26,7 @@ interface Props {
 interface DispatchProps {
   loadHome: (apiKey: string) => void;
   loadHomeReducer: NetworkResponse<LoadHomeResponse>;
+  guardReducer: GuardReducer;
 }
 
 interface States {
@@ -141,8 +143,10 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
   }
 
   load(): void {
+    console.warn(this.props.guardReducer.guard.name);
+
     this.props.loadHome(
-      'TODO: This should be replaced with real api_key'
+      this.props.guardReducer.guard.apiKey
     );
   }
   getResponseType(): any {
@@ -160,6 +164,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
   loadHomeReducer: rootReducer.loadHomeReducer,
+  guardReducer: rootReducer.guardReducer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -9,7 +9,7 @@ export class StackActionsUtils {
    * @param {string} screenName
    * @param {NavigationScreenProp<any>} navigation
    */
-  static resetTo(screenName: string, navigation: NavigationScreenProp<any>) {
+  static resetTo(screenName: string, navigation: NavigationScreenProp<any>) : void {
     const resetAction = StackActions.reset({
       index: 0,
       actions: [
