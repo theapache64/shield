@@ -1,13 +1,21 @@
-import { default as React, PureComponent, ReactElement } from 'react';
-import { View } from 'react-native';
-import { GuerillaText } from '../../guerilla/widgets/guerialla_text/GuerillaText';
+import { default as React, ReactElement } from 'react';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { RootReducer } from '../../reducers/RootReducer';
 import { Dispatch } from 'redux';
+
+import { LoadIssuePassResponse, Data } from '../../api/responses/LoadIssuePassResponse';
 import { loadIssuePass } from '../../api/routes/LoadIssuePass';
-import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
-import { LoadIssuePassResponse } from '../../api/responses/LoadIssuePassResponse';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
+import { RootReducer } from '../../reducers/RootReducer';
+import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
+import { GuardReducer } from '../../reducers/GuardReducer';
+import { Header } from '../../guerilla/widgets/header/Header';
+
+interface DispatchProps {
+  guardReducer: GuardReducer;
+  loadIssuePass: (apiKey: string) => void;
+  loadIssuePassResponse: NetworkResponse<LoadIssuePassResponse>;
+}
 
 interface Props {
   title: string;
@@ -20,30 +28,52 @@ interface States {
 class NewPassScreen
   extends BaseNetworkShieldScreen<
   LoadIssuePassResponse,
-  Props,
+  Props & DispatchProps,
   States
   > {
 
   renderNetworkShieldScreen(response: LoadIssuePassResponse): ReactElement<any> {
-    throw new Error('Method not implemented.');
+    return (
+      <View flex={1}>
+        {/* Header */}
+        <Header
+          title={'Issue New Pass'}
+          backNavigation={true}
+          navigation={this.props.navigation}
+        />
+
+        {response && this.renderContent(response.data)}
+
+      </View>
+    );
+  }
+  renderContent(data: Data): any {
+
   }
 
   load(): void {
-    throw new Error('Method not implemented.');
+    this.props.loadIssuePass(
+      this.props.guardReducer.guard.apiKey
+    );
   }
 
   getResponseType(): any {
-    throw new Error('Method not implemented.');
+    return LoadIssuePassResponse;
   }
 
   getResponse(): NetworkResponse<LoadIssuePassResponse> {
-    throw new Error('Method not implemented.');
+    return this.props.loadIssuePassResponse;
+  }
+
+  componentDidMount(): void {
+    this.load();
   }
 
 }
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
-  guardReducer: rootReducer.guardReducer
+  guardReducer: rootReducer.guardReducer,
+  loadIssuePassResponse: rootReducer.loadIssuePassReducer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -115,7 +115,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         return;
 
       case GI_ISSUE_NEW_PASS:
-        this.props.navigation.navigate('')
+        this.props.navigation.navigate('newPassScreen');
         return;
 
       default:

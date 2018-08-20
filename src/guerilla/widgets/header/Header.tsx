@@ -1,14 +1,20 @@
 import { default as React, PureComponent, ReactElement } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { default as SimpleLineIcons } from 'react-native-vector-icons/SimpleLineIcons';
-import { styles } from './Styles';
+
 import { Guerilla } from '../../Guerilla';
+import { HeaderMenuItem } from '../../models/HeaderMenuItem';
 import { ToolbarMenuItem } from '../../models/ToolbarMenuItem';
+import { NumberUtils } from '../../utils/NumberUtils';
 import { GuerillaText } from '../guerialla_text/GuerillaText';
+import { styles } from './Styles';
+import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
   title?: string;
   menuIcons?: ToolbarMenuItem[];
+  backNavigation?: boolean;
+  navigation?: NavigationScreenProp<any, any>;
   onMenuItemPressed?: (menuItem: ToolbarMenuItem) => void;
 }
 
@@ -16,20 +22,44 @@ interface States {
 
 }
 
+const TMI_BACK_BUTTON = NumberUtils.getRandomId();
+
 export class Header extends PureComponent<Props, States> {
+
+  static defaultProps: Props = {
+    backNavigation: false
+  };
 
   private readonly themedStyle = {
     backgroundColor: Guerilla.getInstance().getColorPrimary()
   };
 
+  onMenuItemPressed = (item: ToolbarMenuItem) => {
+    if (item.id === TMI_BACK_BUTTON) {
+      if (this.props.navigation) {
+        this.props.navigation.goBack();
+      } else {
+        throw new Error('BackNavigation enabled but navigation object not passed');
+      }
+    } else if (this.props.onMenuItemPressed) {
+      this.props.onMenuItemPressed(item);
+    }
+  }
+
   render(): ReactElement<any> {
 
-    const { menuIcons } = this.props;
+    const { menuIcons, backNavigation } = this.props;
 
     return (
       <View style={[styles.vHeader, this.themedStyle]}>
 
-        <GuerillaText style={styles.tTitle}>{this.props.title}</GuerillaText>
+        <View
+          alignItems={'center'}
+          flexDirection={'row'}
+        >
+          {backNavigation && this.renderBackButton()}
+          <GuerillaText style={styles.tTitle}>{this.props.title}</GuerillaText>
+        </View>
 
         <View style={styles.vIcons}>
           {menuIcons && this.renderMenuIcons(menuIcons)}
@@ -37,15 +67,32 @@ export class Header extends PureComponent<Props, States> {
       </View >
     );
   }
+  renderBackButton(): any {
+    return (
+      this.renderMenuIcon(
+        new ToolbarMenuItem(
+          TMI_BACK_BUTTON,
+          'arrow-left'
+        ),
+        -1
+      )
+    );
+  }
 
   renderMenuIcons(menuIcons: ToolbarMenuItem[]): any {
-    const guerilla = Guerilla.getInstance();
+
     // Rendering menu icons
     return menuIcons.map((item: ToolbarMenuItem, index: number) => (
+      this.renderMenuIcon(item, index)
+    ));
+  }
+  renderMenuIcon(item: ToolbarMenuItem, index: number): any {
+    const guerilla = Guerilla.getInstance();
+    return (
       <TouchableOpacity
         style={{ padding: 13, marginRight: 5 }}
         key={index}
-        onPress={this.props.onMenuItemPressed && this.props.onMenuItemPressed.bind(null, item)}
+        onPress={this.onMenuItemPressed.bind(null, item)}
       >
         <SimpleLineIcons
           style={[styles.sli]}
@@ -54,6 +101,6 @@ export class Header extends PureComponent<Props, States> {
           color={guerilla.getHeaderIconColor()}
         />
       </TouchableOpacity>
-    ));
+    );
   }
 }
