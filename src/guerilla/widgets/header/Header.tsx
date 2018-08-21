@@ -90,7 +90,8 @@ export class Header extends PureComponent<Props, States> {
     const guerilla = Guerilla.getInstance();
     return (
       <TouchableOpacity
-        style={{ padding: 13, marginRight: 5 }}
+        // no margin for back button
+        style={{ padding: 13, marginRight: item.id !== TMI_BACK_BUTTON ? 5 : 0 }}
         key={index}
         onPress={this.onMenuItemPressed.bind(null, item)}
       >
