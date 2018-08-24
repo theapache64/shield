@@ -77,6 +77,10 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
     );
   }
 
+  hasHeaderMargin(): boolean {
+    return true;
+  }
+
   renderContent(data: Data): any {
     return (
       <FlatList<GridMenuItemData>

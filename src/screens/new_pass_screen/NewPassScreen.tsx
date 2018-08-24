@@ -48,7 +48,13 @@ class NewPassScreen
     );
   }
   renderContent(data: Data): any {
+    return (
+      <Text>{data.companies[0].name}</Text>
+    );
+  }
 
+  hasHeaderMargin(): boolean {
+    return true;
   }
 
   load(): void {
