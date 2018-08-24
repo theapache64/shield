@@ -24,11 +24,16 @@ export abstract class BaseNetworkScreen<NR extends BaseAPIResponse, P = {}, S= {
       >
         {this.renderNetworkScreen(response)}
         <NetworkProgressOverlay
+          hasHeaderMargin={this.hasHeaderMargin()}
           response={this.getResponse()}
           onRetryPressed={this.onRetry}
         />
       </View >
     );
+  }
+
+  hasHeaderMargin(): boolean {
+    return false;
   }
 
   onRetry = () => {
