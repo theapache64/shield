@@ -30,6 +30,9 @@ const RootStack = createStackNavigator(
   },
   {
     initialRouteName: 'newPassScreen',
+    initialRouteParams: {
+      count: 5,
+    },
     navigationOptions: {
       header: null
     }

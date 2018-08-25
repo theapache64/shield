@@ -1,5 +1,5 @@
 import { default as React, ReactElement } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -10,6 +10,12 @@ import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { GuardReducer } from '../../reducers/GuardReducer';
 import { Header } from '../../guerilla/widgets/header/Header';
+import { CustomPicker } from '../../guerilla/widgets/custom_picker/CustomPicker';
+import { Button } from '../../guerilla/widgets/Button';
+import { InputValidator } from '../../guerilla/utils/InputValidator';
+import { Passes } from './widgets/passes/Passes';
+import { classToPlain } from 'class-transformer';
+import { Pass } from '../../models/Pass';
 
 interface DispatchProps {
   guardReducer: GuardReducer;
@@ -22,15 +28,25 @@ interface Props {
 }
 
 interface States {
+  companyId: string;
+}
 
+interface NavProps {
+  count: number;
 }
 
 class NewPassScreen
   extends BaseNetworkShieldScreen<
   LoadIssuePassResponse,
   Props & DispatchProps,
-  States
+  States,
+  NavProps
   > {
+
+  cpCompany = React.createRef<CustomPicker>();
+  pPasses = React.createRef<Passes>();
+
+  inputValidator: InputValidator;
 
   renderNetworkShieldScreen(response: LoadIssuePassResponse): ReactElement<any> {
     return (
@@ -48,9 +64,57 @@ class NewPassScreen
     );
   }
   renderContent(data: Data): any {
+
+    const count = this.props.navigation.getParam('count');
+
     return (
-      <Text>{data.companies[0].name}</Text>
+      <ScrollView
+        keyboardShouldPersistTaps={'always'}
+        contentContainerStyle={{ margin: 5 }}
+      >
+        {/* Company */}
+        <CustomPicker
+          ref={this.cpCompany}
+          title={'Select Company'}
+          placeholder={'Select a company'}
+          data={data.companies}
+        />
+
+        <Text style={{ marginBottom: 8 }}>Passes</Text>
+
+        {/* Passes */}
+        <Passes
+          ref={this.pPasses}
+          count={count}
+        />
+
+        <Button
+          title={'ISSUE PASS' + (count > 1 ? 'ES' : '')}
+          style={{ marginBottom: 8 }}
+          onPress={this.onIssuePassPressed}
+        />
+      </ScrollView>
     );
+  }
+
+  onIssuePassPressed = () => {
+
+    // Hiding keyboard
+    Keyboard.dismiss();
+
+    if (this.inputValidator == null) {
+      this.inputValidator = new InputValidator(
+        [
+          this.cpCompany.current!,
+          this.pPasses.current!
+        ]
+      );
+    }
+
+    if (this.inputValidator.isAllValid(true)) {
+      const passesJson = classToPlain<Pass>(this.pPasses.current.getPasses());
+      
+    }
   }
 
   hasHeaderMargin(): boolean {

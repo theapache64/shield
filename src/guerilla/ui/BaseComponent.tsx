@@ -19,4 +19,21 @@ export class BaseComponent<P= {}, S= {}> extends PureComponent<P, S> {
     Alert.alert('Error', message);
   }
 
+  protected getPropName = (name: keyof P): keyof P => name;
+  protected getStateName = (name: keyof S): keyof S => name;
+
+  protected changeState =
+    <TKey extends keyof S>(stateKey: TKey, newValue: S[TKey]): void => {
+
+      if (stateKey) {
+        // @ts-ignore
+        this.setState({
+          [stateKey]: newValue,
+        });
+      } else {
+        console.warn('called changeState but stateKey not passed');
+      }
+
+    }
+
 }

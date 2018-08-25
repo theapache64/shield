@@ -15,7 +15,11 @@ export interface GuardAction {
 }
 
 const iState: GuardReducer = {
-  guard: null,
+  // guard: null, TODO: Production - UTLACBL
+  guard: {
+    name: 'TheName',
+    apiKey: 'theApiKey'
+  },
   error: null
 };
 
