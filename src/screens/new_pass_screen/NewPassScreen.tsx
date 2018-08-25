@@ -1,5 +1,5 @@
 import { default as React, ReactElement } from 'react';
-import { Text, View, ScrollView, Keyboard } from 'react-native';
+import { Text, View, ScrollView, Keyboard, TextInput, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -16,11 +16,17 @@ import { InputValidator } from '../../guerilla/utils/InputValidator';
 import { Passes } from './widgets/passes/Passes';
 import { classToPlain } from 'class-transformer';
 import { Pass } from '../../models/Pass';
+import { InputWrapper } from '../../guerilla/widgets/custom_picker/InputWrapper';
+import { Params, issuePass } from '../../api/routes/IssuePass';
+import { IssuePassResponse } from '../../api/responses/IssuePassResponse';
+import { NetworkProgressOverlay } from '../../guerilla/ui/NetworkProgressOverlay';
 
 interface DispatchProps {
   guardReducer: GuardReducer;
   loadIssuePass: (apiKey: string) => void;
+  issuePass: (authorization: string, params: Params) => void;
   loadIssuePassResponse: NetworkResponse<LoadIssuePassResponse>;
+  issuePassResponse: NetworkResponse<IssuePassResponse>;
 }
 
 interface Props {
@@ -28,7 +34,7 @@ interface Props {
 }
 
 interface States {
-  companyId: string;
+  description: string;
 }
 
 interface NavProps {
@@ -42,6 +48,10 @@ class NewPassScreen
   States,
   NavProps
   > {
+
+  state = {
+    description: ''
+  };
 
   cpCompany = React.createRef<CustomPicker>();
   pPasses = React.createRef<Passes>();
@@ -63,38 +73,70 @@ class NewPassScreen
       </View>
     );
   }
+  onDescriptionChanged = (newVal: string) => {
+    this.setState({ description: newVal });
+  }
   renderContent(data: Data): any {
 
     const count = this.props.navigation.getParam('count');
 
     return (
-      <ScrollView
-        keyboardShouldPersistTaps={'always'}
-        contentContainerStyle={{ margin: 5 }}
-      >
-        {/* Company */}
-        <CustomPicker
-          ref={this.cpCompany}
-          title={'Select Company'}
-          placeholder={'Select a company'}
-          data={data.companies}
-        />
+      <View flex={1}>
+        <ScrollView
+          keyboardShouldPersistTaps={'always'}
+          contentContainerStyle={{ margin: 5 }}
+        >
+          {/* Company */}
+          <CustomPicker
+            ref={this.cpCompany}
+            title={'Select Company'}
+            placeholder={'Select a company'}
+            data={data.companies}
+          />
 
-        <Text style={{ marginBottom: 8 }}>Passes</Text>
+          <Text style={{ marginBottom: 8 }}>Passes</Text>
 
-        {/* Passes */}
-        <Passes
-          ref={this.pPasses}
-          count={count}
-        />
+          {/* Passes */}
+          <Passes
+            ref={this.pPasses}
+            count={count}
+          />
 
-        <Button
-          title={'ISSUE PASS' + (count > 1 ? 'ES' : '')}
-          style={{ marginBottom: 8 }}
-          onPress={this.onIssuePassPressed}
+          {/* Description */}
+          <InputWrapper>
+            <TextInput
+              onChangeText={this.onDescriptionChanged}
+              value={this.state.description}
+              style={{ textAlignVertical: 'top' }}
+              placeholder={'Description'}
+              numberOfLines={3}
+              multiline={true}
+            />
+          </InputWrapper>
+
+          <Button
+            title={'ISSUE PASS' + (count > 1 ? 'ES' : '')}
+            style={{ marginBottom: 8 }}
+            onPress={this.onIssuePassPressed}
+          />
+
+        </ScrollView>
+
+        <NetworkProgressOverlay
+          response={this.props.issuePassResponse}
         />
-      </ScrollView>
+      </View>
     );
+  }
+
+  componentWillReceiveProps(newProps: DispatchProps): void {
+    if (newProps.issuePassResponse.isSuccess) {
+      if (!newProps.issuePassResponse.response.error) {
+        Alert.alert('Success', newProps.issuePassResponse.response.message);
+      } else {
+        Alert.alert('Failed', newProps.issuePassResponse.response.message);
+      }
+    }
   }
 
   onIssuePassPressed = () => {
@@ -113,7 +155,15 @@ class NewPassScreen
 
     if (this.inputValidator.isAllValid(true)) {
       const passesJson = classToPlain<Pass>(this.pPasses.current.getPasses());
-      
+
+      this.props.issuePass(
+        this.props.guardReducer.guard.apiKey,
+        new Params(
+          this.cpCompany.current.getSelectedValue(),
+          JSON.stringify(passesJson),
+          this.state.description
+        )
+      );
     }
   }
 
@@ -143,11 +193,13 @@ class NewPassScreen
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
   guardReducer: rootReducer.guardReducer,
-  loadIssuePassResponse: rootReducer.loadIssuePassReducer
+  loadIssuePassResponse: rootReducer.loadIssuePassReducer,
+  issuePassResponse: rootReducer.issuePassReducer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadIssuePass: (apiKey: string) => dispatch(loadIssuePass(apiKey))
+  loadIssuePass: (apiKey: string) => dispatch(loadIssuePass(apiKey)),
+  issuePass: (authorization: string, params: Params) => dispatch(issuePass(authorization, params))
 });
 
 export const newPassScreen = connect(

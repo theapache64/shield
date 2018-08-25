@@ -88,9 +88,7 @@ export class CustomPicker extends PureComponent<PropTypes, StateTypes> implement
 
       // With placeholder
       return (
-        <InputWrapper
-          style={this.pro}
-        >
+        <InputWrapper>
           <Text style={{ fontSize: 13 }}>{title}</Text>
           <Picker
             {...otherProps}
