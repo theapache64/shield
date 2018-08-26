@@ -20,16 +20,18 @@ import { mainScreen } from './screens/main_screen/MainScreen';
 import { splashScreen } from './screens/splash_screen/SplashScreen';
 import { store } from './Store';
 import { newPassScreen } from './screens/new_pass_screen/NewPassScreen';
+import { issuedPassesScreen } from './screens/issued_passes_screen/IssuedPassesScreen';
 
 const RootStack = createStackNavigator(
   {
     splashScreen,
     mainScreen,
     logInScreen,
-    newPassScreen
+    newPassScreen,
+    issuedPassesScreen
   },
   {
-    initialRouteName: 'splashScreen',
+    initialRouteName: 'issuedPassesScreen',
     initialRouteParams: {
       count: 1,
     },

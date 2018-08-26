@@ -4,6 +4,7 @@ import { loadHomeReducer } from '../api/routes/LoadHome';
 import { GuardReducer, guardReducer } from './GuardReducer';
 import { loadIssuePassReducer } from '../api/routes/LoadIssuePass';
 import { issuePassReducer } from '../api/routes/IssuePass';
+import { getPassesReducer } from '../api/routes/GetPasses';
 
 export interface RootReducer {
   loginReducer: any;
@@ -11,6 +12,7 @@ export interface RootReducer {
   guardReducer: any;
   loadIssuePassReducer: any;
   issuePassReducer: any;
+  getPassesReducer: any;
 }
 
 const allReducers: RootReducer = {
@@ -18,7 +20,8 @@ const allReducers: RootReducer = {
   loadHomeReducer,
   guardReducer,
   loadIssuePassReducer,
-  issuePassReducer
+  issuePassReducer,
+  getPassesReducer
 };
 
 export const rootReducer = combineReducers(allReducers);
