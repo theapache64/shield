@@ -20,6 +20,11 @@ import * as Keychain from 'react-native-keychain';
 import { Guard } from '../../api/responses/LogInResponse';
 import { GuardReducer } from '../../reducers/GuardReducer';
 import { CLEAR_GUARD_REQUEST } from '../../sagas/guard/ClearGuardSaga';
+import { default as Dialog } from 'react-native-dialog';
+import { NavProps } from '../new_pass_screen/NewPassScreen';
+import { InputWrapper } from '../../guerilla/widgets/custom_picker/InputWrapper';
+import { styles } from './Styles';
+import { Guerilla } from '../../guerilla/Guerilla';
 
 interface Props {
 }
@@ -32,7 +37,8 @@ interface DispatchProps {
 }
 
 interface States {
-
+  isIssuePassDialogVisible: boolean;
+  numOfPasses: string;
 }
 
 const MI_REFRESH = NumberUtils.getRandomId();
@@ -61,6 +67,10 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
     new GridMenuItemData(GI_LOGOUT, 'LOGOUT', 'logout'),
   ];
 
+  state = {
+    isIssuePassDialogVisible: false,
+    numOfPasses: ''
+  };
   renderNetworkShieldScreen(response: LoadHomeResponse): ReactElement<any> {
     return (
       <View flex={1}>
@@ -71,10 +81,66 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
           menuIcons={MainScreen.TOOLBAR_MENU_ITEMS}
         />
 
+        <Dialog.Container visible={this.state.isIssuePassDialogVisible}>
+
+          <Dialog.Title>Number of Passes</Dialog.Title>
+          <Dialog.Description>Number of passes to be issued</Dialog.Description>
+
+          <Dialog.Input
+            style={styles.dlgInput}
+            keyboardType={'numeric'}
+            onChangeText={this.onNumberOfPassesChanged}
+            placeholder={'Number of passes'}
+          />
+
+          <Dialog.Button
+            label={'CANCEL'}
+            color={Guerilla.getInstance().getColorPrimary()}
+            onPress={this.onCancelIssuePassDialogButtonPressed}
+          />
+
+          <Dialog.Button
+            label={'OK'}
+            color={Guerilla.getInstance().getColorPrimary()}
+            onPress={this.onIssuePassPassDialogButtonPressed}
+          />
+        </Dialog.Container>
+
         {response && this.renderContent(response.data)}
 
       </View>
     );
+  }
+
+  onNumberOfPassesChanged = (newVal: string) => {
+    this.setState({
+      numOfPasses: newVal
+    });
+  }
+  onIssuePassPassDialogButtonPressed = () => {
+    const numOfPasses = parseInt(this.state.numOfPasses, 10);
+    this.setState(
+      {
+        isIssuePassDialogVisible: false
+      },
+      () => {
+        if (numOfPasses > 0) {
+          const params: NavProps = {
+            count: numOfPasses
+          };
+          this.props.navigation.navigate('newPassScreen', params);
+        } else {
+          Alert.alert('Error', 'Number of passes should be greater or equal to one');
+        }
+      }
+    );
+
+  }
+
+  onCancelIssuePassDialogButtonPressed = () => {
+    this.setState({
+      isIssuePassDialogVisible: false
+    });
   }
 
   hasHeaderMargin(): boolean {
@@ -119,7 +185,9 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
         return;
 
       case GI_ISSUE_NEW_PASS:
-        this.props.navigation.navigate('newPassScreen');
+        this.setState({
+          isIssuePassDialogVisible: true
+        });
         return;
 
       default:
@@ -162,6 +230,7 @@ class MainScreen extends BaseNetworkShieldScreen<LoadHomeResponse, Props & Dispa
       this.props.guardReducer.guard.apiKey
     );
   }
+
   getResponseType(): any {
     return LoadHomeResponse;
   }

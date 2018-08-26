@@ -20,6 +20,8 @@ import { InputWrapper } from '../../guerilla/widgets/custom_picker/InputWrapper'
 import { Params, issuePass } from '../../api/routes/IssuePass';
 import { IssuePassResponse } from '../../api/responses/IssuePassResponse';
 import { NetworkProgressOverlay } from '../../guerilla/ui/NetworkProgressOverlay';
+import { ToolbarMenuItem } from '../../guerilla/models/ToolbarMenuItem';
+import { NumberUtils } from '../../guerilla/utils/NumberUtils';
 
 interface DispatchProps {
   guardReducer: GuardReducer;
@@ -37,9 +39,13 @@ interface States {
   description: string;
 }
 
-interface NavProps {
+export interface NavProps {
   count: number;
 }
+
+const MENU_ICONS: ToolbarMenuItem[] = [
+  new ToolbarMenuItem(NumberUtils.getRandomId(), 'check')
+];
 
 class NewPassScreen
   extends BaseNetworkShieldScreen<
@@ -66,12 +72,20 @@ class NewPassScreen
           title={'Issue New Pass'}
           backNavigation={true}
           navigation={this.props.navigation}
+          menuIcons={MENU_ICONS}
+          onMenuItemPressed={this.onToolbarMenuItemPressed}
         />
 
         {response && this.renderContent(response.data)}
 
       </View>
     );
+  }
+
+  onToolbarMenuItemPressed = (menuItem: ToolbarMenuItem) => {
+    if (menuItem.id === MENU_ICONS[0].id) {
+      this.onIssuePassPressed();
+    }
   }
   onDescriptionChanged = (newVal: string) => {
     this.setState({ description: newVal });
@@ -114,12 +128,6 @@ class NewPassScreen
             />
           </InputWrapper>
 
-          <Button
-            title={'ISSUE PASS' + (count > 1 ? 'ES' : '')}
-            style={{ marginBottom: 8 }}
-            onPress={this.onIssuePassPressed}
-          />
-
         </ScrollView>
 
         <NetworkProgressOverlay
@@ -132,7 +140,14 @@ class NewPassScreen
   componentWillReceiveProps(newProps: DispatchProps): void {
     if (newProps.issuePassResponse.isSuccess) {
       if (!newProps.issuePassResponse.response.error) {
-        Alert.alert('Success', newProps.issuePassResponse.response.message);
+        Alert.alert('Success', newProps.issuePassResponse.response.message, [
+          {
+            text: 'OK',
+            onPress: () => {
+              this.props.navigation.goBack();
+            }
+          }
+        ]);
       } else {
         Alert.alert('Failed', newProps.issuePassResponse.response.message);
       }
