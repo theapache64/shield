@@ -1,14 +1,17 @@
-import { default as React, PureComponent, ReactElement } from 'react';
-import { View, Text, TextProps } from 'react-native';
-import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
-import { GetPassesResponse } from '../../api/responses/GetPassesResponse';
-import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
+import { default as React, ReactElement } from 'react';
+import { FlatList, ListRenderItemInfo, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { rootReducer, RootReducer } from '../../reducers/RootReducer';
 import { Dispatch } from 'redux';
-import { Params, getPasses } from '../../api/routes/GetPasses';
-import { GuardReducer } from '../../reducers/GuardReducer';
+
+import { Company, Data, GetPassesResponse } from '../../api/responses/GetPassesResponse';
+import { getPasses, Params } from '../../api/routes/GetPasses';
+import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { Header } from '../../guerilla/widgets/header/Header';
+import { GuardReducer } from '../../reducers/GuardReducer';
+import { RootReducer } from '../../reducers/RootReducer';
+import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
+import { styles } from './Styles';
+import { GuerillaText } from '../../guerilla/widgets/guerialla_text/GuerillaText';
 
 interface DispatchProps {
   guardReducer: GuardReducer;
@@ -21,7 +24,7 @@ interface Props {
 }
 
 interface States {
-
+  activeTabIndex: number;
 }
 
 class IssuedPassesScreen extends BaseNetworkShieldScreen<
@@ -29,12 +32,72 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
   Props & DispatchProps,
   States
   > {
+
+  state = {
+    activeTabIndex: 0
+  };
+  flTab = React.createRef<FlatList<Company>>();
+
   renderNetworkShieldScreen(response: GetPassesResponse): ReactElement<any> {
     return (
       <View>
-        <Header backNavigation={true} title={'Issued Passes'} />
-        {response !== null && <Text>{response.data.companies[0].name}</Text>}
+        <Header
+          navigation={this.props.navigation}
+          backNavigation={true}
+          title={'Issued Passes'}
+        />
+        {response !== null && this.renderIssuedPasses(response.data)}
       </View>
+    );
+  }
+  renderIssuedPasses(data: Data): any {
+    return (
+      <View>
+        {/* Tabs */}
+        <FlatList<Company>
+          ref={this.flTab}
+          data={data.companies}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={this.renderTab}
+          keyExtractor={this.keyExtractor}
+        />
+        {/* Passes */}
+      </View>
+    );
+  }
+
+  keyExtractor(item: Company, index: number): string {
+    return index.toString();
+  }
+
+  renderTab = (item: ListRenderItemInfo<Company>) => {
+    const isActiveTab = item.index === this.state.activeTabIndex;
+    return (
+      <TouchableOpacity onPress={this.onTabPressed.bind(null, item)}>
+        <View style={[styles.vTab, isActiveTab && styles.vActiveTab]}>
+          <GuerillaText
+            fontFamily={isActiveTab ? 'Roboto-Medium' : 'Roboto-Regular'}
+            style={styles.tTabTitle}
+          >
+            {item.item.name}
+          </GuerillaText>
+        </View>
+      </TouchableOpacity >
+    );
+  }
+  onTabPressed = (item: ListRenderItemInfo<Company>) => {
+    this.setState(
+      {
+        activeTabIndex: item.index
+      },
+      () => {
+        this.flTab.current.scrollToIndex({
+          index: this.state.activeTabIndex,
+          animated: true,
+          viewPosition: 0.5
+        });
+      }
     );
   }
   load(): void {
