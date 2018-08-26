@@ -20,7 +20,7 @@ export class Params {
 
 // Action 
 export const getPasses = (
-  authorisation: string,
+  authorization: string,
   params: Params
 ): AxiosRequestType => AxiosRequest.build(
   GET_PASSES,

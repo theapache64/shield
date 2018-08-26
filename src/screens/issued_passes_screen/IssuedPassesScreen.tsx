@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { Company, Data, GetPassesResponse, Pass } from '../../api/responses/GetPassesResponse';
-import { getPasses, Params } from '../../api/routes/GetPasses';
+import { getPasses, Params as GetPassesParams } from '../../api/routes/GetPasses';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { Header } from '../../guerilla/widgets/header/Header';
 import { GuardReducer } from '../../reducers/GuardReducer';
@@ -14,11 +14,16 @@ import { styles } from './Styles';
 import { GuerillaText } from '../../guerilla/widgets/guerialla_text/GuerillaText';
 import { IssuedPass } from './widgets/issued_pass/IssuedPass';
 import { materialColors } from '../../guerilla/res/MaterialColors';
+import { Params as RevokePassParams, revokePass } from '../../api/routes/RevokePass';
+import { RevokePassResponse } from '../../api/responses/RevokePassResponse';
+import { NetworkProgressOverlay } from '../../guerilla/ui/NetworkProgressOverlay';
 
 interface DispatchProps {
   guardReducer: GuardReducer;
-  getPasses: (authorization: string, params: Params) => void;
+  getPasses: (authorization: string, params: GetPassesParams) => void;
+  revokePass: (authorization: string, params: RevokePassParams) => void;
   getPassesResponse: NetworkResponse<GetPassesResponse>;
+  revokePassResponse: NetworkResponse<RevokePassResponse>;
 }
 
 interface Props {
@@ -70,6 +75,7 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
           renderItem={this.renderPass}
           keyExtractor={this.keyExtractor}
         />
+
       </View>
     );
   }
@@ -84,7 +90,12 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
   }
 
   onRevokePassPressed = (pass: Pass) => {
-    console.warn('Revoke ', pass);
+    this.props.revokePass(
+      this.props.guardReducer.guard.apiKey,
+      new RevokePassParams(
+        pass.id
+      )
+    );
   }
 
   keyExtractor(item: any, index: number): string {
@@ -123,7 +134,7 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
   load(): void {
     this.props.getPasses(
       this.props.guardReducer.guard.apiKey,
-      new Params()
+      new GetPassesParams()
     );
   }
   getResponseType(): any {
@@ -141,11 +152,15 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
 
 const mapStateToProps = (rootReducer: RootReducer) => ({
   guardReducer: rootReducer.guardReducer,
+  revokePassResponse: rootReducer.revokePassReducer,
   getPassesResponse: rootReducer.getPassesReducer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getPasses: (authorization: string, params: Params) => dispatch(getPasses(authorization, params))
+  getPasses: (authorization: string, params: GetPassesParams) =>
+    dispatch(getPasses(authorization, params)),
+  revokePass: (authorization: string, params: RevokePassParams) =>
+    dispatch(revokePass(authorization, params))
 });
 
 export const issuedPassesScreen = connect(

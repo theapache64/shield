@@ -1,4 +1,4 @@
-import { AxiosRequest } from '../../guerilla/utils/api/AxiosRequest';
+import { AxiosRequest, AxiosRequestType } from '../../guerilla/utils/api/AxiosRequest';
 import { BaseAction } from '../../guerilla/utils/api/BaseAction';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { ResponseManager } from '../../guerilla/utils/api/ResponseManager';
@@ -22,7 +22,7 @@ export class Params {
 export const revokePass = (
   authorization: string,
   params: Params
-): AxiosRequest => AxiosRequest.build(
+): AxiosRequestType => AxiosRequest.build(
   REVOKE_PASS,
   'PUT',
   '/revoke_pass',
