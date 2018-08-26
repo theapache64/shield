@@ -3,7 +3,7 @@ import { FlatList, ListRenderItemInfo, Text, TouchableOpacity, View } from 'reac
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { Company, Data, GetPassesResponse } from '../../api/responses/GetPassesResponse';
+import { Company, Data, GetPassesResponse, Pass } from '../../api/responses/GetPassesResponse';
 import { getPasses, Params } from '../../api/routes/GetPasses';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { Header } from '../../guerilla/widgets/header/Header';
@@ -12,6 +12,8 @@ import { RootReducer } from '../../reducers/RootReducer';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
 import { styles } from './Styles';
 import { GuerillaText } from '../../guerilla/widgets/guerialla_text/GuerillaText';
+import { IssuedPass } from './widgets/issued_pass/IssuedPass';
+import { materialColors } from '../../guerilla/res/MaterialColors';
 
 interface DispatchProps {
   guardReducer: GuardReducer;
@@ -52,7 +54,7 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
   }
   renderIssuedPasses(data: Data): any {
     return (
-      <View>
+      <View >
         {/* Tabs */}
         <FlatList<Company>
           ref={this.flTab}
@@ -63,11 +65,29 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
           keyExtractor={this.keyExtractor}
         />
         {/* Passes */}
+        <FlatList<Pass>
+          data={data.companies[this.state.activeTabIndex].passes}
+          renderItem={this.renderPass}
+          keyExtractor={this.keyExtractor}
+        />
       </View>
     );
   }
 
-  keyExtractor(item: Company, index: number): string {
+  renderPass = (item: ListRenderItemInfo<Pass>): ReactElement<any> => {
+    return (
+      <IssuedPass
+        onRevokePassPressed={this.onRevokePassPressed}
+        pass={item.item}
+      />
+    );
+  }
+
+  onRevokePassPressed = (pass: Pass) => {
+    console.warn('Revoke ', pass);
+  }
+
+  keyExtractor(item: any, index: number): string {
     return index.toString();
   }
 
