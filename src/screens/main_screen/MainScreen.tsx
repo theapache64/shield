@@ -1,30 +1,28 @@
 import { default as React, ReactElement } from 'react';
-import { FlatList, ListRenderItemInfo, View, Alert } from 'react-native';
+import { Alert, FlatList, ListRenderItemInfo, View } from 'react-native';
+import { default as Dialog } from 'react-native-dialog';
+import * as Keychain from 'react-native-keychain';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { Data, LoadHomeResponse } from '../../api/responses/LoadHomeResponse';
+import { Guard } from '../../api/responses/LogInResponse';
 import { loadHome } from '../../api/routes/LoadHome';
-import { App } from '../../App';
+import { Guerilla } from '../../guerilla/Guerilla';
 import { ToolbarMenuItem } from '../../guerilla/models/ToolbarMenuItem';
 import { NetworkResponse } from '../../guerilla/utils/api/NetworkResponse';
 import { NumberUtils } from '../../guerilla/utils/NumberUtils';
+import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
 import { Header } from '../../guerilla/widgets/header/Header';
 import { GridMenuItemData } from '../../models/GridMenuItemData';
+import { GuardReducer } from '../../reducers/GuardReducer';
 import { RootReducer } from '../../reducers/RootReducer';
+import { CLEAR_GUARD_REQUEST } from '../../sagas/guard/ClearGuardSaga';
 import { BaseNetworkShieldScreen } from '../base/BaseNetworkShieldScreen';
+import { NavProps } from '../new_pass_screen/NewPassScreen';
+import { styles } from './Styles';
 import { Counter } from './widgets/counter/Counter';
 import { GridMenuItem } from './widgets/grid_menu_item/GridMenuItem';
-import { StackActionsUtils } from '../../guerilla/utils/StackActionsUtils';
-import * as Keychain from 'react-native-keychain';
-import { Guard } from '../../api/responses/LogInResponse';
-import { GuardReducer } from '../../reducers/GuardReducer';
-import { CLEAR_GUARD_REQUEST } from '../../sagas/guard/ClearGuardSaga';
-import { default as Dialog } from 'react-native-dialog';
-import { NavProps } from '../new_pass_screen/NewPassScreen';
-import { InputWrapper } from '../../guerilla/widgets/custom_picker/InputWrapper';
-import { styles } from './Styles';
-import { Guerilla } from '../../guerilla/Guerilla';
 
 interface Props {
 }
