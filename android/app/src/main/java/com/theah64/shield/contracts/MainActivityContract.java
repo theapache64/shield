@@ -1,12 +1,13 @@
 package com.theah64.shield.contracts;
 
+import com.theah64.shield.views.BaseView;
+
 public interface MainActivityContract {
     interface Model {
         String getData();
     }
 
-    interface View {
-        void initView();
+    interface View extends BaseView {
         void onData(String data);
     }
 

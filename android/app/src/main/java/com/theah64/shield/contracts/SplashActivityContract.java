@@ -1,20 +1,22 @@
 package com.theah64.shield.contracts;
 
-public class SplashActivityContract {
+import com.theah64.shield.views.BaseView;
 
-    public interface Callback {
+public interface SplashActivityContract {
+
+    interface Callback {
         void onSuccess();
     }
 
-    public interface View {
+    interface View extends BaseView {
         void onTimeout();
     }
 
-    public interface Model {
+    interface Model {
         void startCounter(long durationInMillis, Callback callback);
     }
 
-    public interface Presenter {
+    interface Presenter {
         void startCounter(long durationInMillis);
     }
 

@@ -4,7 +4,7 @@ import android.os.Handler;
 
 import com.theah64.shield.contracts.SplashActivityContract;
 
-public class SplashActivityModel implements SplashActivityContract.Model {
+public class SplashActivityModel extends BaseModel implements SplashActivityContract.Model {
 
     @Override
     public void startCounter(long durationInMillis, final SplashActivityContract.Callback callback) {
