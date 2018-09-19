@@ -24,7 +24,7 @@ export const revokePass = (
   params: Params
 ): AxiosRequestType => AxiosRequest.build(
   REVOKE_PASS,
-  'PUT',
+  'POST',
   '/revoke_pass',
   params,
   authorization

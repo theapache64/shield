@@ -47,19 +47,36 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
 
   renderNetworkShieldScreen(response: GetPassesResponse): ReactElement<any> {
     return (
-      <View>
+      <View flex={1}>
         <Header
           navigation={this.props.navigation}
           backNavigation={true}
           title={'Issued Passes'}
         />
         {response !== null && this.renderIssuedPasses(response.data)}
+
+        <NetworkProgressOverlay
+          hasHeaderMargin={true}
+          response={this.props.revokePassResponse}
+        />
+
       </View>
     );
   }
+
+  componentWillReceiveProps(nextProps: DispatchProps): void {
+    if (nextProps.revokePassResponse.isSuccess) {
+      if (!nextProps.revokePassResponse.response.error) {
+        // Removed
+        
+      }
+    }
+  }
+
   renderIssuedPasses(data: Data): any {
     return (
-      <View >
+      <View>
+
         {/* Tabs */}
         <FlatList<Company>
           ref={this.flTab}
@@ -71,6 +88,7 @@ class IssuedPassesScreen extends BaseNetworkShieldScreen<
         />
         {/* Passes */}
         <FlatList<Pass>
+          style={{ backgroundColor: 'red' }}
           data={data.companies[this.state.activeTabIndex].passes}
           renderItem={this.renderPass}
           keyExtractor={this.keyExtractor}
