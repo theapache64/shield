@@ -2,7 +2,6 @@ package com.theah64.shield.presenters;
 
 import com.theah64.shield.contracts.SplashActivityContract;
 import com.theah64.shield.models.SplashActivityModel;
-import com.theah64.shield.views.SplashActivity;
 
 public class SplashActivityPresenter
         extends BasePresenter<SplashActivityContract.View>
