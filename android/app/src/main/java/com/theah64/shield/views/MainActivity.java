@@ -16,7 +16,11 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     private static final String TAG = MainActivity.class.getSimpleName();
     Button btnCheck;
     MainActivityContract.Presenter presenter;
+    private CompositeDisposable compositeDisposables = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +40,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         presenter = new MainActivityPresenter(this);
 
         // Checking RxJava
-        Observable<String> marvelObservable = Observable.just("Ironman", "Antman", "Hulk", "Loki", "Thor", "Black Widow");
-        Observer<String> marvelObserver = new Observer<String>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                Log.d(TAG, "Subscribed to marvel chars");
-            }
+        Observable<String> marvelObservable = Observable.fromArray("Ironman", "Antman", "Hulk", "Loki", "Loki 2", "Thor", "Black Widow");
+        DisposableObserver<String> marvelObserver1 = new DisposableObserver<String>() {
 
             @Override
             public void onNext(String s) {
@@ -58,10 +59,62 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             }
         };
 
-        marvelObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(marvelObserver);
+        DisposableObserver<String> marvelObserver2 = new DisposableObserver<String>() {
+
+            @Override
+            public void onNext(String s) {
+                Log.d(TAG, "Marvel CHAR IS " + s);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, "Error : " + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i(TAG, "Completed marvel chars");
+            }
+        };
+
+        compositeDisposables.add(
+                marvelObservable
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .filter(new Predicate<String>() {
+                            @Override
+                            public boolean test(String s) throws Exception {
+                                return s.toLowerCase().startsWith("l");
+                            }
+                        })
+                        .map(new Function<String, String>() {
+                            @Override
+                            public String apply(String s) throws Exception {
+                                return s.toUpperCase();
+                            }
+                        })
+                        .subscribeWith(marvelObserver1)
+        );
+
+
+        compositeDisposables.add(
+                marvelObservable
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .filter(new Predicate<String>() {
+                            @Override
+                            public boolean test(String s) throws Exception {
+                                return s.toLowerCase().startsWith("l");
+                            }
+                        })
+                        .map(new Function<String, String>() {
+                            @Override
+                            public String apply(String s) throws Exception {
+                                return s.toLowerCase();
+                            }
+                        })
+                        .subscribeWith(marvelObserver2)
+        );
     }
 
     @Override
@@ -73,6 +126,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
                 presenter.onClick();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        this.compositeDisposables.clear();
     }
 
     @Override
