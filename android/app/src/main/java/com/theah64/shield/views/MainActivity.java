@@ -10,9 +10,15 @@ import android.widget.Toast;
 
 import com.theah64.shield.R;
 import com.theah64.shield.contracts.MainActivityContract;
+import com.theah64.shield.pojos.User;
 import com.theah64.shield.presenters.MainActivityPresenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,82 +45,69 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
         presenter = new MainActivityPresenter(this);
 
+        final List<User> users = new ArrayList<>();
+        users.add(new User("John", "USA"));
+        users.add(new User("Ravi", "India"));
+        users.add(new User("Chop", "China"));
+        users.add(new User("Chandran", "India"));
+        users.add(new User("Oblar", "Mexico"));
+
         // Checking RxJava
-        Observable<String> marvelObservable = Observable.fromArray("Ironman", "Antman", "Hulk", "Loki", "Loki 2", "Thor", "Black Widow");
-        DisposableObserver<String> marvelObserver1 = new DisposableObserver<String>() {
-
+        Observable<User> userObservable = Observable.create(new ObservableOnSubscribe<User>() {
             @Override
-            public void onNext(String s) {
-                Log.d(TAG, "Marvel char is " + s);
+            public void subscribe(ObservableEmitter<User> emitter) throws Exception {
+
+                for (User user : users) {
+                    if (!emitter.isDisposed()) {
+                        emitter.onNext(user);
+                    }
+                }
+
+                if (!emitter.isDisposed()) {
+                    emitter.onComplete();
+                }
+            }
+        });
+
+
+        DisposableObserver<User> userObserver = new DisposableObserver<User>() {
+            @Override
+            public void onNext(User user) {
+                System.out.println("User is " + user);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e(TAG, "Error : " + e.getMessage());
+
             }
 
             @Override
             public void onComplete() {
-                Log.i(TAG, "Completed marvel chars");
-            }
-        };
 
-        DisposableObserver<String> marvelObserver2 = new DisposableObserver<String>() {
-
-            @Override
-            public void onNext(String s) {
-                Log.d(TAG, "Marvel CHAR IS " + s);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(TAG, "Error : " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
-                Log.i(TAG, "Completed marvel chars");
             }
         };
 
         compositeDisposables.add(
-                marvelObservable
+                userObservable
                         .subscribeOn(Schedulers.io())
+                        .filter(new Predicate<User>() {
+                            @Override
+                            public boolean test(User user) throws Exception {
+                                return user.getName().toLowerCase().startsWith("c");
+                            }
+                        })
+                        .map(new Function<User, User>() {
+                            @Override
+                            public User apply(User user) throws Exception {
+                                user.setName(user.getName().toUpperCase());
+                                return user;
+                            }
+                        })
                         .observeOn(AndroidSchedulers.mainThread())
-                        .filter(new Predicate<String>() {
-                            @Override
-                            public boolean test(String s) throws Exception {
-                                return s.toLowerCase().startsWith("l");
-                            }
-                        })
-                        .map(new Function<String, String>() {
-                            @Override
-                            public String apply(String s) throws Exception {
-                                return s.toUpperCase();
-                            }
-                        })
-                        .subscribeWith(marvelObserver1)
+                        .subscribeWith(userObserver)
         );
 
 
-        compositeDisposables.add(
-                marvelObservable
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .filter(new Predicate<String>() {
-                            @Override
-                            public boolean test(String s) throws Exception {
-                                return s.toLowerCase().startsWith("l");
-                            }
-                        })
-                        .map(new Function<String, String>() {
-                            @Override
-                            public String apply(String s) throws Exception {
-                                return s.toLowerCase();
-                            }
-                        })
-                        .subscribeWith(marvelObserver2)
-        );
     }
 
     @Override
