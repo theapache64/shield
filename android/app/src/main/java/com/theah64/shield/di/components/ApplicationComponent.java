@@ -1,6 +1,7 @@
 package com.theah64.shield.di.components;
 
 import com.theah64.shield.di.modules.ApplicationContextModule;
+import com.theah64.shield.di.modules.GuardModule;
 import com.theah64.shield.di.modules.NetworkModule;
 import com.theah64.shield.di.modules.PreferenceModule;
 import com.theah64.shield.models.SplashActivityModel;
@@ -15,7 +16,8 @@ import dagger.Component;
         modules = {
                 PreferenceModule.class,
                 NetworkModule.class,
-                ApplicationContextModule.class
+                ApplicationContextModule.class,
+                GuardModule.class
         }
 )
 public interface ApplicationComponent {

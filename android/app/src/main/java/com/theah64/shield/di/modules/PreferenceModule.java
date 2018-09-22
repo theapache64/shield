@@ -10,9 +10,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(
-        includes = ApplicationContextModule.class
-)
+@Module
 public class PreferenceModule {
 
     private final String fileName;

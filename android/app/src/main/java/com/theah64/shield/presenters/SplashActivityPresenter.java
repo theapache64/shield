@@ -15,7 +15,7 @@ public class SplashActivityPresenter
 
     public SplashActivityPresenter(SplashActivityContract.View view, Context context) {
         super(view);
-        this.model = new SplashActivityModel(context);
+        this.model = new SplashActivityModel();
     }
 
     @Override

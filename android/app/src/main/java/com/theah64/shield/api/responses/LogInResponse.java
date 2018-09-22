@@ -12,15 +12,17 @@ public class LogInResponse {
     private final Guard guard;
 
 
-    public LogInResponse(Guard guard){
+    public LogInResponse(Guard guard) {
         this.guard = guard;
     }
 
-    public Guard getGuard(){
+    public Guard getGuard() {
         return guard;
     }
 
     public static class Guard {
+
+        public static final String KEY = "guard";
 
         @SerializedName("name")
         private final String name;
@@ -29,21 +31,20 @@ public class LogInResponse {
         private final String apiKey;
 
 
-        public Guard(String name,String apiKey){
+        public Guard(String name, String apiKey) {
             this.name = name;
             this.apiKey = apiKey;
         }
 
-        public String getName(){
+        public String getName() {
             return name;
         }
 
-        public String getApiKey(){
+        public String getApiKey() {
             return apiKey;
         }
 
     }
-
 
 
 }

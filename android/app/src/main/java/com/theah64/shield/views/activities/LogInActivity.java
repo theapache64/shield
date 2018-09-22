@@ -17,14 +17,12 @@ public class LogInActivity extends AppCompatActivity {
     @Inject
     Retrofit retrofit;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
         Shield.getApplicationComponent().inject(this);
-
         Toast.makeText(this, retrofit.toString(), Toast.LENGTH_SHORT).show();
     }
 }

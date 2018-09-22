@@ -10,10 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".views.activities.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <!--Splash-->
         <activity
             android:name=".views.activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -23,7 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.activities.LogInActivity"></activity>
+        <!--LogIn
+        -->
+        <activity
+            android:name=".views.activities.LogInActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <!--Main-->
+        <activity
+            android:name=".views.activities.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
