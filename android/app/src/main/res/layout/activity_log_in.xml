@@ -9,6 +9,16 @@
     android:padding="18dp"
     tools:context=".views.activities.LogInActivity">
 
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="38dp"
+        android:text="{icon-shield}"
+        android:textColor="@color/colorAccent"
+        android:textSize="80sp" />
+
     <!--Username-->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilUsername"
@@ -45,6 +55,7 @@
         android:id="@+id/bLogIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
         android:text="@string/LOGIN" />
 
 </LinearLayout>
