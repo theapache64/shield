@@ -27,6 +27,5 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
 
     // Butterknife
-    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+    api "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
 }
