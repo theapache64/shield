@@ -43,10 +43,14 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
     // Dagger
-    implementation  "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
+    // Just butter knife compiler, core library.
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation project(path: ':guerilla')
+
+
+
+    implementation project(path: ':gorilla')
 }

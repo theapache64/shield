@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.theah64.gorilla.utils.ProgressMan;
 import com.theah64.shield.R;
 import com.theah64.shield.contracts.SplashActivityContract;
 import com.theah64.shield.presenters.SplashActivityPresenter;
@@ -19,6 +20,8 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityC
 
         this.presenter = new SplashActivityPresenter(this, getApplicationContext());
         this.presenter.startCounter(1000);
+
+        new ProgressMan(this).inflate();
     }
 
 

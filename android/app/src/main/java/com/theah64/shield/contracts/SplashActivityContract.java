@@ -1,6 +1,6 @@
 package com.theah64.shield.contracts;
 
-import com.theah64.guerilla.views.activities.BaseView;
+import com.theah64.gorilla.views.activities.BaseView;
 
 public interface SplashActivityContract {
 

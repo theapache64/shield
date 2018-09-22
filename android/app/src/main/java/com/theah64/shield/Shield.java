@@ -2,19 +2,16 @@ package com.theah64.shield;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.SimpleLineIconsModule;
+import com.theah64.gorilla.core.Gorilla;
+import com.theah64.gorilla.core.GorillaConfig;
 import com.theah64.shield.di.components.ApplicationComponent;
 import com.theah64.shield.di.components.DaggerApplicationComponent;
 import com.theah64.shield.di.modules.ApplicationContextModule;
 import com.theah64.shield.di.modules.NetworkModule;
 import com.theah64.shield.di.modules.PreferenceModule;
-
-import javax.inject.Inject;
-
-import retrofit2.Retrofit;
 
 public class Shield extends Application {
 
@@ -25,11 +22,17 @@ public class Shield extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Gorilla.init(
+                new GorillaConfig.Builder()
+                        .build()
+        );
+
         Iconify.with(new SimpleLineIconsModule());
-        initAppComponent(this);
+        initDaggerAppComponent(this);
+
     }
 
-    private static void initAppComponent(Context context) {
+    private static void initDaggerAppComponent(Context context) {
 
         Shield.applicationComponent = DaggerApplicationComponent.builder()
                 .networkModule(

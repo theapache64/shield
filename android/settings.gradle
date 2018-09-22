@@ -1,1 +1,1 @@
-include ':app', ':guerilla'
+include ':app', ':gorilla'
