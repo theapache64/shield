@@ -1,8 +1,8 @@
 package com.theah64.shield.presenters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
+import com.theah64.guerilla.presenters.BasePresenter;
 import com.theah64.shield.contracts.SplashActivityContract;
 import com.theah64.shield.models.SplashActivityModel;
 

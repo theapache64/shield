@@ -1,6 +1,6 @@
 package com.theah64.shield.contracts;
 
-import com.theah64.shield.views.BaseView;
+import com.theah64.guerilla.views.activities.BaseView;
 
 public interface MainActivityContract {
     interface Model {

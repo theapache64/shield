@@ -1,6 +1,7 @@
-package com.theah64.shield.presenters;
+package com.theah64.guerilla.presenters;
 
-import com.theah64.shield.views.BaseView;
+
+import com.theah64.guerilla.views.activities.BaseView;
 
 public class BasePresenter<View extends BaseView> {
     private final View view;

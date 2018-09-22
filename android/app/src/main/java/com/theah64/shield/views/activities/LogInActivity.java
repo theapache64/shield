@@ -1,16 +1,14 @@
 package com.theah64.shield.views.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.theah64.guerilla.ui.activities.BaseAppCompatActivity;
+import com.theah64.guerilla.views.activities.BaseAppCompatActivity;
 import com.theah64.shield.R;
 import com.theah64.shield.Shield;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Retrofit;
 
@@ -30,9 +28,8 @@ public class LogInActivity extends BaseAppCompatActivity {
 
     @OnClick(R.id.bLogIn)
     public void onLogInPressed() {
-
-        super.showLoading(R.string.Authenticating);
-
+        showToast("Clicked");
     }
+
 
 }
