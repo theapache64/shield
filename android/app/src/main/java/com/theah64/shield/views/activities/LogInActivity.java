@@ -20,17 +20,19 @@ public class LogInActivity extends BaseAppCompatActivity {
     @Inject
     Retrofit retrofit;
 
-    @OnClick(R.id.bLogIn)
-    public void onLogInPressed() {
-        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
         Shield.getApplicationComponent().inject(this);
-        Toast.makeText(this, retrofit.toString(), Toast.LENGTH_SHORT).show();
     }
+
+    @OnClick(R.id.bLogIn)
+    public void onLogInPressed() {
+
+        super.showLoading(R.string.Authenticating);
+
+    }
+
 }
