@@ -5,11 +5,11 @@ import com.theah64.shield.views.BaseView;
 public interface SplashActivityContract {
 
     interface Callback {
-        void onSuccess();
+        void onSuccess(boolean isLoggedIn);
     }
 
     interface View extends BaseView {
-        void onTimeout();
+        void onTimeout(boolean isLoggedIn);
     }
 
     interface Model {

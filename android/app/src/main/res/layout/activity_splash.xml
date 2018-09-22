@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.SplashActivity">
+    tools:context=".views.activities.SplashActivity">
 
     <com.joanzapata.iconify.widget.IconTextView
         android:layout_width="wrap_content"
@@ -12,6 +12,6 @@
         android:layout_gravity="center"
         android:text="{icon-shield}"
         android:textColor="@color/colorAccent"
-        android:textSize="50sp" />
+        android:textSize="80sp" />
 
 </FrameLayout>
