@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
@@ -43,13 +44,11 @@ dependencies {
     // Retrofit logger
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
-    // Butterknife
-    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
-
     // Dagger
     implementation  "com.google.dagger:dagger:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation project(path: ':guerilla')
 }
