@@ -13,7 +13,7 @@ public class SplashActivityPresenter
 
     private final SplashActivityContract.Model model;
 
-    public SplashActivityPresenter(SplashActivityContract.View view, Context context) {
+    public SplashActivityPresenter(SplashActivityContract.View view) {
         super(view);
         this.model = new SplashActivityModel();
     }

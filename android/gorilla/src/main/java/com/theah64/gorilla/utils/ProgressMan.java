@@ -1,6 +1,7 @@
 package com.theah64.gorilla.utils;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +32,17 @@ public class ProgressMan {
                 .findViewById(android.R.id.content)).getChildAt(0);
 
         if (rootView instanceof LinearLayout) {
+            // Removing root view
+            ((ViewGroup) activity.findViewById(android.R.id.content)).removeViewAt(0);
+
             final FrameLayout frameLayout = new FrameLayout(activity);
             final int width = FrameLayout.LayoutParams.MATCH_PARENT;
-            final int height = FrameLayout.LayoutParams.WRAP_CONTENT;
+            final int height = FrameLayout.LayoutParams.MATCH_PARENT;
             final FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
             frameLayout.setLayoutParams(layoutParams);
             frameLayout.addView(rootView);
-            ((ViewGroup) activity.findViewById(android.R.id.content)).removeViewAt(0);
 
-            activity.setContentView(rootView);
+            activity.setContentView(frameLayout);
         }
 
         View rootView2 = (ViewGroup) ((ViewGroup) activity

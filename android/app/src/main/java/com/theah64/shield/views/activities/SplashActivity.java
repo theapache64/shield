@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        this.presenter = new SplashActivityPresenter(this, getApplicationContext());
+        this.presenter = new SplashActivityPresenter(this);
         this.presenter.startCounter(1000);
 
         new ProgressMan(this).inflate();
