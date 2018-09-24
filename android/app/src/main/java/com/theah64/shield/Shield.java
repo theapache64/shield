@@ -28,6 +28,13 @@ public class Shield extends Application {
 
         Iconify.with(new SimpleLineIconsModule());
 
+        // All app level configs are stored in Gorilla class
+        Gorilla.init(
+                new GorillaConfig.Builder()
+                        .setBaseURL("http://theapache64.com/mock_api/get_json/shield/")
+                        .build()
+        );
+
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .preferenceModule(new PreferenceModule("shield"))
                 .applicationContextModule(new ApplicationContextModule(this))

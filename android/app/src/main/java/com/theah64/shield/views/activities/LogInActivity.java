@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 
-import com.theah64.shield.views.activities.base.BaseProgressManActivity;
 import com.theah64.shield.R;
 import com.theah64.shield.contracts.LogInActivityContract;
 import com.theah64.shield.di.components.DaggerLogInActivityComponent;
-import com.theah64.shield.di.modules.activities.LogInActivityModule;
 import com.theah64.shield.di.modules.NetworkModule;
+import com.theah64.shield.di.modules.activities.LogInActivityModule;
+import com.theah64.shield.utils.Validator;
+import com.theah64.shield.views.activities.base.BaseProgressManActivity;
 
 import javax.inject.Inject;
 
@@ -32,10 +33,14 @@ public class LogInActivity extends BaseProgressManActivity implements LogInActiv
     @BindView(R.id.tilPassword)
     TextInputLayout tilPassword;
 
+    Validator validator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        this.validator = Validator.from(this);
 
         DaggerLogInActivityComponent.builder()
                 .networkModule(new NetworkModule())
@@ -46,7 +51,9 @@ public class LogInActivity extends BaseProgressManActivity implements LogInActiv
 
     @OnClick(R.id.bLogIn)
     public void onLogInPressed() {
+        if (this.validator.isAllValid(true)) {
 
+        }
     }
 
 

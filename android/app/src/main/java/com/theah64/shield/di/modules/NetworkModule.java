@@ -1,6 +1,7 @@
 package com.theah64.shield.di.modules;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.theah64.shield.gorilla.Gorilla;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,6 +48,6 @@ public class NetworkModule {
     @Singleton
     @Provides
     String provideBaseUrl() {
-        return "http://theapache64.com/mock_api/get_json/shield/";
+        return Gorilla.getInstance().getBaseUrl();
     }
 }
