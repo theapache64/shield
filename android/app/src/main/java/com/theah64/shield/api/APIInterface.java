@@ -2,7 +2,7 @@ package com.theah64.shield.api;
 
 import android.support.annotation.NonNull;
 
-import com.theah64.gorilla.api.BaseAPIResponse;
+import com.theah64.shield.api.responses.BaseAPIResponse;
 import com.theah64.shield.api.responses.LogInResponse;
 
 import io.reactivex.Single;

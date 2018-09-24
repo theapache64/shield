@@ -1,16 +1,13 @@
 package com.theah64.shield.views.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.theah64.gorilla.utils.ProgressMan;
 import com.theah64.shield.R;
-import com.theah64.shield.Shield;
 import com.theah64.shield.contracts.SplashActivityContract;
 import com.theah64.shield.di.components.DaggerSplashActivityComponent;
 import com.theah64.shield.di.modules.ApplicationContextModule;
-import com.theah64.shield.di.modules.SplashActivityModule;
+import com.theah64.shield.di.modules.activities.SplashActivityModule;
 
 import javax.inject.Inject;
 
@@ -44,9 +41,10 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityC
     public void onTimeout(boolean isLoggedIn) {
         if (isLoggedIn) {
             // Starting MainActivity
-            startActivity(new Intent(this, LogInActivity.class));
+            MainActivity.start(this);
         } else {
             // Starting LogInActivity
+            LogInActivity.start(this);
 
         }
         finish();

@@ -2,7 +2,7 @@ package com.theah64.shield.di.modules;
 
 import android.app.Activity;
 
-import com.theah64.gorilla.utils.ProgressMan;
+import com.theah64.shield.utils.ProgressMan;
 
 import dagger.Module;
 import dagger.Provides;

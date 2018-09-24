@@ -33,7 +33,7 @@ public class SplashActivityModel implements SplashActivityContract.Model {
             @Override
             public void run() {
                 Log.d("X", "Guard is " + guard);
-                callback.onSuccess(true);
+                callback.onSuccess(guard != null);
             }
         }, durationInMillis);
     }

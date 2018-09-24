@@ -13,15 +13,12 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(
-        modules = {
-                PreferenceModule.class,
-                NetworkModule.class,
-                ApplicationContextModule.class,
-                GuardModule.class
-        }
-)
+@Component(modules = {
+        PreferenceModule.class,
+        NetworkModule.class,
+        ApplicationContextModule.class,
+        GuardModule.class
+})
 public interface ApplicationComponent {
-    void inject(LogInActivity logInActivity);
     void inject(SplashActivityModel model);
 }

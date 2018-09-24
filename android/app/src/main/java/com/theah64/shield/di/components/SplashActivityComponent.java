@@ -1,7 +1,6 @@
 package com.theah64.shield.di.components;
 
-import com.theah64.shield.di.modules.ProgressManModule;
-import com.theah64.shield.di.modules.SplashActivityModule;
+import com.theah64.shield.di.modules.activities.SplashActivityModule;
 import com.theah64.shield.views.activities.SplashActivity;
 
 import dagger.Component;

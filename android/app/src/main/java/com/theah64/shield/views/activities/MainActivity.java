@@ -1,5 +1,7 @@
 package com.theah64.shield.views.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +11,7 @@ import android.widget.Button;
 import com.theah64.shield.R;
 import com.theah64.shield.contracts.MainActivityContract;
 import com.theah64.shield.di.components.DaggerMainActivityComponent;
-import com.theah64.shield.di.modules.MainActivityModule;
+import com.theah64.shield.di.modules.activities.MainActivityModule;
 
 import javax.inject.Inject;
 
@@ -60,5 +62,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     @Override
     public void onData(String data) {
         this.btnCheck.setText(data);
+    }
+
+    public static void start(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
     }
 }

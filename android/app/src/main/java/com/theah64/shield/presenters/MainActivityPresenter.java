@@ -1,6 +1,6 @@
 package com.theah64.shield.presenters;
 
-import com.theah64.gorilla.presenters.BasePresenter;
+import com.theah64.shield.presenters.base.BasePresenter;
 import com.theah64.shield.contracts.MainActivityContract;
 import com.theah64.shield.models.MainActivityModel;
 

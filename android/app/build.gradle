@@ -21,6 +21,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
 
     // Core
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
@@ -37,6 +38,7 @@ dependencies {
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
     // Retrofit logger
@@ -47,10 +49,11 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
-    // Just butter knife compiler, core library.
+    // ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
 
+    // AVIndicatorView
+    implementation 'com.wang.avi:library:2.1.3'
 
-
-    implementation project(path: ':gorilla')
 }

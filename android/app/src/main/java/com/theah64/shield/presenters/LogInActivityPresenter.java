@@ -1,6 +1,6 @@
 package com.theah64.shield.presenters;
 
-import com.theah64.gorilla.presenters.BasePresenter;
+import com.theah64.shield.presenters.base.BasePresenter;
 import com.theah64.shield.contracts.LogInActivityContract;
 
 public class LogInActivityPresenter
@@ -10,5 +10,4 @@ public class LogInActivityPresenter
     public LogInActivityPresenter(LogInActivityContract.View view) {
         super(view);
     }
-
 }

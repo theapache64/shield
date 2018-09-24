@@ -2,7 +2,7 @@ package com.theah64.shield.presenters;
 
 import android.content.Context;
 
-import com.theah64.gorilla.presenters.BasePresenter;
+import com.theah64.shield.presenters.base.BasePresenter;
 import com.theah64.shield.contracts.SplashActivityContract;
 import com.theah64.shield.di.qualifiers.ApplicationContext;
 import com.theah64.shield.models.SplashActivityModel;
