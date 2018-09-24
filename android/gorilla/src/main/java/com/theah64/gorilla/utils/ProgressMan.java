@@ -2,12 +2,10 @@ package com.theah64.gorilla.utils;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class ProgressMan {
     private final Activity activity;

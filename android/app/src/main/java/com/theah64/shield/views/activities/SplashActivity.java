@@ -7,9 +7,16 @@ import android.os.Bundle;
 import com.theah64.gorilla.utils.ProgressMan;
 import com.theah64.shield.R;
 import com.theah64.shield.contracts.SplashActivityContract;
+import com.theah64.shield.di.components.DaggerProgressManComponent;
+import com.theah64.shield.di.modules.ProgressManModule;
 import com.theah64.shield.presenters.SplashActivityPresenter;
 
+import javax.inject.Inject;
+
 public class SplashActivity extends AppCompatActivity implements SplashActivityContract.View {
+
+    @Inject
+    ProgressMan progressMan;
 
     SplashActivityContract.Presenter presenter;
 
@@ -21,7 +28,12 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityC
         this.presenter = new SplashActivityPresenter(this);
         this.presenter.startCounter(1000);
 
-        new ProgressMan(this).inflate();
+        DaggerProgressManComponent.builder()
+                .progressManModule(new ProgressManModule(this))
+                .build()
+                .inject(this);
+
+        progressMan.inflate();
     }
 
 
