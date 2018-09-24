@@ -2,12 +2,13 @@ package com.theah64.shield.di.modules.activities;
 
 import com.theah64.shield.contracts.LogInActivityContract;
 import com.theah64.shield.di.modules.NetworkModule;
+import com.theah64.shield.di.modules.ValidatorModule;
 import com.theah64.shield.presenters.LogInActivityPresenter;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {NetworkModule.class})
+@Module(includes = {NetworkModule.class, ValidatorModule.class})
 public class LogInActivityModule {
     private final LogInActivityContract.View view;
 
