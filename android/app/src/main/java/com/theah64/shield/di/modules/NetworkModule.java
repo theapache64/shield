@@ -1,6 +1,7 @@
 package com.theah64.shield.di.modules;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.theah64.shield.api.APIInterface;
 import com.theah64.shield.gorilla.Gorilla;
 
 import javax.inject.Inject;
@@ -17,6 +18,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
+    @Singleton
+    @Provides
+    APIInterface provideAPIInterface(Retrofit retrofit) {
+        return retrofit.create(APIInterface.class);
+    }
 
     @Singleton
     @Provides

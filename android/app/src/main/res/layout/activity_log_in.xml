@@ -21,7 +21,7 @@
 
     <!--Username-->
     <com.theah64.shield.widget.ValidTextInputLayout
-        android:id="@+id/tilUsername"
+        android:id="@+id/vtilUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -36,7 +36,7 @@
 
     <!--Password-->
     <com.theah64.shield.widget.ValidTextInputLayout
-        android:id="@+id/tilPassword"
+        android:id="@+id/vtilPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp">

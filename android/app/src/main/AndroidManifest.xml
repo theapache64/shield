@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.theah64.shield">
 
+    <uses-permission android:name="android.permission.INTERNET" />\
+
     <application
         android:name=".Shield"
         android:allowBackup="true"
@@ -26,8 +28,8 @@
         -->
         <activity
             android:name=".views.activities.LogInActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize">
 
         </activity>
 

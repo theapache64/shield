@@ -9,6 +9,8 @@ import com.theah64.shield.contracts.BaseAppCompatActivityContract;
 import com.theah64.shield.presenters.base.BaseAppCompatActivityPresenter;
 
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * <b>Features</b> :
@@ -17,6 +19,8 @@ import butterknife.ButterKnife;
 public class BaseAppCompatActivity
         extends AppCompatActivity
         implements BaseAppCompatActivityContract.View {
+
+    private final CompositeDisposable compositeDisposables = new CompositeDisposable();
 
 
     @Override
@@ -57,5 +61,15 @@ public class BaseAppCompatActivity
     public ViewGroup getContentView() {
         ViewGroup content = findViewById(android.R.id.content);
         return (ViewGroup) content.getChildAt(0);
+    }
+
+    protected void addToCompositeDisposable(Disposable d) {
+        compositeDisposables.add(d);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposables.clear();
     }
 }

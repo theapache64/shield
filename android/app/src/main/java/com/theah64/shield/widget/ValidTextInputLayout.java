@@ -99,6 +99,11 @@ public class ValidTextInputLayout extends TextInputLayout {
         }
     }
 
+    @NonNull
+    public String getTextString() {
+        return getNonNullEditText().getText().toString();
+    }
+
     private void addLiveWatcher() {
         this.getNonNullEditText().addTextChangedListener(new TextWatcher() {
             @Override
