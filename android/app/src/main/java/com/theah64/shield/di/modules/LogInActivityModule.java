@@ -6,7 +6,7 @@ import com.theah64.shield.presenters.LogInActivityPresenter;
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes = {NetworkModule.class})
 public class LogInActivityModule {
     private final LogInActivityContract.View view;
 
@@ -20,7 +20,7 @@ public class LogInActivityModule {
     }
 
     @Provides
-    LogInActivityContract.View provideView(){
+    LogInActivityContract.View provideView() {
         return this.view;
     }
 }

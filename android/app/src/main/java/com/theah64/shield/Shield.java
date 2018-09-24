@@ -16,7 +16,7 @@ import com.theah64.shield.di.modules.PreferenceModule;
 public class Shield extends Application {
 
 
-    static ApplicationComponent applicationComponent;
+    ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -28,23 +28,19 @@ public class Shield extends Application {
         );
 
         Iconify.with(new SimpleLineIconsModule());
-        initDaggerAppComponent(this);
 
-    }
-
-    private static void initDaggerAppComponent(Context context) {
-
-        Shield.applicationComponent = DaggerApplicationComponent.builder()
-                .networkModule(
-                        new NetworkModule("http://theapache64.com/mock_api/get_json/shield/")
-                )
+        this.applicationComponent = DaggerApplicationComponent.builder()
                 .preferenceModule(new PreferenceModule("shield"))
-                .applicationContextModule(new ApplicationContextModule(context))
+                .applicationContextModule(new ApplicationContextModule(this))
                 .build();
-
     }
 
-    public static ApplicationComponent getApplicationComponent() {
+
+    public static Shield getInstance(Context context) {
+        return (Shield) context.getApplicationContext();
+    }
+
+    public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }
 }

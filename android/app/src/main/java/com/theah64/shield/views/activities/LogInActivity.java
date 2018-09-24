@@ -7,7 +7,9 @@ import com.theah64.gorilla.views.activities.BaseProgressManActivity;
 import com.theah64.shield.R;
 import com.theah64.shield.Shield;
 import com.theah64.shield.contracts.LogInActivityContract;
-import com.theah64.shield.presenters.LogInActivityPresenter;
+import com.theah64.shield.di.components.DaggerLogInActivityComponent;
+import com.theah64.shield.di.modules.LogInActivityModule;
+import com.theah64.shield.di.modules.NetworkModule;
 
 import javax.inject.Inject;
 
@@ -17,8 +19,11 @@ import retrofit2.Retrofit;
 public class LogInActivity extends BaseProgressManActivity implements LogInActivityContract.View {
 
 
-    @Inject
+    // @Inject
     Retrofit retrofit;
+
+    // @Inject
+    LogInActivityContract.Presenter presenter;
 
 
     @Override
@@ -26,12 +31,17 @@ public class LogInActivity extends BaseProgressManActivity implements LogInActiv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        Shield.getApplicationComponent().inject(this);
+
+//        DaggerLogInActivityComponent.builder()
+//                .networkModule(new NetworkModule())
+//                .logInActivityModule(new LogInActivityModule(this))
+//                .build();
+
     }
 
     @OnClick(R.id.bLogIn)
     public void onLogInPressed() {
-        Toast.makeText(this, "OKokl", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, retrofit.toString(), Toast.LENGTH_SHORT).show();
     }
 
 

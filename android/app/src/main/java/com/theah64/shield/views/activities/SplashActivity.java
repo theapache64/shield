@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.theah64.gorilla.utils.ProgressMan;
 import com.theah64.shield.R;
+import com.theah64.shield.Shield;
 import com.theah64.shield.contracts.SplashActivityContract;
 import com.theah64.shield.di.components.DaggerSplashActivityComponent;
+import com.theah64.shield.di.modules.ApplicationContextModule;
 import com.theah64.shield.di.modules.SplashActivityModule;
 
 import javax.inject.Inject;
@@ -23,6 +25,7 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityC
         setContentView(R.layout.activity_splash);
 
         DaggerSplashActivityComponent.builder()
+                .applicationContextModule(new ApplicationContextModule(this))
                 .splashActivityModule(new SplashActivityModule(this))
                 .build()
                 .inject(this);

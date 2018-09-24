@@ -4,7 +4,10 @@ import android.content.Context;
 
 import com.theah64.gorilla.presenters.BasePresenter;
 import com.theah64.shield.contracts.SplashActivityContract;
+import com.theah64.shield.di.qualifiers.ApplicationContext;
 import com.theah64.shield.models.SplashActivityModel;
+
+import javax.inject.Inject;
 
 public class SplashActivityPresenter
         extends BasePresenter<SplashActivityContract.View>
@@ -13,9 +16,10 @@ public class SplashActivityPresenter
 
     private final SplashActivityContract.Model model;
 
-    public SplashActivityPresenter(SplashActivityContract.View view) {
+    @Inject
+    public SplashActivityPresenter(SplashActivityContract.View view, @ApplicationContext Context context) {
         super(view);
-        this.model = new SplashActivityModel();
+        this.model = new SplashActivityModel(context);
     }
 
     @Override

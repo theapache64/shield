@@ -23,11 +23,8 @@ public class SplashActivityModel implements SplashActivityContract.Model {
     LogInResponse.Guard guard;
 
     @Inject
-    @ApplicationContext
-    Context context;
-
-    public SplashActivityModel() {
-        Shield.getApplicationComponent().inject(this);
+    public SplashActivityModel(@ApplicationContext Context context) {
+        Shield.getInstance(context).getApplicationComponent().inject(this);
     }
 
     @Override
@@ -35,7 +32,6 @@ public class SplashActivityModel implements SplashActivityContract.Model {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("X", "Context is " + context);
                 Log.d("X", "Guard is " + guard);
                 callback.onSuccess(true);
             }

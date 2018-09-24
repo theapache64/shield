@@ -3,6 +3,7 @@ package com.theah64.shield.di.modules;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -15,17 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
-    private final String baseUrl;
-
-    public NetworkModule(String baseUrl) {
-        this.baseUrl = baseUrl;
-    }
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(OkHttpClient okHttpClient, String baseUrl) {
         return new Retrofit.Builder()
-                .baseUrl(this.baseUrl)
+                .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -46,5 +42,11 @@ public class NetworkModule {
         final HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
         logger.setLevel(HttpLoggingInterceptor.Level.BODY);
         return logger;
+    }
+
+    @Singleton
+    @Provides
+    String provideBaseUrl() {
+        return "http://theapache64.com/mock_api/get_json/shield/";
     }
 }
