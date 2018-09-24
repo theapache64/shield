@@ -7,5 +7,4 @@ import dagger.Component;
 
 @Component(modules = ProgressManModule.class)
 public interface ProgressManComponent {
-    void inject(SplashActivity activity);
 }

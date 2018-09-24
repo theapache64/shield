@@ -1,23 +1,20 @@
 package com.theah64.shield.views.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.theah64.gorilla.utils.ProgressMan;
 import com.theah64.shield.R;
 import com.theah64.shield.contracts.SplashActivityContract;
-import com.theah64.shield.di.components.DaggerProgressManComponent;
-import com.theah64.shield.di.modules.ProgressManModule;
-import com.theah64.shield.presenters.SplashActivityPresenter;
+import com.theah64.shield.di.components.DaggerSplashActivityComponent;
+import com.theah64.shield.di.modules.SplashActivityModule;
 
 import javax.inject.Inject;
 
 public class SplashActivity extends AppCompatActivity implements SplashActivityContract.View {
 
     @Inject
-    ProgressMan progressMan;
-
     SplashActivityContract.Presenter presenter;
 
     @Override
@@ -25,15 +22,13 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        this.presenter = new SplashActivityPresenter(this);
-        this.presenter.startCounter(1000);
-
-        DaggerProgressManComponent.builder()
-                .progressManModule(new ProgressManModule(this))
+        DaggerSplashActivityComponent.builder()
+                .splashActivityModule(new SplashActivityModule(this))
                 .build()
                 .inject(this);
 
-        progressMan.inflate();
+
+        this.presenter.startCounter(1000);
     }
 
 

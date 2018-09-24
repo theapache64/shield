@@ -13,7 +13,7 @@ import com.theah64.shield.di.qualifiers.ApplicationContext;
 
 import javax.inject.Inject;
 
-public class SplashActivityModel extends BaseModel implements SplashActivityContract.Model {
+public class SplashActivityModel implements SplashActivityContract.Model {
 
     @Inject
     SharedPreferences sharedPreferences;

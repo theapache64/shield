@@ -8,7 +8,10 @@ import android.widget.Button;
 
 import com.theah64.shield.R;
 import com.theah64.shield.contracts.MainActivityContract;
-import com.theah64.shield.presenters.MainActivityPresenter;
+import com.theah64.shield.di.components.DaggerMainActivityComponent;
+import com.theah64.shield.di.modules.MainActivityModule;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -16,7 +19,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     private static final String TAG = MainActivity.class.getSimpleName();
     Button btnCheck;
+
+    @Inject
     MainActivityContract.Presenter presenter;
+
     private CompositeDisposable compositeDisposables = new CompositeDisposable();
 
     @Override
@@ -26,7 +32,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        presenter = new MainActivityPresenter(this);
+
+        DaggerMainActivityComponent.builder()
+                .mainActivityModule(new MainActivityModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override

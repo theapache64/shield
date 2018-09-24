@@ -7,6 +7,7 @@ import com.theah64.shield.di.modules.PreferenceModule;
 import com.theah64.shield.models.SplashActivityModel;
 import com.theah64.shield.views.activities.LogInActivity;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;

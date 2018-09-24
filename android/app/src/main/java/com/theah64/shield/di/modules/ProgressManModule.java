@@ -17,8 +17,8 @@ public class ProgressManModule {
     }
 
     @Provides
-    ProgressMan provideProgressMan() {
-        return new ProgressMan(this.provideActivity());
+    ProgressMan provideProgressMan(Activity activity) {
+        return new ProgressMan(activity);
     }
 
     @Provides
