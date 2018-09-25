@@ -1,5 +1,7 @@
 package com.theah64.shield.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,5 +22,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+    }
+
+    public static void start(Context context) {
+        final Intent mainIntent = new Intent(context, MainActivity.class);
+        context.startActivity(mainIntent);
     }
 }

@@ -33,6 +33,10 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityV
 
     @Override
     public void onTimeOut(boolean isLoggedIn) {
-        Toast.makeText(this, "Timeout", Toast.LENGTH_SHORT).show();
+        if (isLoggedIn) {
+            MainActivity.start(this);
+        } else {
+            LogInActivity.start(this);
+        }
     }
 }
