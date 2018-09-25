@@ -5,4 +5,5 @@
     <string name="LOGIN">LOGIN</string>
     <string name="Username">Username</string>
     <string name="Password">Password</string>
+    <string name="s_cant_be_empty">%s can\'t be empty</string>
 </resources>
