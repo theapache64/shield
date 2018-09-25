@@ -2,6 +2,7 @@ package com.theah64.shield.utils;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
@@ -108,6 +109,10 @@ public class ProgressMan {
     public void showLoading(String message) {
         llPv.setVisibility(View.VISIBLE);
         tv.setText(message);
+    }
+
+    public void showLoading(@StringRes int message) {
+        showLoading(activity.getString(message));
     }
 
     public void hideLoading() {

@@ -1,6 +1,7 @@
 package com.theah64.shield.model;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.theah64.shield.Shield;
@@ -20,6 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LogInActivityPresenterImpl implements LogInActivityPresenter {
 
+    private static final String TAG = LogInActivityPresenterImpl.class.getSimpleName();
     @Inject
     APIInterface apiInterface;
 
@@ -46,7 +48,7 @@ public class LogInActivityPresenterImpl implements LogInActivityPresenter {
 
 
                 if (logInResponse.isError()) {
-                    view.onLogInFailed();
+                    view.onLogInFailed(logInResponse.getMessage());
                 } else {
 
                     // Save user
@@ -56,13 +58,14 @@ public class LogInActivityPresenterImpl implements LogInActivityPresenter {
                             .putString(LogInResponse.Guard.KEY, guardJson)
                             .apply();
 
-                    view.onLogInSuccess();
+                    view.onLogInSuccess(logInResponse);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                view.onNetworkError();
+                Log.d(TAG, "Network error occurred ", e);
+                view.onNetworkError(e.getMessage());
             }
         };
 

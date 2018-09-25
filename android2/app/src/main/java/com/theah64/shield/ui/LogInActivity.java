@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.theah64.shield.R;
+import com.theah64.shield.api.responses.BaseAPIResponse;
+import com.theah64.shield.api.responses.LogInResponse;
 import com.theah64.shield.di.components.DaggerLogInActivityComponent;
 import com.theah64.shield.di.modules.ProgressManModule;
 import com.theah64.shield.di.modules.ValidatorModule;
@@ -13,6 +15,7 @@ import com.theah64.shield.di.modules.activities.LogInActivityModule;
 import com.theah64.shield.model.LogInActivityPresenterImpl;
 import com.theah64.shield.ui.base.BaseAppCompatActivity;
 import com.theah64.shield.utils.ProgressMan;
+import com.theah64.shield.utils.SingletonToast;
 import com.theah64.shield.utils.Validator;
 import com.theah64.shield.view.LogInActivityView;
 import com.theah64.shield.widget.ValidTextInputLayout;
@@ -40,6 +43,7 @@ public class LogInActivity extends BaseAppCompatActivity implements LogInActivit
     @Inject
     ProgressMan progressMan;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +63,6 @@ public class LogInActivity extends BaseAppCompatActivity implements LogInActivit
     @OnClick(R.id.bLogIn)
     public void onLogInPressed() {
 
-
         if (this.validator.isAllValid(true)) {
 
             final String username = vtilUsername.getTextString();
@@ -70,27 +73,38 @@ public class LogInActivity extends BaseAppCompatActivity implements LogInActivit
             //Showing progress
             progressMan.showLoading("Authenticating...");
         }
+
     }
 
+
+    @Override
+    public void onLogInSuccess(BaseAPIResponse<LogInResponse> response) {
+
+        progressMan.hideLoading();
+
+        final String guardName = response.getData().getGuard().getName();
+        final String message = getString(R.string.Logged_in_as_s, guardName);
+
+        SingletonToast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLogInFailed(String reason) {
+
+        progressMan.hideLoading();
+
+        SingletonToast.makeText(this, reason, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNetworkError(String message) {
+        progressMan.hideLoading();
+
+        SingletonToast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
     public static void start(Context context) {
         final Intent loginIntent = new Intent(context, LogInActivity.class);
         context.startActivity(loginIntent);
-    }
-
-    @Override
-    public void onLogInSuccess() {
-        Toast.makeText(this, "Logged In", Toast.LENGTH_SHORT).show();
-        progressMan.hideLoading();
-    }
-
-    @Override
-    public void onLogInFailed() {
-
-    }
-
-    @Override
-    public void onNetworkError() {
-
     }
 }

@@ -6,4 +6,5 @@
     <string name="Username">Username</string>
     <string name="Password">Password</string>
     <string name="s_cant_be_empty">%s can\'t be empty</string>
+    <string name="Logged_in_as_s">Logged in as %s</string>
 </resources>

@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.theah64.shield.utils.SingletonToast;
+
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -41,7 +43,7 @@ public class BaseAppCompatActivity
      * @param message Message to be displayed
      */
     protected void showToast(final String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        SingletonToast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     /**
