@@ -1,12 +1,13 @@
 package com.theah64.shield.ui;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.theah64.shield.R;
 import com.theah64.shield.di.components.DaggerSplashActivityComponent;
-import com.theah64.shield.di.modules.SplashActivityModule;
+import com.theah64.shield.di.modules.activities.SplashActivityModule;
 import com.theah64.shield.presenter.SplashActivityPresenter;
 import com.theah64.shield.view.SplashActivityView;
 
@@ -31,7 +32,7 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityV
     }
 
     @Override
-    public void onTimeOut() {
+    public void onTimeOut(boolean isLoggedIn) {
         Toast.makeText(this, "Timeout", Toast.LENGTH_SHORT).show();
     }
 }

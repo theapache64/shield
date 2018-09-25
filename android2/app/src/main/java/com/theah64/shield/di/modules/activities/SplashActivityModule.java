@@ -1,4 +1,4 @@
-package com.theah64.shield.di.modules;
+package com.theah64.shield.di.modules.activities;
 
 import com.theah64.shield.di.scopes.PerActivity;
 import com.theah64.shield.model.SplashActivityPresenterImpl;

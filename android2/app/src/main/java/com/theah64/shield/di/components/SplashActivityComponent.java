@@ -1,6 +1,7 @@
 package com.theah64.shield.di.components;
 
-import com.theah64.shield.di.modules.SplashActivityModule;
+
+import com.theah64.shield.di.modules.activities.SplashActivityModule;
 import com.theah64.shield.di.scopes.PerActivity;
 import com.theah64.shield.ui.SplashActivity;
 
