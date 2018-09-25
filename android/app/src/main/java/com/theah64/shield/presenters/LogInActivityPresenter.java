@@ -30,9 +30,8 @@ public class LogInActivityPresenter
     }
 
 
-
     @Override
     public void onLogInFailed(Throwable e) {
-        this.getView().onLogInFailed(e.get);
+
     }
 }
