@@ -1,0 +1,6 @@
+
+asquid:UselessImportCheck"3Remove this unused import 'android.graphics.Color'.(øãíòşÿÿÿÿ8Á©µ€á,
+asquid:UselessImportCheck"3Remove this unused import 'com.wang.avi.Indicator'.(™óÆùÿÿÿÿ8Á©µ€á,
+nsquid:S1450"RRemove the "avl" field and declare it as a local variable in the relevant methods.(¾Ì¦©8Á©µ€á,
+tsquid:UselessImportCheck"FRemove this unused import 'com.wang.avi.indicators.BallBeatIndicator'.(³êØ‰øÿÿÿÿ8Á©µ€á,
+_squid:UselessImportCheck"1Remove this unused import 'android.widget.Toast'.(©›ïÍúÿÿÿÿ8Á©µ€á,

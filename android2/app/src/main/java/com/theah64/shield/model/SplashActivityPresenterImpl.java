@@ -43,7 +43,7 @@ public class SplashActivityPresenterImpl implements SplashActivityPresenter {
                 }
 
                 final boolean isLoggedIn = guard != null;
-                view.onTimeOut(isLoggedIn);
+                view.onTimeOut(false);
             }
         }, duration);
     }
