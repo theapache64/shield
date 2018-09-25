@@ -31,7 +31,7 @@ const RootStack = createStackNavigator(
     issuedPassesScreen
   },
   {
-    initialRouteName: 'issuedPassesScreen',
+    initialRouteName: 'splashScreen',
     initialRouteParams: {
       count: 1,
     },

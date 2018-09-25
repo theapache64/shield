@@ -38,5 +38,6 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityV
         } else {
             LogInActivity.start(this);
         }
+        finish();
     }
 }

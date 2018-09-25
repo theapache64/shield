@@ -3,14 +3,20 @@ package com.theah64.shield.api;
 import android.support.annotation.NonNull;
 
 import com.theah64.shield.api.responses.BaseAPIResponse;
+import com.theah64.shield.api.responses.LoadHomeResponse;
 import com.theah64.shield.api.responses.LogInResponse;
 
 import io.reactivex.Single;
+import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface APIInterface {
+
+    String KEY_AUTHORIZATION = "Authorization";
 
     /**
      * @param username <p>Username of the guard</p>
@@ -22,4 +28,13 @@ public interface APIInterface {
     Single<BaseAPIResponse<LogInResponse>> login(
             @Field("username") @NonNull String username,
             @Field("password") @NonNull String password);
+
+    /**
+     * @return LoadHomeResponse
+     */
+    @GET("load_home")
+    Single<BaseAPIResponse<LoadHomeResponse>> loadHome(
+            @Header(KEY_AUTHORIZATION) String apiKey);
+
+
 }

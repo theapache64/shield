@@ -86,6 +86,9 @@ public class LogInActivity extends BaseAppCompatActivity implements LogInActivit
         final String message = getString(R.string.Logged_in_as_s, guardName);
 
         SingletonToast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+        MainActivity.start(this);
+        finish();
     }
 
     @Override

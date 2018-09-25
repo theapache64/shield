@@ -12,20 +12,52 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.theah64.shield.R;
+import com.theah64.shield.api.responses.LoadHomeResponse;
+import com.theah64.shield.di.components.DaggerMainActivityComponent;
+import com.theah64.shield.di.modules.activities.MainActivityModule;
+import com.theah64.shield.presenter.MainActivityPresenter;
+import com.theah64.shield.ui.base.BaseAppCompatActivity;
+import com.theah64.shield.view.MainActivityView;
 
-public class MainActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+public class MainActivity extends BaseAppCompatActivity implements MainActivityView {
+
+    @Inject
+    MainActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DaggerMainActivityComponent.builder()
+                .mainActivityModule(new MainActivityModule(this))
+                .build()
+                .inject(this);
+
+        addToCompositeDisposable(presenter.loadHome());
     }
 
     public static void start(Context context) {
         final Intent mainIntent = new Intent(context, MainActivity.class);
         context.startActivity(mainIntent);
+    }
+
+    @Override
+    public void onHomeLoaded(LoadHomeResponse response) {
+
+    }
+
+    @Override
+    public void onHomeLoadFailed(String reason) {
+
+    }
+
+    @Override
+    public void onNetworkError(String reason) {
+
     }
 }
