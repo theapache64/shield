@@ -9,6 +9,7 @@ import com.theah64.shield.di.components.ApplicationComponent;
 import com.theah64.shield.di.components.DaggerApplicationComponent;
 import com.theah64.shield.di.modules.ApplicationContextModule;
 import com.theah64.shield.di.modules.GsonModule;
+import com.theah64.shield.di.modules.GuardModule;
 import com.theah64.shield.di.modules.NetworkModule;
 import com.theah64.shield.di.modules.PreferenceModule;
 import com.theah64.shield.gorilla.Gorilla;
@@ -36,6 +37,7 @@ public class Shield extends Application {
                 .applicationContextModule(new ApplicationContextModule(this))
                 .preferenceModule(new PreferenceModule())
                 .networkModule(new NetworkModule())
+                .guardModule(new GuardModule())
                 .gsonModule(new GsonModule())
                 .build();
     }
