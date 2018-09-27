@@ -2,7 +2,6 @@ package com.theah64.shield.di.modules;
 
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.theah64.shield.api.responses.LogInResponse;
@@ -21,7 +20,7 @@ public class GuardModule {
     @Provides
     LogInResponse.Guard provideGuard(SharedPreferences sharedPreferences, Gson gson) {
 
-        Log.d("Shifar", "Getting guard...");
+        Logx.d(this, "Getting guard");
 
         final String guardJson = sharedPreferences.getString(LogInResponse.Guard.KEY, null);
         if (guardJson != null) {
