@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:count="777"
-        app:icon="{icon-shield}"
+        app:counter_icon="{icon-shield}"
         app:title="Sample Title" />
 
     <com.theah64.shield.widget.MainCounter
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:count="777"
-        app:icon="{icon-shield}"
+        app:counter_icon="{icon-shield}"
         app:title="Sample Title" />
 
 </LinearLayout>

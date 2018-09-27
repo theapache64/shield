@@ -1,3 +1,4 @@
 
-osquid:UselessImportCheck"ARemove this unused import 'com.theah64.shield.utils.ProgressMan'.(Õå›ÿÿÿÿÿ8æ£Æüà,
-msquid:UselessImportCheck"?Remove this unused import 'com.theah64.shield.utils.Validator'.(µÒˆ˜ùÿÿÿÿ8æ£Æüà,
+osquid:UselessImportCheck"ARemove this unused import 'com.theah64.shield.utils.ProgressMan'.(Õå›ÿÿÿÿÿ8—Œ»Íá,
+msquid:UselessImportCheck"?Remove this unused import 'com.theah64.shield.utils.Validator'.(µÒˆ˜ùÿÿÿÿ8—Œ»Íá,
+zsquid:UselessImportCheck"LRemove this unused import 'com.theah64.shield.di.modules.ProgressManModule'.(³æÒêÿÿÿÿÿ8œ´»Íá,

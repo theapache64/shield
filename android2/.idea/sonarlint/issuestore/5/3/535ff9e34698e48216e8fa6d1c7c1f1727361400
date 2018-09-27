@@ -1,0 +1,6 @@
+
+vsquid:UselessImportCheck"MRemove this unused import 'com.theah64.shield.ui.base.BaseAppCompatActivity'.(Ğè²ƒ8™ËÄÍá,
+osquid:UselessImportCheck"ARemove this unused import 'com.theah64.shield.utils.ProgressMan'.(Õå›ÿÿÿÿÿ8™ËÄÍá,
+rsquid:UselessImportCheck"IRemove this unused import 'com.theah64.shield.view.base.BaseNetworkView'.(ˆÓğ8™ËÄÍá,
+}squid:UselessImportCheck"ORemove this unused import 'com.theah64.shield.ui.base.BaseProgressManActivity'.(°˜¼Éúÿÿÿÿ8™ËÄÍá,
+zsquid:UselessImportCheck"LRemove this unused import 'com.theah64.shield.di.modules.ProgressManModule'.(³æÒêÿÿÿÿÿ8™ËÄÍá,

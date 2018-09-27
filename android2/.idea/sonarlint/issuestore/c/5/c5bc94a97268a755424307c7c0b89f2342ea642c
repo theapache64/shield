@@ -1,3 +1,2 @@
 
-Ksquid:S1481"/Remove this unused "isLoggedIn" local variable.(õøâÎ8Â‰Ìıà,
-Zsquid:S1854">Remove this useless assignment to local variable "isLoggedIn".(õøâÎ8Â‰Ìıà,
+fsquid:UselessImportCheck">Remove this unused import 'android.content.SharedPreferences'.(íÎÉr8›»Çá,

@@ -1,10 +1,3 @@
 
-xsquid:UselessImportCheck"ORemove this unused import 'android.support.design.widget.FloatingActionButton'.(„Ÿ¹¼8îµá,
-\squid:UselessImportCheck".Remove this unused import 'android.view.View'.(Ø½­äşÿÿÿÿ8îµá,
-ssquid:UselessImportCheck"ERemove this unused import 'android.support.v7.app.AppCompatActivity'.(«Û®ûüÿÿÿÿ8îµá,
-¢squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(£ÖÜ¬üÿÿÿÿ8ÕÔ·á,
-squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(­áİŞ8ÕÔ·á,
-Wsquid:UselessImportCheck".Remove this unused import 'android.view.Menu'.(£¯Ò…8îµá,
-squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ú´ı¼8îµá,
-ksquid:UselessImportCheck"CRemove this unused import 'android.support.design.widget.Snackbar'.( À®p8îµá,
-[squid:UselessImportCheck"2Remove this unused import 'android.view.MenuItem'.(Ğ¬Ó‘8îµá,
+Psquid:S1068#"-Remove this unused "menuItems" private field.(½ù¼·ùÿÿÿÿ8ú“ïÔá,
+Ksquid:S1185G"(Remove this method to simply inherit it.(É”Óùÿÿÿÿ8ú“ïÔá,

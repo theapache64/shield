@@ -42,7 +42,7 @@ public class ValidTextInputLayout extends TextInputLayout {
 
         // Getting xml inputs
         this.regEx = ta.getString(R.styleable.ValidTextInputLayout_regEx);
-        this.errorMessage = ta.getString(R.styleable.ValidTextInputLayout_errorMessage);
+        this.errorMessage = ta.getString(R.styleable.ValidTextInputLayout_error_message);
 
         if (this.regEx == null) {
             // Setting non empty regEx for default

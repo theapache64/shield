@@ -24,7 +24,7 @@ public class MainCounter extends LinearLayout {
     private void init(AttributeSet attrs) {
 
         final TypedArray ta = getContext().obtainStyledAttributes(R.styleable.MainCounter);
-        final String icon = ta.getString(R.styleable.MainCounter_icon);
+        final String icon = ta.getString(R.styleable.MainCounter_counter_icon);
         final String title = ta.getString(R.styleable.MainCounter_title);
         final String count = ta.getString(R.styleable.MainCounter_count);
         ta.recycle();

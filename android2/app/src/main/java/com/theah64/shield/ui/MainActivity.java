@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 
+import com.theah64.shield.R;
 import com.theah64.shield.adapters.MainAdapter;
 import com.theah64.shield.api.responses.BaseAPIResponse;
 import com.theah64.shield.api.responses.LoadHomeResponse;
+import com.theah64.shield.di.components.DaggerMainActivityComponent;
 import com.theah64.shield.di.modules.activities.MainActivityModule;
 import com.theah64.shield.pojos.GridMenuItem;
 import com.theah64.shield.presenter.MainActivityPresenter;
