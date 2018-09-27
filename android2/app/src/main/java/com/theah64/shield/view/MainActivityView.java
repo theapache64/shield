@@ -1,9 +1,7 @@
 package com.theah64.shield.view;
 
 import com.theah64.shield.api.responses.LoadHomeResponse;
+import com.theah64.shield.view.base.BaseNetworkView;
 
-public interface MainActivityView {
-    void onHomeLoaded(LoadHomeResponse response);
-    void onHomeLoadFailed(String reason);
-    void onNetworkError(String reason);
+public interface MainActivityView extends BaseNetworkView<LoadHomeResponse> {
 }

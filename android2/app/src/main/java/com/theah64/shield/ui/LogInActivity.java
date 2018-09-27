@@ -14,10 +14,13 @@ import com.theah64.shield.di.modules.ValidatorModule;
 import com.theah64.shield.di.modules.activities.LogInActivityModule;
 import com.theah64.shield.model.LogInActivityPresenterImpl;
 import com.theah64.shield.ui.base.BaseAppCompatActivity;
+import com.theah64.shield.ui.base.BaseNetworkActivity;
+import com.theah64.shield.ui.base.BaseProgressManActivity;
 import com.theah64.shield.utils.ProgressMan;
 import com.theah64.shield.utils.SingletonToast;
 import com.theah64.shield.utils.Validator;
 import com.theah64.shield.view.LogInActivityView;
+import com.theah64.shield.view.base.BaseNetworkView;
 import com.theah64.shield.widget.ValidTextInputLayout;
 
 import javax.inject.Inject;
@@ -26,7 +29,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 
-public class LogInActivity extends BaseAppCompatActivity implements LogInActivityView {
+public class LogInActivity extends BaseNetworkActivity<LogInResponse> implements LogInActivityView {
 
     @Inject
     Validator validator;
@@ -40,9 +43,6 @@ public class LogInActivity extends BaseAppCompatActivity implements LogInActivit
     @Inject
     LogInActivityPresenterImpl presenter;
 
-    @Inject
-    ProgressMan progressMan;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,35 +52,21 @@ public class LogInActivity extends BaseAppCompatActivity implements LogInActivit
         DaggerLogInActivityComponent.builder()
                 .logInActivityModule(new LogInActivityModule(this))
                 .validatorModule(new ValidatorModule(this))
-                .progressManModule(new ProgressManModule(this))
                 .build()
                 .inject(this);
-
-        progressMan.inflate();
     }
 
 
     @OnClick(R.id.bLogIn)
     public void onLogInPressed() {
-
         if (this.validator.isAllValid(true)) {
-
-            final String username = vtilUsername.getTextString();
-            final String password = vtilPassword.getTextString();
-            final Disposable disposable = presenter.login(username, password);
-            addToCompositeDisposable(disposable);
-
-            //Showing progress
-            progressMan.showLoading("Authenticating...");
+            load("Authenticating...");
         }
-
     }
 
-
     @Override
-    public void onLogInSuccess(BaseAPIResponse<LogInResponse> response) {
-
-        progressMan.hideLoading();
+    public void onLoaded(BaseAPIResponse<LogInResponse> response) {
+        super.onLoaded(response);
 
         final String guardName = response.getData().getGuard().getName();
         final String message = getString(R.string.Logged_in_as_s, guardName);
@@ -92,18 +78,11 @@ public class LogInActivity extends BaseAppCompatActivity implements LogInActivit
     }
 
     @Override
-    public void onLogInFailed(String reason) {
+    protected Disposable getAPICall() {
+        final String username = vtilUsername.getTextString();
+        final String password = vtilPassword.getTextString();
 
-        progressMan.hideLoading();
-
-        SingletonToast.makeText(this, reason, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNetworkError(String message) {
-        progressMan.hideLoading();
-
-        SingletonToast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        return presenter.login(username, password);
     }
 
     public static void start(Context context) {

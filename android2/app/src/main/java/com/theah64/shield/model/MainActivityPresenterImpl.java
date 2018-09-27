@@ -9,7 +9,7 @@ import com.theah64.shield.api.responses.BaseAPIResponse;
 import com.theah64.shield.api.responses.LoadHomeResponse;
 import com.theah64.shield.api.responses.LogInResponse;
 import com.theah64.shield.presenter.MainActivityPresenter;
-import com.theah64.shield.view.MainActivityView;
+import com.theah64.shield.view.base.BaseNetworkView;
 
 import javax.inject.Inject;
 
@@ -29,9 +29,9 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
     LogInResponse.Guard guard;
 
 
-    private final MainActivityView view;
+    private final BaseNetworkView<LoadHomeResponse> view;
 
-    public MainActivityPresenterImpl(MainActivityView view) {
+    public MainActivityPresenterImpl(BaseNetworkView<LoadHomeResponse> view) {
         this.view = view;
         Shield.getApplicationComponent().inject(this);
 
@@ -44,9 +44,9 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
             @Override
             public void onSuccess(BaseAPIResponse<LoadHomeResponse> resp) {
                 if (resp.isError()) {
-                    view.onHomeLoadFailed(resp.getMessage());
+                    view.onLoadFailed(resp.getMessage());
                 } else {
-                    view.onHomeLoaded(resp.getData());
+                    view.onLoaded(resp);
                 }
             }
 
@@ -55,6 +55,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
                 view.onNetworkError(e.getMessage());
             }
         };
+        assert guard != null;
         return apiInterface.loadHome(guard.getApiKey())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

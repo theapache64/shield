@@ -11,7 +11,7 @@ import com.theah64.shield.utils.Validator;
 import dagger.Component;
 
 @PerActivity
-@Component(modules = {LogInActivityModule.class, ValidatorModule.class, ProgressManModule.class})
+@Component(modules = {LogInActivityModule.class, ValidatorModule.class})
 public interface LogInActivityComponent {
     void inject(LogInActivity logInActivity);
 }

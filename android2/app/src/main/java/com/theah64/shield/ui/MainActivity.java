@@ -10,26 +10,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.theah64.shield.R;
+import com.theah64.shield.api.responses.BaseAPIResponse;
 import com.theah64.shield.api.responses.LoadHomeResponse;
 import com.theah64.shield.di.components.DaggerMainActivityComponent;
 import com.theah64.shield.di.modules.ProgressManModule;
 import com.theah64.shield.di.modules.activities.MainActivityModule;
 import com.theah64.shield.presenter.MainActivityPresenter;
 import com.theah64.shield.ui.base.BaseAppCompatActivity;
+import com.theah64.shield.ui.base.BaseNetworkActivity;
+import com.theah64.shield.ui.base.BaseProgressManActivity;
 import com.theah64.shield.utils.ProgressMan;
 import com.theah64.shield.view.MainActivityView;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseAppCompatActivity implements MainActivityView {
+import io.reactivex.disposables.Disposable;
+
+public class MainActivity extends BaseNetworkActivity<LoadHomeResponse> {
 
     @Inject
     MainActivityPresenter presenter;
-
-    @Inject
-    ProgressMan progressMan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +43,22 @@ public class MainActivity extends BaseAppCompatActivity implements MainActivityV
 
         DaggerMainActivityComponent.builder()
                 .mainActivityModule(new MainActivityModule(this))
-                .progressManModule(new ProgressManModule(this))
                 .build()
                 .inject(this);
 
-        addToCompositeDisposable(presenter.loadHome());
-        progressMan.inflate();
-        progressMan.showLoading("Loading home...");
+        load();
+    }
+
+    @Override
+    protected Disposable getAPICall() {
+        return presenter.loadHome();
+    }
+
+    @Override
+    public void onLoaded(BaseAPIResponse<LoadHomeResponse> response) {
+        super.onLoaded(response);
+
+        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     public static void start(Context context) {
@@ -54,18 +66,5 @@ public class MainActivity extends BaseAppCompatActivity implements MainActivityV
         context.startActivity(mainIntent);
     }
 
-    @Override
-    public void onHomeLoaded(LoadHomeResponse response) {
-        progressMan.hideLoading();
-    }
 
-    @Override
-    public void onHomeLoadFailed(String reason) {
-        progressMan.hideLoading();
-    }
-
-    @Override
-    public void onNetworkError(String reason) {
-        progressMan.hideLoading();
-    }
 }

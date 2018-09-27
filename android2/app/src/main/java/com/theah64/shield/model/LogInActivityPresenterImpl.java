@@ -48,7 +48,7 @@ public class LogInActivityPresenterImpl implements LogInActivityPresenter {
 
 
                 if (logInResponse.isError()) {
-                    view.onLogInFailed(logInResponse.getMessage());
+                    view.onLoadFailed(logInResponse.getMessage());
                 } else {
 
                     // Save user
@@ -58,7 +58,7 @@ public class LogInActivityPresenterImpl implements LogInActivityPresenter {
                             .putString(LogInResponse.Guard.KEY, guardJson)
                             .apply();
 
-                    view.onLogInSuccess(logInResponse);
+                    view.onLoaded(logInResponse);
                 }
             }
 
