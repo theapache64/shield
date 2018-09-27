@@ -8,10 +8,10 @@
     tools:context=".ui.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:id="@+id/bCheck"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/check" />
+        android:orientation="vertical" />
 
 </FrameLayout>

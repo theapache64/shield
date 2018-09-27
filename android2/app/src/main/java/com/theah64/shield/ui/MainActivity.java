@@ -3,36 +3,45 @@ package com.theah64.shield.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.theah64.shield.R;
+
+import com.theah64.shield.adapters.MainAdapter;
 import com.theah64.shield.api.responses.BaseAPIResponse;
 import com.theah64.shield.api.responses.LoadHomeResponse;
-import com.theah64.shield.di.components.DaggerMainActivityComponent;
-import com.theah64.shield.di.modules.ProgressManModule;
 import com.theah64.shield.di.modules.activities.MainActivityModule;
+import com.theah64.shield.pojos.GridMenuItem;
 import com.theah64.shield.presenter.MainActivityPresenter;
-import com.theah64.shield.ui.base.BaseAppCompatActivity;
 import com.theah64.shield.ui.base.BaseNetworkActivity;
-import com.theah64.shield.ui.base.BaseProgressManActivity;
-import com.theah64.shield.utils.ProgressMan;
-import com.theah64.shield.view.MainActivityView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends BaseNetworkActivity<LoadHomeResponse> {
 
     @Inject
     MainActivityPresenter presenter;
+
+    @BindView(R.id.rvMain)
+    RecyclerView rvMain;
+
+    private static final List<GridMenuItem> menuItems = new ArrayList<>();
+
+    /*static {
+        new GridMenuItem(R.id.gmiIssuePass, "ISSUE NEW PASS", "plus"),
+                new GridMenuItem(R.id.giIssuedPassed, "VIEW ISSUED PASSES", "eye"),
+                new GridMenuItem(GI_MY_PROFILE, "MY PROFILE", "user"),
+                new GridMenuItem(GI_GUARDS, "GUARDS", "mustache"),
+                new GridMenuItem(GI_OTHER, "OTHER", "tag"),
+                new GridMenuItem(GI_LOGOUT, "LOGOUT", "logout"),
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,10 @@ public class MainActivity extends BaseNetworkActivity<LoadHomeResponse> {
                 .mainActivityModule(new MainActivityModule(this))
                 .build()
                 .inject(this);
+
+        rvMain.setLayoutManager(new LinearLayoutManager(this));
+        // rvMain.setAdapter(new MainAdapter(this, menuItems, ));
+
 
         load();
     }
