@@ -1,10 +1,12 @@
 package com.theah64.shield.di.modules;
 
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.theah64.shield.api.responses.LogInResponse;
+import com.theah64.shield.utils.Logx;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,6 +16,8 @@ import dagger.Provides;
         GsonModule.class
 })
 public class GuardModule {
+
+    @Nullable
     @Provides
     LogInResponse.Guard provideGuard(SharedPreferences sharedPreferences, Gson gson) {
 
@@ -21,10 +25,10 @@ public class GuardModule {
 
         final String guardJson = sharedPreferences.getString(LogInResponse.Guard.KEY, null);
         if (guardJson != null) {
-            System.out.println("Good guard");
+            Logx.d(this, "Good guard");
             return gson.fromJson(guardJson, LogInResponse.Guard.class);
         }
-        System.out.println("Bad guard");
+        Logx.d(this, "Bad guard");
         return null;
     }
 }

@@ -2,6 +2,7 @@ package com.theah64.shield.model;
 
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.theah64.shield.Shield;
@@ -14,10 +15,11 @@ import javax.inject.Inject;
 public class SplashActivityPresenterImpl implements SplashActivityPresenter {
 
     @Inject
-    SharedPreferences sharedPreferences;
-
-    @Inject
     Gson gson;
+
+    @Nullable
+    @Inject
+    LogInResponse.Guard guard;
 
     private final SplashActivityView view;
 
@@ -33,17 +35,8 @@ public class SplashActivityPresenterImpl implements SplashActivityPresenter {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                final String guardJson = sharedPreferences.getString(LogInResponse.Guard.KEY, null);
-
-                LogInResponse.Guard guard = null;
-
-                if (guardJson != null) {
-                    guard = gson.fromJson(guardJson, LogInResponse.Guard.class);
-                }
-
                 final boolean isLoggedIn = guard != null;
-                view.onTimeOut(false);
+                view.onTimeOut(isLoggedIn);
             }
         }, duration);
     }

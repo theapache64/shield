@@ -1,5 +1,6 @@
 package com.theah64.shield.model;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.theah64.shield.Shield;
@@ -23,6 +24,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
     @Inject
     APIInterface apiInterface;
 
+    @Nullable
     @Inject
     LogInResponse.Guard guard;
 
@@ -40,13 +42,17 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
     public Disposable loadHome() {
         final DisposableSingleObserver<BaseAPIResponse<LoadHomeResponse>> observer = new DisposableSingleObserver<BaseAPIResponse<LoadHomeResponse>>() {
             @Override
-            public void onSuccess(BaseAPIResponse<LoadHomeResponse> loadHomeResponseBaseAPIResponse) {
-
+            public void onSuccess(BaseAPIResponse<LoadHomeResponse> resp) {
+                if (resp.isError()) {
+                    view.onHomeLoadFailed(resp.getMessage());
+                } else {
+                    view.onHomeLoaded(resp.getData());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                view.onNetworkError(e.getMessage());
             }
         };
         return apiInterface.loadHome(guard.getApiKey())
