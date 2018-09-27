@@ -58,7 +58,6 @@ public class MainActivity extends BaseNetworkActivity<LoadHomeResponse> {
     public void onLoaded(BaseAPIResponse<LoadHomeResponse> response) {
         super.onLoaded(response);
 
-        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     public static void start(Context context) {

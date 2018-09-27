@@ -3,7 +3,6 @@ package com.theah64.shield.di.modules.activities;
 import com.theah64.shield.api.responses.LoadHomeResponse;
 import com.theah64.shield.model.MainActivityPresenterImpl;
 import com.theah64.shield.presenter.MainActivityPresenter;
-import com.theah64.shield.view.MainActivityView;
 import com.theah64.shield.view.base.BaseNetworkView;
 
 import dagger.Module;

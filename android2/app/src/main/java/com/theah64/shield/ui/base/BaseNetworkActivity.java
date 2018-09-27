@@ -34,7 +34,6 @@ public abstract class BaseNetworkActivity<R> extends BaseProgressManActivity imp
 
     @Override
     public void onNetworkError(String reason) {
-        hideLoading();
-        SingletonToast.makeText(this, reason, Toast.LENGTH_SHORT).show();
+        onLoadFailed(String.format("Network error : %s", reason));
     }
 }
