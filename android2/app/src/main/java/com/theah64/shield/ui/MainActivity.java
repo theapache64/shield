@@ -3,6 +3,7 @@ package com.theah64.shield.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -34,21 +35,22 @@ public class MainActivity extends BaseNetworkActivity<LoadHomeResponse> {
     @BindView(R.id.rvMain)
     RecyclerView rvMain;
 
-    private static final List<GridMenuItem> menuItems = new ArrayList<>();
+    private static final List<GridMenuItem> gridMenuItems = new ArrayList<>();
 
-    /*static {
-        new GridMenuItem(R.id.gmiIssuePass, "ISSUE NEW PASS", "plus"),
-                new GridMenuItem(R.id.giIssuedPassed, "VIEW ISSUED PASSES", "eye"),
-                new GridMenuItem(GI_MY_PROFILE, "MY PROFILE", "user"),
-                new GridMenuItem(GI_GUARDS, "GUARDS", "mustache"),
-                new GridMenuItem(GI_OTHER, "OTHER", "tag"),
-                new GridMenuItem(GI_LOGOUT, "LOGOUT", "logout"),
-    }*/
+    static {
+        gridMenuItems.add(new GridMenuItem(R.id.gmiIssuePass, "ISSUE NEW PASS", "plus"));
+        gridMenuItems.add(new GridMenuItem(R.id.giIssuedPassed, "VIEW ISSUED PASSES", "eye"));
+        gridMenuItems.add(new GridMenuItem(R.id.giMyProfile, "MY PROFILE", "user"));
+        gridMenuItems.add(new GridMenuItem(R.id.giGuards, "GUARDS", "mustache"));
+        gridMenuItems.add(new GridMenuItem(R.id.giOther, "OTHER", "tag"));
+        gridMenuItems.add(new GridMenuItem(R.id.giLogOut, "LOGOUT", "logout"));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,9 +59,15 @@ public class MainActivity extends BaseNetworkActivity<LoadHomeResponse> {
                 .build()
                 .inject(this);
 
-        rvMain.setLayoutManager(new LinearLayoutManager(this));
-        // rvMain.setAdapter(new MainAdapter(this, menuItems, ));
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return position == 0 ? 2 : 1;
+            }
+        });
 
+        rvMain.setLayoutManager(gridLayoutManager);
 
         load();
     }
@@ -73,6 +81,7 @@ public class MainActivity extends BaseNetworkActivity<LoadHomeResponse> {
     public void onLoaded(BaseAPIResponse<LoadHomeResponse> response) {
         super.onLoaded(response);
 
+        rvMain.setAdapter(new MainAdapter(this, gridMenuItems, response.getData()));
     }
 
     public static void start(Context context) {

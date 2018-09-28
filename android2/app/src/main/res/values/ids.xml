@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="gmiIssuePass" type="id" />
+    <item name="giIssuedPassed" type="id" />
+    <item name="giMyProfile" type="id" />
+    <item name="giGuards" type="id" />
+    <item name="giOther" type="id" />
+    <item name="giLogOut" type="id" />
+</resources>

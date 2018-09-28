@@ -61,11 +61,11 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         } else if (holder instanceof MenuItemViewHolder) {
 
-            final GridMenuItem menuItem = menuItems.get(position);
+            final GridMenuItem menuItem = menuItems.get(position - 1);
 
             MenuItemViewHolder menuItemViewHolder = (MenuItemViewHolder) holder;
             menuItemViewHolder.tvTitle.setText(menuItem.getName());
-            menuItemViewHolder.itvIcon.setText("{icon-shield}");
+            menuItemViewHolder.itvIcon.setText(String.format("{icon-%s}", menuItem.getIcon()));
         }
     }
 

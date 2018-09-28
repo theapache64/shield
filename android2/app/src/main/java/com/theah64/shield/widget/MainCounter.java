@@ -2,8 +2,10 @@ package com.theah64.shield.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ public class MainCounter extends LinearLayout {
 
     private void init(AttributeSet attrs) {
 
-        final TypedArray ta = getContext().obtainStyledAttributes(R.styleable.MainCounter);
+        final TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.MainCounter);
         final String icon = ta.getString(R.styleable.MainCounter_counter_icon);
         final String title = ta.getString(R.styleable.MainCounter_title);
         final String count = ta.getString(R.styleable.MainCounter_count);
@@ -31,18 +33,26 @@ public class MainCounter extends LinearLayout {
 
         // Creating icon
         this.itv = new IconTextView(getContext());
+        final LayoutParams lpItv = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        itv.setLayoutParams(lpItv);
         itv.setText(icon);
 
         // Creating count
         this.tvCount = new TextView(getContext());
+        final LayoutParams lpTvCount = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        tvCount.setLayoutParams(lpTvCount);
         tvCount.setText(count);
 
         // Creating title
         this.tvTitle = new TextView(getContext());
+        final LayoutParams lpTvTitle = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        tvTitle.setLayoutParams(lpTvTitle);
         tvTitle.setText(title);
 
         // Setting orientation
+        setGravity(Gravity.CENTER);
         setOrientation(LinearLayout.VERTICAL);
+        setPadding(100, 100, 100, 100);
 
         // Adding views to container
         addView(itv);
@@ -50,10 +60,9 @@ public class MainCounter extends LinearLayout {
         addView(tvTitle);
     }
 
-    public void setCount(final String count){
+    public void setCount(final String count) {
         this.tvCount.setText(count);
     }
-
 
 
 }

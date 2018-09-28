@@ -22,6 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 public class LogInActivityPresenterImpl implements LogInActivityPresenter {
 
     private static final String TAG = LogInActivityPresenterImpl.class.getSimpleName();
+
     @Inject
     APIInterface apiInterface;
 
