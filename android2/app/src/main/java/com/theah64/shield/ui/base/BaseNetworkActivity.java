@@ -1,5 +1,7 @@
 package com.theah64.shield.ui.base;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.theah64.shield.api.responses.BaseAPIResponse;
@@ -12,6 +14,18 @@ public abstract class BaseNetworkActivity<R> extends BaseProgressManActivity imp
 
     protected void load() {
         load("Loading...");
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(!isAutoLoadDisabled()){
+            load();
+        }
+    }
+
+    private boolean isAutoLoadDisabled() {
+        return false;
     }
 
     protected void load(String message) {
