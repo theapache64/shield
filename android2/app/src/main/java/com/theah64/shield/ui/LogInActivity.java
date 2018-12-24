@@ -56,6 +56,8 @@ public class LogInActivity extends BaseNetworkActivity<LogInResponse> implements
                 .inject(this);
     }
 
+
+
     @OnClick(R.id.bLogIn)
     public void onLogInPressed() {
         if (this.validator.isAllValid(true)) {

@@ -16,17 +16,6 @@ public abstract class BaseNetworkActivity<R> extends BaseProgressManActivity imp
         load("Loading...");
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(!isAutoLoadDisabled()){
-            load();
-        }
-    }
-
-    private boolean isAutoLoadDisabled() {
-        return false;
-    }
 
     protected void load(String message) {
         showLoading(message);

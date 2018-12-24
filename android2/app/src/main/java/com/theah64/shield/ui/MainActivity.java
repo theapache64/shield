@@ -69,6 +69,8 @@ public class MainActivity extends BaseNetworkActivity<LoadHomeResponse> {
 
         rvMain.setLayoutManager(gridLayoutManager);
 
+        load();
+
     }
 
     @Override
